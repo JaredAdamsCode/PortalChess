@@ -1,0 +1,148 @@
+[
+  {
+    "name": "Account",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Create account",
+      "Login to account",
+      "Log out of account",
+      "Unregister account"
+    ],
+    "collaborators": [
+      "Player"
+    ]
+  },
+  {
+    "name": "Player",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Accept invites",
+      "Reject invites",
+      "Notify inviter if invite is rejected"
+    ],
+    "collaborators": [
+      "Account",
+      "MatchFacilitator"
+    ]
+  },
+  {
+    "name": "Profile",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Contains win/loss history from matches",
+      "Contains abandoned match history"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "MatchFacilitator",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Create match",
+      "Close match",
+      "Abandon match",
+      "Resume saved match",
+      "Switch between matches"
+    ],
+    "collaborators": [
+      "Player"
+    ]
+  },
+  {
+    "name": "Match",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Save state of the match in progress",
+      "Start when enough players join",
+      "Reflect if game is over and who won"
+    ],
+    "collaborators": [
+      "MatchFacilitator"
+    ]
+  },
+  {
+    "name": "Turn",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "See whose turn it is"
+    ],
+    "collaborators": [
+      "Match"
+    ]
+  },
+  {
+    "name": "History",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Stores match history"
+    ],
+    "collaborators": [
+      "Profile"
+    ]
+  },
+  {
+    "name": "Game",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Define ruleset",
+      "Determine if match is over"
+    ],
+    "collaborators": [
+      "Match"
+    ]
+  },
+  {
+    "name": "Inbox/Email",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Contains notifications"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Invite",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Be sent to player's inbox"
+    ],
+    "collaborators": [
+      "Player"
+    ]
+  },
+  {
+    "name": "Notification",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Be sent to player's inbox"
+    ],
+    "collaborators": [
+      "Player"
+    ]
+  }
+]
