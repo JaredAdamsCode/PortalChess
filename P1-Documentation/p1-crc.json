@@ -60,28 +60,18 @@
   },
   {
     "name": "Match",
-    "superclasses": "",
+    "superclasses": "Game",
     "subclasses": "",
     "type": 1,
     "responsibilities": [
       "Save state of the match in progress",
       "Start when enough players join",
-      "Reflect if game is over and who won"
+      "Determine if game is over",
+      "Reflect victor of game determined by Game (if applicable)",
+      "Keep track of active player"
     ],
     "collaborators": [
       "MatchFacilitator"
-    ]
-  },
-  {
-    "name": "Turn",
-    "superclasses": "",
-    "subclasses": "",
-    "type": 1,
-    "responsibilities": [
-      "See whose turn it is"
-    ],
-    "collaborators": [
-      "Match"
     ]
   },
   {
@@ -99,18 +89,17 @@
   {
     "name": "Game",
     "superclasses": "",
-    "subclasses": "",
-    "type": 1,
+    "subclasses": "Match",
+    "type": 2,
     "responsibilities": [
-      "Define ruleset",
-      "Determine if match is over"
+      "Determine victor (if applicable)"
     ],
     "collaborators": [
       "Match"
     ]
   },
   {
-    "name": "Inbox/Email",
+    "name": "Inbox",
     "superclasses": "",
     "subclasses": "",
     "type": 1,
@@ -123,7 +112,7 @@
   },
   {
     "name": "Invite",
-    "superclasses": "",
+    "superclasses": "Notification",
     "subclasses": "",
     "type": 1,
     "responsibilities": [
@@ -136,13 +125,127 @@
   {
     "name": "Notification",
     "superclasses": "",
-    "subclasses": "",
-    "type": 1,
+    "subclasses": "Invite",
+    "type": 2,
     "responsibilities": [
       "Be sent to player's inbox"
     ],
     "collaborators": [
       "Player"
+    ]
+  },
+  {
+    "name": "ChessBoard",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Show location of each piece"
+    ],
+    "collaborators": [
+      "ChessPiece"
+    ]
+  },
+  {
+    "name": "ChessPiece",
+    "superclasses": "",
+    "subclasses": "Knight, Pawn, King, Queen, Rook, Bishop, Portal",
+    "type": 2,
+    "responsibilities": [
+      "Store color"
+    ],
+    "collaborators": [
+      "Knight",
+      "Pawn",
+      "King",
+      "Queen",
+      "Rook",
+      "Bishop",
+      "Portal"
+    ]
+  },
+  {
+    "name": "Knight",
+    "superclasses": "ChessPiece",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Determine valid moves"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Pawn",
+    "superclasses": "ChessPiece",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Determine valid moves"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Bishop",
+    "superclasses": "ChessPiece",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Determine valid moves"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "King",
+    "superclasses": "ChessPiece",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Determine valid moves"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Queen",
+    "superclasses": "ChessPiece",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Determine valid moves"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Rook",
+    "superclasses": "ChessPiece",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Determine valid moves"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Portal",
+    "superclasses": "ChessPiece",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Determine valid moves"
+    ],
+    "collaborators": [
+      ""
     ]
   }
 ]
