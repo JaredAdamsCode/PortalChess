@@ -1,6 +1,6 @@
-Scrum Session 1  
+**Scrum Session 1**
 
-09/10/2020 
+**09/10/2020** 
 
  
 
@@ -38,9 +38,9 @@ Setup next meeting for Monday 09/14/2020 to finalize the tasks on Zenhub, so for
 
  
 
-Scrum Session 2  
+**Scrum Session 2** 
 
-09/14/2020 
+**09/14/2020** 
 
  
 
@@ -64,9 +64,9 @@ Should some of the tasks be broken down further into smaller tasks?
 
  
 
-Scrum Session 3 
+**Scrum Session 3**
 
-09/15/2020 
+**09/15/2020** 
 
  
 
@@ -84,9 +84,9 @@ User stories, design sketches, create CRC cards, create wiki page, scrum ceremon
 
  
 
-Scrum Session 4 
+**Scrum Session 4** 
 
-09/17/2020 
+**09/17/2020** 
 
  
 
@@ -98,9 +98,9 @@ Closed issue #40
 
  
 
-Scrum Session 5 
+**Scrum Session 5** 
 
-09/22/2020 
+**09/22/2020** 
 
  
 
@@ -120,9 +120,9 @@ Created a shared lucid chart link so everyone could edit the document
 
  
 
-Scrum Session 5 
+**Scrum Session 5 **
 
-09/23/2020 
+**09/23/2020 **
 
  
 
@@ -138,9 +138,9 @@ Create relationship connections between all classes
 
  
 
-Scrum Session 5 
+**Scrum Session 5** 
 
-09/24/2020 
+**09/24/2020** 
 
 Created PowerPoint presentation 
 
