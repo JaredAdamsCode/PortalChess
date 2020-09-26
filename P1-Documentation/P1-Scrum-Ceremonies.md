@@ -146,6 +146,16 @@ Created PowerPoint presentation
 
 Scheduled presentation time for 09/25/2020 @5:30pm to make recording 
 
- 
 
- 
+Sprint retrospective
+
+What went well
+Good meeting cadence, good attendance at meetings, easy to work with, easy to set up times for meetings
+Started working on things early and worked on what we needed to regularly, very few days we weren't working on something
+Everyone could work on a document all at once instead of one person doing everything
+Everyone was easily able to express thoughts on the process 
+
+
+What we need to work on
+Ask more questions/ set up more meetings with Product Owner - some unclarity in parts of project
+Be more attentive in telling everyone any update for the project even if it is small. Jared was left out of a team meeting because we decided to work right after class time.
