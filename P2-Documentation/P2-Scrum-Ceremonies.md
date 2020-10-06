@@ -26,3 +26,11 @@ No she will need access to it for grading, she will let us know how she would li
 She is asking about getting a shared machine to use for setting up the server, she will get back to us on this.
 
 Next Tuesday 10/06 we will create tasks and acceptance criteria for the high priority user stories, come up with questions for the PO, and schedule the planning meeting with the PO.
+
+10/06/2020
+Created acceptance criteria document 
+Created acceptance criteria for all user stories, included the additional features
+Set up meeting for tomorrow to take these and create them into tasks
+
+Questions for instructor
+Do we need to create user stories/acceptance criteria/tasks for the additional features that were added in P2?
