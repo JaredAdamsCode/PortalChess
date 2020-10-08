@@ -32,5 +32,21 @@ Created acceptance criteria document
 Created acceptance criteria for all user stories, included the additional features
 Set up meeting for tomorrow to take these and create them into tasks
 
+10/07/20
+Started creating tasks based off the acceptance criteria made on 10/06. Assigned any remaining acceptance criteria without tasks to finish before meeting on 10/08.
+
+10/08/20
+Finalized acceptance criteria and tasks
+Created P2 milestone set all tasks to fall under that milestone
+
 Questions for instructor
 Do we need to create user stories/acceptance criteria/tasks for the additional features that were added in P2?
+Do we need to create tasks for everything? Or just what we think we might get to in Sprint 2?
+What are the expectations of where the project should be at the end of this Sprint?
+What should we focus on first task wise?
+How other teams are deploying the server? Running on a local machine vs a shared network machine
+Check new user stories/acceptance criteria that were new to Sprint 2
+
+Clarify invite system whether an invite to a game can only be accepted by one person, after that person accepts the invite then it goes away for everyone else
+vs
+Invite is sent to multiple people, any number of people can accept it, each accepted invite will start a new game
