@@ -1,8 +1,4 @@
-**Scrum Session 1 Daily Scrum**
-
-**09/10/2020** 
-
- 
+## Scrum Session 1 Daily Scrum 09/10/2020
 
 Github repository setup 
 
@@ -38,11 +34,7 @@ Setup next meeting for Monday 09/14/2020 to finalize the tasks on Zenhub, so for
 
  
 
-**Scrum Session 2 Daily Scrum** 
-
-**09/14/2020** 
-
- 
+## Scrum Session 2 Daily Scrum 09/14/2020
 
 Finalized tasks in the Zenhub board 
 
@@ -64,11 +56,7 @@ Should some of the tasks be broken down further into smaller tasks?
 
  
 
-**Scrum Session 3 Planning Session**
-
-**09/15/2020** 
-
- 
+## Scrum Session 3 Planning Session 09/15/2020
 
 Met with product owner to discuss user stories and give them priorities 
 
@@ -84,25 +72,13 @@ User stories, design sketches, create CRC cards, create wiki page, scrum ceremon
 
  
 
-**Scrum Session 4 Daily Scrum** 
-
-**09/17/2020** 
-
- 
+## Scrum Session 4 Daily Scrum 09/17/2020
 
 Created CRC cards for all of the classes, filled in the info for each of these 
 
 Closed issue #40 
 
- 
-
- 
-
-**Scrum Session 5 Daily Scrum** 
-
-**09/22/2020** 
-
- 
+## Scrum Session 5 Daily Scrum 09/22/2020
 
 Created wiki page on GitHub 
 
@@ -112,19 +88,13 @@ Moved CRC document page into GitHub repo
 
 Closed Issue #44 
 
- 
-
 Started working on design sketch with UML diagram 
 
 Created a shared lucid chart link so everyone could edit the document 
 
  
 
-**Scrum Session 6  Daily Scrum**
-
-**09/23/2020 **
-
- 
+## Scrum Session 6  Daily Scrum 09/23/2020
 
 Continued working on the UML diagram 
 
@@ -138,23 +108,19 @@ Create relationship connections between all classes
 
  
 
-**Scrum Session 7  Daily Scrum** 
-
-**09/24/2020** 
+## Scrum Session 7  Daily Scrum 09/24/2020 
 
 Created PowerPoint presentation 
 
 Scheduled presentation time for 09/25/2020 @5:30pm to make recording 
 
-**Scrum Session 8  Sprint Retrospective** 
-**09/25/2020** 
+## Scrum Session 8  Sprint Retrospective 09/25/2020
 
 What went well
 Good meeting cadence, good attendance at meetings, easy to work with, easy to set up times for meetings
 Started working on things early and worked on what we needed to regularly, very few days we weren't working on something
 Everyone could work on a document all at once instead of one person doing everything
 Everyone was easily able to express thoughts on the process 
-
 
 What we need to work on
 Ask more questions/ set up more meetings with Product Owner - some unclarity in parts of project
