@@ -1,4 +1,4 @@
-**Scrum Session 1**
+**Scrum Session 1 Daily Scrum**
 
 **09/10/2020** 
 
@@ -38,7 +38,7 @@ Setup next meeting for Monday 09/14/2020 to finalize the tasks on Zenhub, so for
 
  
 
-**Scrum Session 2** 
+**Scrum Session 2 Daily Scrum** 
 
 **09/14/2020** 
 
@@ -64,7 +64,7 @@ Should some of the tasks be broken down further into smaller tasks?
 
  
 
-**Scrum Session 3**
+**Scrum Session 3 Planning Session**
 
 **09/15/2020** 
 
@@ -84,7 +84,7 @@ User stories, design sketches, create CRC cards, create wiki page, scrum ceremon
 
  
 
-**Scrum Session 4** 
+**Scrum Session 4 Daily Scrum** 
 
 **09/17/2020** 
 
@@ -98,7 +98,7 @@ Closed issue #40
 
  
 
-**Scrum Session 5** 
+**Scrum Session 5 Daily Scrum** 
 
 **09/22/2020** 
 
@@ -120,7 +120,7 @@ Created a shared lucid chart link so everyone could edit the document
 
  
 
-**Scrum Session 5 **
+**Scrum Session 6  Daily Scrum**
 
 **09/23/2020 **
 
@@ -138,7 +138,7 @@ Create relationship connections between all classes
 
  
 
-**Scrum Session 5** 
+**Scrum Session 7  Daily Scrum** 
 
 **09/24/2020** 
 
@@ -146,8 +146,8 @@ Created PowerPoint presentation
 
 Scheduled presentation time for 09/25/2020 @5:30pm to make recording 
 
-
-Sprint retrospective
+**Scrum Session 8  Sprint Retrospective** 
+**09/25/2020** 
 
 What went well
 Good meeting cadence, good attendance at meetings, easy to work with, easy to set up times for meetings
