@@ -1,6 +1,4 @@
-**Scrum Session 1 Daily Scrum**
-<br/><br/>
-09/29/2020
+## Scrum Session 1 Daily Scrum 09/29/2020
 
 Need to setup sprint review meeting with PO soon - Ask PO if Thursday 10/01/2020 at 12:30pm will work
 
@@ -11,10 +9,7 @@ Ask about getting shared machine for running the server/database in the CS depar
 
 Talked about everyone running the spring react tutorial and learn how that functions so we can get the project fully started.
 
-
-**Scrum Session 2  Sprint Review**
-<br/><br/>
-10/01/2020
+## Scrum Session 2  Sprint Review 10/01/2020
 
 Should we setup another meeting with her for the planning phase?
 <br/><br/>
@@ -32,23 +27,17 @@ She is asking about getting a shared machine to use for setting up the server, s
 
 Next Tuesday 10/06 we will create tasks and acceptance criteria for the high priority user stories, come up with questions for the PO, and schedule the planning meeting with the PO.
 
-**Scrum Session 3  Daily Scrum**
-10/06/2020
-<br/><br/>
+## Scrum Session 3  Daily Scrum 10/06/2020
 Created acceptance criteria document 
 Created acceptance criteria for all user stories, included the additional features
 Set up meeting for tomorrow to take these and create them into tasks
 
 
-**Scrum Session 4  Daily Scrum**
-10/07/20
-<br/><br/>
-Started creating tasks based off the acceptance criteria made on 10/06. Assigned any remaining acceptance criteria without tasks to finish before meeting on 10/08.
+## Scrum Session 4  Daily Scrum 10/07/2020
+Started creating tasks based off the acceptance criteria made on 10/06. 
+Assigned any remaining acceptance criteria without tasks to finish before meeting on 10/08.
 
-
-**Scrum Session 5  Daily Scrum**
-10/08/20
-<br/><br/>
+## Scrum Session 5  Daily Scrum 10/08/2020
 Finalized acceptance criteria and tasks
 Created P2 milestone set all tasks to fall under that milestone
 
@@ -66,10 +55,7 @@ vs
 Invite is sent to multiple people, any number of people can accept it, each accepted invite will start a new game
 
 
-**Scrum Session 6  Planning Session**
-<br/><br/>
-10/09/20
-
+## Scrum Session 6  Planning Session 10/09/2020
 Met with PO to go through acceptance criteria that we have created
 Need to add more acceptance criteria for corner cases of using the system, such as logging in with an invalid username/password
 Need to rework class diagram, some of the relationship lines are pointing in the wrong direction
