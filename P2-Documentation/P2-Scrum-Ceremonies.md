@@ -62,3 +62,8 @@ Need to rework class diagram, some of the relationship lines are pointing in the
 Discussed expectations of P2- Should be around 40% done with the user stories 
 Discussed getting server/database system from CSU so we can shared that- need to email her to ask her for this
 
+## Scrum Session 7  Planning Session 10/13/2020
+Ask PO to clarify -- Tasks for the user stories (or at least for the ones with the highest priority) are missing. in P1 grading<br/><br/>
+Fixed up UML diagram<br/><br/>
+Fixed up Scrum Session document formatting<br/><br/>
+Added Inbox/Notification system epic so all invite/notification tasks fall under this<br/><br/>
