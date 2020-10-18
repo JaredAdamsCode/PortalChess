@@ -65,7 +65,13 @@ export default function AddUser() {
       body: JSON.stringify(toInput) // body data type must match "Content-Type" header
     });
     let body = await response.json();
-    setMessage(body.message);
+    if(!body.message){
+        setMessage("Account created successfully")
+    }
+    else{
+        setMessage(body.message);
+    }
+
   }
 
   const handleSubmit = variables => {

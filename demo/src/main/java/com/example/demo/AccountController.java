@@ -26,7 +26,7 @@ public class AccountController {
 
 	 //Captures the request from client with user object
 	 @PostMapping(path = "/account", consumes = "application/json", produces = "application/json")
-	 public ResponseEntity<Object> save(@RequestBody Account account){
+	 public ResponseEntity<?> save(@RequestBody Account account){
 
 	 	//Before saving validate the account information given
 		 String accountCheck = ValidateAccount.validate(account);
@@ -43,19 +43,20 @@ public class AccountController {
 
 		//After validating the inputs are ok then check if an account with this info already exists
 		 List<Account> emailExists = accountService.checkAccount(account);
-		 if(emailExists != null){
+
+		 if(!emailExists.isEmpty()){
 			 throw new InvalidRequest("An account with this email already exists");
 		 }
 		 else{
 			 List<Account> usernameExists = accountService.checkUser(account);
-			 if(usernameExists != null) {
+			 if(!usernameExists.isEmpty()) {
 				 throw new InvalidRequest("An account with this username already exists");
 			 }
 			 else{
 				 accountService.save(account);
 			 }
 		 }
-		 return ResponseEntity.status(HttpStatus.ACCEPTED).body("Account has been created");
+		 return ResponseEntity.accepted().body(account);
 	 }
 
 	@ExceptionHandler(IllegalArgumentException.class)
