@@ -13,7 +13,7 @@ Talked about everyone running the spring react tutorial and learn how that funct
 
 Should we setup another meeting with her for the planning phase?
 <br/><br/>
-Not until we create all tasks and acceptance criteria for higher priority user stories, while creating these tasks any questions we run into make sure to make note of them for the planning meeting.
+Not until we create all tasks and acceptance criteria for higher priority account stories, while creating these tasks any questions we run into make sure to make note of them for the planning meeting.
 
 Sprint review should happen before the presentation for her to clear up issues with the presentation. Then with this feedback make changes to the presentation, and use this for the retrospective.
 
@@ -25,11 +25,11 @@ No she will need access to it for grading, she will let us know how she would li
 
 She is asking about getting a shared machine to use for setting up the server, she will get back to us on this.
 
-Next Tuesday 10/06 we will create tasks and acceptance criteria for the high priority user stories, come up with questions for the PO, and schedule the planning meeting with the PO.
+Next Tuesday 10/06 we will create tasks and acceptance criteria for the high priority account stories, come up with questions for the PO, and schedule the planning meeting with the PO.
 
 ## Scrum Session 3  Daily Scrum 10/06/2020
 Created acceptance criteria document 
-Created acceptance criteria for all user stories, included the additional features
+Created acceptance criteria for all account stories, included the additional features
 Set up meeting for tomorrow to take these and create them into tasks
 
 
@@ -43,12 +43,12 @@ Created P2 milestone set all tasks to fall under that milestone
 
 Questions for instructor
 <br/><br/>
-Do we need to create user stories/acceptance criteria/tasks for the additional features that were added in P2?
+Do we need to create account stories/acceptance criteria/tasks for the additional features that were added in P2?
 Do we need to create tasks for everything? Or just what we think we might get to in Sprint 2?
 What are the expectations of where the project should be at the end of this Sprint?
 What should we focus on first task wise?
 How other teams are deploying the server? Running on a local machine vs a shared network machine
-Check new user stories/acceptance criteria that were new to Sprint 2
+Check new account stories/acceptance criteria that were new to Sprint 2
 
 Clarify invite system whether an invite to a game can only be accepted by one person, after that person accepts the invite then it goes away for everyone else
 vs
@@ -59,11 +59,11 @@ Invite is sent to multiple people, any number of people can accept it, each acce
 Met with PO to go through acceptance criteria that we have created
 Need to add more acceptance criteria for corner cases of using the system, such as logging in with an invalid username/password
 Need to rework class diagram, some of the relationship lines are pointing in the wrong direction
-Discussed expectations of P2- Should be around 40% done with the user stories 
+Discussed expectations of P2- Should be around 40% done with the account stories 
 Discussed getting server/database system from CSU so we can shared that- need to email her to ask her for this
 
 ## Scrum Session 7  Planning Session 10/13/2020
-Ask PO to clarify -- Tasks for the user stories (or at least for the ones with the highest priority) are missing. in P1 grading<br/><br/>
+Ask PO to clarify -- Tasks for the account stories (or at least for the ones with the highest priority) are missing. in P1 grading<br/><br/>
 Fixed up UML diagram<br/><br/>
 Fixed up Scrum Session document formatting<br/><br/>
 Added Inbox/Notification system epic so all invite/notification tasks fall under this<br/><br/>

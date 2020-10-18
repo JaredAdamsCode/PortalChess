@@ -3,6 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+demo/frontend/package-lock.json
 
 ### STS ###
 .apt_generated
@@ -33,7 +34,7 @@ build/
 .vscode/
 
 # dependencies
-/node_modules
+node_modules/
 /.pnp
 .pnp.js
 

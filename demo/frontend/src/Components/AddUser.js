@@ -51,7 +51,7 @@ export default function AddUser() {
   const [message, setMessage] = React.useState("Nothing saved in the session");
 
   async function sampleFunc(toInput) {
-    const response = await fetch("/api/user", {
+    const response = await fetch("/api/account", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -65,8 +65,7 @@ export default function AddUser() {
       body: JSON.stringify(toInput) // body data type must match "Content-Type" header
     });
     let body = await response.json();
-    console.log(body.id);
-    setMessage(body.id ? "Data sucessfully updated" : "Data updation failed");
+    setMessage(body.message);
   }
 
   const handleSubmit = variables => {
