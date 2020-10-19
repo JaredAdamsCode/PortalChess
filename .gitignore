@@ -33,7 +33,8 @@ build/
 .vscode/
 
 # dependencies
-/node_modules
+node_modules/
+/package-lock.json
 /.pnp
 .pnp.js
 
