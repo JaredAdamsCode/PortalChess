@@ -55,6 +55,7 @@ public class AccountController {
 				 accountService.save(account); //Has passed all checks, now can create the account in the database
 			 }
 		 }
+		 System.out.println("Test made it here");
 		 return ResponseEntity.accepted().body(account);
 	 }
 	 
