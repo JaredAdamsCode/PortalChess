@@ -41,10 +41,17 @@ public class AccountDAOImplementation implements AccountDAO {
 	}
 
 	@Override
-	public List checkAccount(Account account) {
+	public boolean checkAccount(Account account) {
 		Session currSession = entityManager.unwrap(Session.class);
 		Query query = currSession.createQuery("from Account a where a.email = :email").setParameter("email", account.getEmail());
-		return query.getResultList();
+		return !query.getResultList().isEmpty();
+	}
+
+	@Override
+	public boolean checkUser(Account account) {
+		Session currSession = entityManager.unwrap(Session.class);
+		Query query = currSession.createQuery("from Account a where a.username = :username").setParameter("username", account.getUsername());
+		return !query.getResultList().isEmpty();
 	}
 
 	@Override
@@ -53,13 +60,5 @@ public class AccountDAOImplementation implements AccountDAO {
 		Account account = currSession.get(Account.class, id);
 		currSession.delete(account);
 	}
-
-	@Override
-	public List checkUser(Account account) {
-		Session currSession = entityManager.unwrap(Session.class);
-		Query query = currSession.createQuery("from Account a where a.username = :username").setParameter("username", account.getUsername());
-		return query.getResultList();
-	}
-
 
 }

@@ -37,16 +37,15 @@ public class AccountServiceImplementation implements AccountService {
 	 }
 
 	@Override
-	public List<Account> checkAccount(Account account) {
+	public boolean checkAccount(Account account) {
 		return accountDAO.checkAccount(account);
 	}
+
+	@Override
+	public boolean checkUser(Account account) { return accountDAO.checkUser(account); }
 
 	@Transactional
 	 @Override
 	 public void delete(int id) { accountDAO.delete(id);
 	 }
-
-	@Override
-	public List<Account> checkUser(Account account) { return accountDAO.checkUser(account); }
-
 }

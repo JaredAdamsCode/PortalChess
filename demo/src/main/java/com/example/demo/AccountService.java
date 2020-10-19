@@ -14,9 +14,11 @@ public interface AccountService {
 	 
 	void save(Account account);
 
-	List<Account> checkAccount(Account account);
+	boolean checkAccount(Account account);
+
+	boolean checkUser(Account account);
 	 
 	void delete(int id);
 
-	List<Account> checkUser(Account account);
+
 }

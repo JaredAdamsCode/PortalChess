@@ -29,9 +29,9 @@ public class AccountController {
 	 public ResponseEntity<?> save(@RequestBody Account account){
 
 	 	//Before saving validate the account information given
-		 String accountCheck = ValidateAccount.validate(account);
+		 String accountCheck = ValidateAccount.validate(account); //Checks the inputs
 		 switch (accountCheck) {
-			 case "valid":
+			 case "valid": //Inputs are valid, move onto checking if this account info exists in the database
 				 break;
 			 case "invalid email":
 				 throw new InvalidRequest("The email address entered is not valid");
@@ -42,27 +42,21 @@ public class AccountController {
 		 }
 
 		//After validating the inputs are ok then check if an account with this info already exists
-		 List<Account> emailExists = accountService.checkAccount(account);
-
-		 if(!emailExists.isEmpty()){
+		 boolean emailExists = accountService.checkAccount(account); //Returns true if an account with this email address already exists
+		 if(emailExists){
 			 throw new InvalidRequest("An account with this email already exists");
 		 }
 		 else{
-			 List<Account> usernameExists = accountService.checkUser(account);
-			 if(!usernameExists.isEmpty()) {
+			 boolean usernameExists = accountService.checkUser(account);//Returns true if an account with this username already exists
+			 if(usernameExists) {
 				 throw new InvalidRequest("An account with this username already exists");
 			 }
 			 else{
-				 accountService.save(account);
+				 accountService.save(account); //Has passed all checks, now can create the account in the database
 			 }
 		 }
 		 return ResponseEntity.accepted().body(account);
 	 }
-
-	@ExceptionHandler(IllegalArgumentException.class)
-	void handleBadRequests(HttpServletResponse response) throws IOException {
-		response.sendError(HttpStatus.BAD_REQUEST.value(), "Please try again and with a non empty string as 'name'");
-	}
 	 
 	 @GetMapping("/account/{id}")
 	 public Account get(@PathVariable int id) {

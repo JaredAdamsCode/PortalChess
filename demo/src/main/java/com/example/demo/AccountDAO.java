@@ -12,9 +12,10 @@ public interface AccountDAO {
 
 	 void save(Account account);
 
-	List<Account> checkAccount(Account account);
-	 
-	 void delete(int id);
+	boolean checkAccount(Account account);
 
-	List<Account> checkUser(Account account);
+	boolean checkUser(Account account);
+	 
+	void delete(int id);
+
 }
