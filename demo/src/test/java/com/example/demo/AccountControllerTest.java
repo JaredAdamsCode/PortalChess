@@ -36,7 +36,7 @@ public class AccountControllerTest {
         testAccount.setGames_Played(2);
         testAccount.setGames_Won(0);
 
-        mvc.perform(MockMvcRequestBuilders.post("/api/account")
+        mvc.perform(MockMvcRequestBuilders.post("/api/createAccount")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(testAccount))
                 .accept(MediaType.APPLICATION_JSON))

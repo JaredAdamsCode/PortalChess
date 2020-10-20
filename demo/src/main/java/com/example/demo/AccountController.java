@@ -25,7 +25,7 @@ public class AccountController {
 
 
 	 //Captures the request from client with user object
-	 @PostMapping(path = "/account", consumes = "application/json", produces = "application/json")
+	 @PostMapping(path = "/createAccount", consumes = "application/json", produces = "application/json")
 	 public ResponseEntity<?> save(@RequestBody Account account){
 
 	 	//Before saving validate the account information given
@@ -58,7 +58,7 @@ public class AccountController {
 		 return ResponseEntity.accepted().body(account);
 	 }
 	 
-	 @GetMapping("/account/{id}")
+	 @GetMapping("/login")
 	 public Account get(@PathVariable int id) {
 	  return accountService.get(id);
 	 }
