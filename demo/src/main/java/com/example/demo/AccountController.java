@@ -75,4 +75,29 @@ public class AccountController {
 	  //accountService.save(account);
 	  return account;
 	 }
+
+	//Captures the request from client with user object
+	@PostMapping(path = "/login", consumes = "application/json", produces = "application/json")
+	public ResponseEntity<?> getAccount(@RequestBody Account account){
+
+		//Before saving validate the account information given
+		String accountCheck = ValidateAccount.validate(account); //Checks the inputs
+		switch (accountCheck) {
+			case "valid": //Inputs are valid, move onto checking if this account info exists in the database
+				break;
+			case "invalid email":
+				throw new InvalidRequest("The email address entered is not valid");
+			case "invalid password":
+				throw new InvalidRequest("The password entered is not valid");
+		}
+
+		//After validating the inputs are ok then check if an account with this info already exists
+		Account accountValue = accountService.getAccount(account); //Returns true if an account with this email address already exists
+		if(accountValue != null){
+			return ResponseEntity.accepted().body(account); //handle session
+		}
+		else{
+			throw new InvalidRequest("No account with matching credentials was found.");
+		}
+	}
 }

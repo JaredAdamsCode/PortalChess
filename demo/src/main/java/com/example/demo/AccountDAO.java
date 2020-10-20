@@ -18,4 +18,5 @@ public interface AccountDAO {
 	 
 	void delete(int id);
 
+    Account getAccount(Account account);
 }

@@ -61,4 +61,19 @@ public class AccountDAOImplementation implements AccountDAO {
 		currSession.delete(account);
 	}
 
+	@Override
+	public Account getAccount(Account account) {
+		Session currSession = entityManager.unwrap(Session.class);
+		Query<Account> query = currSession.createQuery("from Account a where a.email = :email AND a.password = :password")
+				.setParameter("email", account.getEmail())
+				.setParameter("password", account.getPassword());
+		if (query.getResultList().isEmpty()){
+			return null;
+		}
+		else{
+			return query.getResultList().get(0);
+		}
+
+	}
+
 }
