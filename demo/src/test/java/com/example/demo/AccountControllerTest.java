@@ -100,6 +100,25 @@ public class AccountControllerTest {
         assert(accountCheck.equals("valid"));
     }
 
+    @Test
+    public void loginTest() throws Exception
+    {
+
+        Account testAccount = new Account();
+        testAccount.setId(1);
+        testAccount.setEmail("steve@email.com");
+        testAccount.setPassword("123456");
+        testAccount.setGames_Played(2);
+        testAccount.setGames_Won(0);
+
+        mvc.perform(MockMvcRequestBuilders.post("/api/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(testAccount))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+    }
+
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
