@@ -1,13 +1,8 @@
 package com.example.demo;
-import com.zaxxer.hikari.HikariDataSource;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityManager;
-import java.sql.SQLException;
-import java.util.List;
 import java.util.regex.Pattern;
 
 @Service

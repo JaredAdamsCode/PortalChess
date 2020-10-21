@@ -1,15 +1,8 @@
 package com.example.demo;
 
-import java.io.IOException;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-
 
 @RestController
 @RequestMapping("/api")
@@ -17,12 +10,6 @@ public class AccountController {
 
 	@Autowired
 	 private AccountService accountService;
-
-	 @GetMapping("/account")
-	 public List<Account> get() {
-	  return accountService.get();
-	 }
-
 
 	 //Captures the request from client with user object
 	 @PostMapping(path = "/createAccount", consumes = "application/json", produces = "application/json")
@@ -57,12 +44,19 @@ public class AccountController {
 		 }
 		 return ResponseEntity.accepted().body(account);
 	 }
-	 
+
+	 /*
 	 @GetMapping("/login")
 	 public Account get(@PathVariable int id) {
 	  return accountService.get(id);
 	 }
-	 
+
+
+	@GetMapping("/account")
+	public List<Account> get() {
+		return accountService.get();
+	}
+
 	 @DeleteMapping("/account/{id}")
 	 public String delete(@PathVariable int id) {
 	  accountService.delete(id);
@@ -75,6 +69,7 @@ public class AccountController {
 	  //accountService.save(account);
 	  return account;
 	 }
+	 */
 
 	//Captures the request from client with user object
 	@PostMapping(path = "/login", consumes = "application/json", produces = "application/json")

@@ -10,11 +10,11 @@ Setup Zenhub within the repository
 
  
 
-Decided on major epics from account stories and created those in Zenhub 
+Decided on major epics from user stories and created those in Zenhub 
 
 Need a backend server, front end client, and database to store everything 
 
-Split up account stories to then be created into a tasks, each going to add our tasks to Zenhub 
+Split up user stories to then be created into a tasks, each going to add our tasks to Zenhub 
 
  
 
@@ -58,11 +58,11 @@ Should some of the tasks be broken down further into smaller tasks?
 
 ## Scrum Session 3 Planning Session 09/15/2020
 
-Met with product owner to discuss account stories and give them priorities 
+Met with product owner to discuss user stories and give them priorities 
 
 PO answered above questions 
 
-Reworded several stories to be more focused on the account side of the system 
+Reworded several stories to be more focused on the user side of the system 
 
 Got rid of redundant stories and added new ones  
 

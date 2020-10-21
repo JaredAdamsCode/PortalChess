@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +9,7 @@ public class AccountServiceImplementation implements AccountService {
 
 	  @Autowired
 	  private AccountDAO accountDAO;
-
+/*
 	@Transactional
 	 @Override
 	 public List<Account> get() {
@@ -24,6 +22,12 @@ public class AccountServiceImplementation implements AccountService {
 		return accountDAO.get(id);
 	 }
 
+	 @Transactional
+	 @Override
+	 public void delete(int id) { accountDAO.delete(id);
+	 }
+
+*/
 	@Transactional
 	@Override
 	public Account get(String username) {
@@ -47,8 +51,4 @@ public class AccountServiceImplementation implements AccountService {
 	@Override
 	public Account getAccount(Account account) {return accountDAO.getAccount(account);}
 
-	@Transactional
-	 @Override
-	 public void delete(int id) { accountDAO.delete(id);
-	 }
 }
