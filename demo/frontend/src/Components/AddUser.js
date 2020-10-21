@@ -163,7 +163,17 @@ export default function AddUser() {
           >
             Save
           </Button>
-
+          <Link to="/login">
+            <Button
+                //type="button"
+                fullWidth
+                variant="contained"
+                color="primary"
+                preventDefault
+            >
+              Login
+            </Button>
+          </Link>
           <Grid container justify="center">
             <Grid item>
               <Link to="/view">View User Records</Link>

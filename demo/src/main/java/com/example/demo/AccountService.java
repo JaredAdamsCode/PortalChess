@@ -16,6 +16,8 @@ public interface AccountService {
 
 	boolean checkAccount(Account account);
 
+	Account getAccount(Account account);
+
 	boolean checkUser(Account account);
 	 
 

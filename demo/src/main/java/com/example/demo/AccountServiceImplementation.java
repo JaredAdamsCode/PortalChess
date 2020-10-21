@@ -47,4 +47,8 @@ public class AccountServiceImplementation implements AccountService {
 
 	@Override
 	public boolean checkUser(Account account) { return accountDAO.checkUser(account); }
+
+	@Override
+	public Account getAccount(Account account) {return accountDAO.getAccount(account);}
+
 }

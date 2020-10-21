@@ -16,4 +16,6 @@ public interface AccountDAO {
 	boolean checkAccount(Account account);
 
 	boolean checkUser(Account account);
+
+    Account getAccount(Account account);
 }
