@@ -1639,7 +1639,7 @@
   <commands xmi:id="_zAB_0Q_JEeueBIAJFgjF6g" elementId="org.eclipse.jdt.ui.edit.text.java.open.type.hierarchy" commandName="Open Type Hierarchy" description="Open a type hierarchy on the selected element" category="_y_-VbA_JEeueBIAJFgjF6g"/>
   <commands xmi:id="_zAB_0g_JEeueBIAJFgjF6g" elementId="org.eclipse.egit.ui.ContinueRebase" commandName="Continue Rebase" category="_y_-8cQ_JEeueBIAJFgjF6g"/>
   <commands xmi:id="_zAB_0w_JEeueBIAJFgjF6g" elementId="org.eclipse.jdt.ui.edit.text.java.extract.interface" commandName="Extract Interface" description="Extract a set of members into a new interface and try to use the new interface" category="_y_-VdQ_JEeueBIAJFgjF6g"/>
-  <commands xmi:id="_zAB_1A_JEeueBIAJFgjF6g" elementId="org.eclipse.help.ui.closeTray" commandName="Close User Assistance Tray" description="Close the user assistance tray containing context help information and cheat sheets." category="_y_-Vdg_JEeueBIAJFgjF6g"/>
+  <commands xmi:id="_zAB_1A_JEeueBIAJFgjF6g" elementId="org.eclipse.help.ui.closeTray" commandName="Close User Assistance Tray" description="Close the account assistance tray containing context help information and cheat sheets." category="_y_-Vdg_JEeueBIAJFgjF6g"/>
   <commands xmi:id="_zAB_1Q_JEeueBIAJFgjF6g" elementId="org.eclipse.egit.ui.history.CreatePatch" commandName="Create Patch..." category="_y_-8eA_JEeueBIAJFgjF6g"/>
   <commands xmi:id="_zAB_1g_JEeueBIAJFgjF6g" elementId="org.eclipse.ltk.ui.refactoring.commands.moveResources" commandName="Move Resources" description="Move the selected resources and notify LTK participants." category="_y_-8cw_JEeueBIAJFgjF6g"/>
   <commands xmi:id="_zAB_1w_JEeueBIAJFgjF6g" elementId="org.eclipse.debug.ui.commands.Resume" commandName="Resume" description="Resume" category="_y_-VeQ_JEeueBIAJFgjF6g"/>
@@ -1850,7 +1850,7 @@
   <commands xmi:id="_zAEcJg_JEeueBIAJFgjF6g" elementId="org.eclipse.egit.ui.team.PullWithOptions" commandName="Pull..." category="_y_-8cQ_JEeueBIAJFgjF6g"/>
   <commands xmi:id="_zAEcJw_JEeueBIAJFgjF6g" elementId="org.eclipse.egit.ui.RepositoriesViewConfigurePush" commandName="Configure Push..." category="_y_-8cQ_JEeueBIAJFgjF6g"/>
   <commands xmi:id="_zAEcKA_JEeueBIAJFgjF6g" elementId="org.eclipse.ui.edit.findIncrementalReverse" commandName="Incremental Find Reverse" description="Incremental find reverse" category="_y_-VYg_JEeueBIAJFgjF6g"/>
-  <commands xmi:id="_zAEcKQ_JEeueBIAJFgjF6g" elementId="org.eclipse.epp.mpc.ui.command.importFavoritesWizard" commandName="Import Marketplace Favorites" description="Import another user's Marketplace Favorites List" category="_y_-8eA_JEeueBIAJFgjF6g">
+  <commands xmi:id="_zAEcKQ_JEeueBIAJFgjF6g" elementId="org.eclipse.epp.mpc.ui.command.importFavoritesWizard" commandName="Import Marketplace Favorites" description="Import another account's Marketplace Favorites List" category="_y_-8eA_JEeueBIAJFgjF6g">
     <parameters xmi:id="_zAEcKg_JEeueBIAJFgjF6g" elementId="favoritesUrl" name="favoritesUrl"/>
   </commands>
   <commands xmi:id="_zAEcKw_JEeueBIAJFgjF6g" elementId="org.eclipse.jdt.ui.edit.text.java.introduce.factory" commandName="Introduce Factory" description="Introduce a factory method to encapsulate invocation of the selected constructor" category="_y_-VdQ_JEeueBIAJFgjF6g"/>

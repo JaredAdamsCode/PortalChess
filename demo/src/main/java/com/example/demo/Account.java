@@ -9,9 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table (name = "users")
+@Table (name = "accounts")
 
-public class User {
+public class Account {
 	
 	@Id
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +35,7 @@ public class User {
 	
 	@Override
 	 public String toString() {
-	  return "Employee [id= " + id + ", email=" + email + ", username=" + username + ", password=" + password + ", games_played="
+	  return "Account [id= " + id + ", email=" + email + ", username=" + username + ", password=" + password + ", games_played="
 	    + games_played + ", games_won=" + games_won + "]";
 	 }
 	
@@ -86,9 +86,5 @@ public class User {
 	public void setGames_Played(Integer gp) {
 		  this.games_played = gp;
 	 }
-	
-	
-	
-	
 
 }
