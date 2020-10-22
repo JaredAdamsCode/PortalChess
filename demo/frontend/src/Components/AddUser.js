@@ -9,6 +9,7 @@ import GroupIcon from "@material-ui/icons/Group";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import {ButtonGroup} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -91,11 +92,8 @@ export default function AddUser() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <GroupIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
-          User Directory
+          Register New Account
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
@@ -152,28 +150,21 @@ export default function AddUser() {
               />
             </Grid> */}
           </Grid>
-          <Button
-            // type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            preventDefault
-            className={classes.submit}
-            onClick={handleSubmit}
-          >
-            Save
+          <Button fullWidth variant="contained" color="primary" preventDefault
+                  className={classes.submit} onClick={handleSubmit}>OK
           </Button>
-          <Link to="/login">
-            <Button
-                //type="button"
-                fullWidth
-                variant="contained"
-                color="primary"
-                preventDefault
-            >
-              Login
-            </Button>
-          </Link>
+          <Grid container direction="row" justify="space-evenly" alignItems="center">
+            <Grid item xs>
+              <Link to="/login">
+                <Button fullWidth variant="contained" color="primary" preventDefault>Login</Button>
+              </Link>
+            </Grid>
+            <Grid item xs>
+              <Link to="/">
+                <Button fullWidth variant="contained" color="primary" preventDefault>Close</Button>
+              </Link>
+            </Grid>
+          </Grid>
           <Grid container justify="center">
             <Grid item>
               <Link to="/view">View User Records</Link>
