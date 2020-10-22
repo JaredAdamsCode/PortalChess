@@ -62,13 +62,22 @@ Need to rework class diagram, some of the relationship lines are pointing in the
 Discussed expectations of P2- Should be around 40% done with the user stories 
 Discussed getting server/database system from CSU so we can shared that- need to email her to ask her for this
 
-## Scrum Session 7  Planning Session 10/13/2020
+## Scrum Session 7  Daily Scrum 10/13/2020
 Ask PO to clarify -- Tasks for the user stories (or at least for the ones with the highest priority) are missing. in P1 grading<br/><br/>
 Fixed up UML diagram<br/><br/>
 Fixed up Scrum Session document formatting<br/><br/>
 Added Inbox/Notification system epic so all invite/notification tasks fall under this<br/><br/>
 
-## Scrum Session 8  Planning Session 10/15/2020
+## Scrum Session 8  Daily Scrum 10/15/2020
 Agreed upon Jared's branch as the starting point for the project<br/><br/>
 Got everyone to build and run this branch<br/><br/>
 Discussed what tasks to begin on<br/><br/>
+Merged this branch and got started<br/><br/>
+
+## Scrum Session 9  Daily Scrum 10/20/2020
+Added node_modules folder to gitignore <br/><br/>
+Conor and Jon showed their branches to the rest of the group and how they functione<br/><br/>
+Merged both of these branches, system can now create an account and login to this account<br/><br/>
+Closed issues 8, 9, 3, 1, 49, 11
+
+## Scrum Session 9  Daily Scrum 10/22/2020
