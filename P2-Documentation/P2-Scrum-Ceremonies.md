@@ -80,4 +80,8 @@ Conor and Jon showed their branches to the rest of the group and how they functi
 Merged both of these branches, system can now create an account and login to this account<br/><br/>
 Closed issues 8, 9, 3, 1, 49, 11
 
-## Scrum Session 9  Daily Scrum 10/22/2020
+## Scrum Session 10  Daily Scrum 10/22/2020
+Closed issue #12<br/><br/>
+Discussed planning of the messaging system so users can send out invites<br/><br/>
+Need to create a game and notification table in the database<br/><br/>
+Need to create Traceability link matrix document<br/><br/>
