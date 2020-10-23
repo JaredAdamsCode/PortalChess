@@ -7,6 +7,8 @@ import {Box, Typography, IconButton, Divider, MenuItem, TextField, Grid, Menu,Bu
 export default function Dashboard() {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [inviteList, upDateData] = React.useState([]);
+    const [firstLoad, setLoad] = React.useState(true);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -18,9 +20,20 @@ export default function Dashboard() {
 
     let user = {
         name: 'testuser',
+        id: 5,
         matches: ['game1','game2', 'game3'],
-        invitations: ['inv1','inv2']
+        invitations: []
     }
+
+    async function getInviteList(userID) {
+        let body = await fetch('/api/getInviteList/' + userID);
+        upDateData(body);
+    }
+
+     if (firstLoad) {
+       getInviteList(5); //5 will eventually be this.account.id
+       setLoad(false);
+     }
 
     return (
         <div >
@@ -84,9 +97,9 @@ export default function Dashboard() {
                                 Invitations
                             </Typography>
                             <Divider/>
-                            {user.invitations.map((invite) => (
+                            {user.invitations.map((inviteList) => (
                                 <Typography variant='h5'>
-                                    {invite}
+                                    {inviteList}
                                 </Typography>
                             ))}
                         </Paper>

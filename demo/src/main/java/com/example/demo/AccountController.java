@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class AccountController {
@@ -44,6 +46,17 @@ public class AccountController {
 		 }
 		 return ResponseEntity.accepted().body(account);
 	 }
+
+	@GetMapping("/account")
+	public List<Account> get() {
+		return accountService.get();
+	}
+
+	@GetMapping("/getInviteList/{account_id}")
+	public List<Notification> get(@PathVariable int account_id) {
+	 	System.out.println("The get invite list was called");
+		return accountService.getNotificationList(account_id);
+	}
 
 	 /*
 	 @GetMapping("/login")

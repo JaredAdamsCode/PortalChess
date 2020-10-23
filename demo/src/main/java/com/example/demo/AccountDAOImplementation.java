@@ -6,18 +6,15 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountDAOImplementation implements AccountDAO {
 	
 	@Autowired
 	 private EntityManager entityManager;
 /*
-	@Override
-	public List<Account> get() {
-		Session currSession = entityManager.unwrap(Session.class);
-		Query<Account> query = currSession.createQuery("from Account", Account.class);
-		return query.getResultList();
-	}
+
 
 	@Override
 	public Account get(int id) {
@@ -32,6 +29,20 @@ public class AccountDAOImplementation implements AccountDAO {
 		currSession.delete(account);
 	}
 */
+	@Override
+	 public List<Account> get() {
+		Session currSession = entityManager.unwrap(Session.class);
+	 	Query<Account> query = currSession.createQuery("from Account", Account.class);
+		return query.getResultList();
+     }
+
+	@Override
+	public List<Notification> getNotificationList(Integer account_id) {
+		Session currSession = entityManager.unwrap(Session.class);
+		Query<Notification> query = currSession.createQuery("from Notification n where n.receiver_id = :receiver_id").setParameter("receiver_id", account_id);
+		return query.getResultList();
+	}
+
 
 	@Override
 	public Account get(String username) {
