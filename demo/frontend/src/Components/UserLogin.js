@@ -1,11 +1,9 @@
 import React from "react";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import GroupIcon from "@material-ui/icons/Group";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -123,19 +121,6 @@ export default function UserLogin() {
                                 onChange={handlePasswordChange}
                             />
                         </Grid>
-                        {/* <Grid item xs={12}>
-              <TextField
-                id="date"
-                label="Date of birth"
-                type="date"
-                defaultValue="1998-04-02"
-                className={classes.textField}
-                InputLabelProps={{
-                  shrink: true
-                }}
-                onChange={handleDateChange}
-              />
-            </Grid> */}
                     </Grid>
                     <Button
                         // type="submit"
@@ -158,11 +143,6 @@ export default function UserLogin() {
                             <Link to="/">
                                 <Button fullWidth variant="contained" color="primary" preventDefault>Close</Button>
                             </Link>
-                        </Grid>
-                    </Grid>
-                    <Grid container justify="center">
-                        <Grid item>
-                            <Link to="/view">View User Records</Link>
                         </Grid>
                     </Grid>
                 </form>

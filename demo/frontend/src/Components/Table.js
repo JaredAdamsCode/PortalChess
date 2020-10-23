@@ -7,11 +7,10 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import Avatar from "@material-ui/core/Avatar";
-import GroupIcon from "@material-ui/icons/Group";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -64,9 +63,6 @@ export default function SimpleTable() {
 
   return (
     <div className={classes.paper}>
-      <Avatar className={classes.avatar}>
-        <GroupIcon />
-      </Avatar>
       <Typography component="h1" variant="h5">
         User Directory
       </Typography>
@@ -81,29 +77,31 @@ export default function SimpleTable() {
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="center">email</TableCell>
                 <TableCell align="center">username</TableCell>
-                <TableCell align="center">games played</TableCell>
-                <TableCell align="center">games won</TableCell>
+                <TableCell align="center">Profile</TableCell>
+                <TableCell align="center">Invite to Game</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {data?.map(row => (
                 <TableRow key={row.email}>
-                  <TableCell align="center">{row.email}</TableCell>
                   <TableCell align="center">{row.username}</TableCell>
-                  <TableCell align="center">{row.games_Played}</TableCell>
-                  <TableCell align="center">{row.games_Won}</TableCell>
+                  <TableCell align="center">
+                    <Button>View Profile</Button>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button>Send Game Invite</Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       )}
-      <Link className={classes.link} to="/">
+      <Link className={classes.link} to="/dashboard">
         {" "}
         <Typography align="left">
-          &#x2190; Head back to save data
+          &#x2190; Back to Dashboard
         </Typography>{" "}
       </Link>
     </div>
