@@ -9,6 +9,7 @@ import GroupIcon from "@material-ui/icons/Group";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -37,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function UserLogin() {
     const classes = useStyles();
+    const history = useHistory();
 
     const [data, upDateData] = React.useState([]);
     const [firstLoad, setLoad] = React.useState(true);
@@ -65,8 +67,8 @@ export default function UserLogin() {
             body: JSON.stringify(toInput) // body data type must match "Content-Type" header
         });
         let body = await response.json();
-        if(!body.message){
-            setMessage("Login Successful")
+        if(!body.message && body.status != 400){
+            history.push("/dashboard");
         }
         else{
             setMessage(body.message);
