@@ -17,6 +17,11 @@ export default function Dashboard() {
         setAnchorEl(null);
     };
 
+    const handleLogout = () => {
+        document.location.href="/";
+        handleClose();
+    }
+
     let user = {
         name: 'testuser',
         matches: ['game1','game2', 'game3'],
@@ -45,7 +50,7 @@ export default function Dashboard() {
                                 >
                                     <MenuItem onClick={handleClose}>Profile</MenuItem>
                                     <MenuItem onClick={handleClose}>My account</MenuItem>
-                                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
                                 </Menu>
                             </Grid>
                             <Grid item>{/*Placeholder*/}</Grid>
