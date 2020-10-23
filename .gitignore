@@ -35,6 +35,7 @@ build/
 
 # dependencies
 node_modules/
+.idea/
 /.pnp
 .pnp.js
 
