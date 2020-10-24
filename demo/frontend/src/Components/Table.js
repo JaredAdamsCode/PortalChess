@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -48,10 +50,31 @@ export default function SimpleTable() {
   const [firstLoad, setLoad] = React.useState(true);
   let isLoading = true;
 
+  const [searchString, setSearchString] = React.useState("");
+  const handleSearchStringChange = event => setSearchString(event.target.value);
+
   async function sampleFunc() {
     let response = await fetch("/api/account");
     let body = await response.json();
     upDateData(body);
+  }
+
+  function interpretRow(row) {
+    /*let search = searchString.toLowerCase();
+    let uname = row.username.toString().toLowerCase();
+    if(searchString.length > 0 || uname.contains(search)) {*/
+      return (
+          <TableRow key={row.email}>
+            <TableCell align="center">{row.username}</TableCell>
+            <TableCell align="center">
+              <Button>View Profile</Button>
+            </TableCell>
+            <TableCell align="center">
+              <Button>Send Game Invite</Button>
+            </TableCell>
+          </TableRow>
+      );
+    //}
   }
 
   if (firstLoad) {
@@ -63,10 +86,6 @@ export default function SimpleTable() {
 
   return (
     <div className={classes.paper}>
-      <Typography component="h1" variant="h5">
-        User Directory
-      </Typography>
-
       {isLoading ? (
         <CircularProgress />
       ) : (
@@ -74,26 +93,27 @@ export default function SimpleTable() {
           style={{ width: "80%", margin: "0 10px" }}
           component={Paper}
         >
+          <Grid container alignItems="center">
+            <Typography component="h1" variant="h5">
+              User Directory
+            </Typography>
+          </Grid>
+          <div>{ '\xa0' /* For spacing */ }</div>
+          <Grid container>
+            <TextField variant="outlined" fullWidth id="user-search" value={searchString}
+                       label="Search Usernames" name="user-search" onChange={handleSearchStringChange}
+            />
+          </Grid>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="center">username</TableCell>
+                <TableCell align="center">Username</TableCell>
                 <TableCell align="center">Profile</TableCell>
                 <TableCell align="center">Invite to Game</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data?.map(row => (
-                <TableRow key={row.email}>
-                  <TableCell align="center">{row.username}</TableCell>
-                  <TableCell align="center">
-                    <Button>View Profile</Button>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button>Send Game Invite</Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {data?.map(row => (interpretRow(row)) )}
             </TableBody>
           </Table>
         </TableContainer>
