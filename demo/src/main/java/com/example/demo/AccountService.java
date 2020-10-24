@@ -2,11 +2,14 @@ package com.example.demo;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public interface AccountService {
-/*
+
 	List<Account> get();
+	/*
 	void delete(int id);
 	Account get(int id);
 */

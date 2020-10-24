@@ -6,12 +6,14 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountDAOImplementation implements AccountDAO {
 	
 	@Autowired
 	 private EntityManager entityManager;
-/*
+
 	@Override
 	public List<Account> get() {
 		Session currSession = entityManager.unwrap(Session.class);
@@ -25,6 +27,7 @@ public class AccountDAOImplementation implements AccountDAO {
 		return currSession.get(Account.class, id);
 	}
 
+	/*
 		@Override
 	public void delete(int id) {
 		Session currSession = entityManager.unwrap(Session.class);

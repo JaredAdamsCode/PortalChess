@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class AccountController {
@@ -50,13 +52,14 @@ public class AccountController {
 	 public Account get(@PathVariable int id) {
 	  return accountService.get(id);
 	 }
-
+	 */
 
 	@GetMapping("/account")
 	public List<Account> get() {
 		return accountService.get();
 	}
 
+	/*
 	 @DeleteMapping("/account/{id}")
 	 public String delete(@PathVariable int id) {
 	  accountService.delete(id);
