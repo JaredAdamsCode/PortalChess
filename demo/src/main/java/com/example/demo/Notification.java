@@ -30,10 +30,6 @@ public class Notification {
                 + matchID + "]";
     }
 
-    public Integer getId() {
-        return id;
-    }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -48,6 +44,12 @@ public class Notification {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public void setMatch(Integer id){this.matchID = id;}
+
+    public Integer getId() {
+        return id;
     }
 
     public Integer getSender() {
