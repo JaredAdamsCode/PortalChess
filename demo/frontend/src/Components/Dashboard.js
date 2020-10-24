@@ -10,9 +10,18 @@ export default function Dashboard() {
     const [inviteList, upDateData] = React.useState([]);
     const [firstLoad, setLoad] = React.useState(true);
 
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
+    const acceptInvite = (event) =>{
+
+    }
+
+    const rejectInvite = (event) =>{
+
+    }
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -26,7 +35,8 @@ export default function Dashboard() {
     }
 
     async function getInviteList(userID) {
-        let body = await fetch('/api/getInviteList/' + userID);
+        let response = await fetch('/api/getInviteList/' + userID);
+        let body = await response.json();
         upDateData(body);
     }
 
@@ -97,17 +107,16 @@ export default function Dashboard() {
                                 Invitations
                             </Typography>
                             <Divider/>
-                            {user.invitations.map((inviteList) => (
-                                <Typography variant='h5'>
-                                    {inviteList}
-                                </Typography>
+                               {inviteList.map(invite => (
+                                <p key={invite.id}>
+                                {invite.message} from user id {invite.sender}
+                                  <button className="extend-button"onClick={acceptInvite}>Accept</button>
+                                  <button className="extend-button"onClick={rejectInvite}>Reject</button>
+                                   </p>
                             ))}
                         </Paper>
                     </Grid>
                 </Grid>
-
-
-
             </Box>
         </div>
     );

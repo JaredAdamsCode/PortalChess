@@ -52,10 +52,9 @@ public class AccountController {
 		return accountService.get();
 	}
 
-	@GetMapping("/getInviteList/{account_id}")
-	public List<Notification> get(@PathVariable int account_id) {
-	 	System.out.println("The get invite list was called");
-		return accountService.getNotificationList(account_id);
+	@GetMapping("/getInviteList/{accountID}")
+	public List<Notification> get(@PathVariable int accountID) {
+		return accountService.getNotificationList(accountID);
 	}
 
 	 /*

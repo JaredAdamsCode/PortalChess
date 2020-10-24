@@ -15,7 +15,7 @@ public interface AccountService {
 
 	List<Account> get();
 
-	List<Notification> getNotificationList(Integer account_id);
+	List<Notification> getNotificationList(Integer accountID);
 
 	Account get(String username);
 	 

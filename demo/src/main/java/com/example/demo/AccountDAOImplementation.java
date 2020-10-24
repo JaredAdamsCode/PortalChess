@@ -37,9 +37,9 @@ public class AccountDAOImplementation implements AccountDAO {
      }
 
 	@Override
-	public List<Notification> getNotificationList(Integer account_id) {
+	public List<Notification> getNotificationList(Integer accountID) {
 		Session currSession = entityManager.unwrap(Session.class);
-		Query<Notification> query = currSession.createQuery("from Notification n where n.receiver_id = :receiver_id").setParameter("receiver_id", account_id);
+		Query<Notification> query = currSession.createQuery("from Notification n where n.receiverID = :receiverID").setParameter("receiverID", accountID);
 		return query.getResultList();
 	}
 

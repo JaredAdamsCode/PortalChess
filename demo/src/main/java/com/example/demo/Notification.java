@@ -13,21 +13,21 @@ public class Notification {
     private Integer id;
 
     @Column
-    private Integer sender_id;
+    private Integer senderID;
 
     @Column
-    private Integer receiver_id;
+    private Integer receiverID;
 
     @Column
     private String message;
 
     @Column
-    private Integer match_id;
+    private Integer matchID;
 
     @Override
     public String toString() {
-        return "Notification [id= " + id + ", sender_id= " +sender_id + ", receiver_id= " + receiver_id + ", message=" + message + ", match_id= "
-                + match_id + "]";
+        return "Notification [id= " + id + ", senderID= " +senderID + ", receiverID= " + receiverID + ", message=" + message + ", matchID= "
+                + matchID + "]";
     }
 
     public Integer getId() {
@@ -39,11 +39,11 @@ public class Notification {
     }
 
     public void setSender(Integer id) {
-        this.sender_id = id;
+        this.senderID = id;
     }
 
     public void setReceiver(Integer id) {
-        this.receiver_id = id;
+        this.receiverID = id;
     }
 
     public void setMessage(String message) {
@@ -51,11 +51,11 @@ public class Notification {
     }
 
     public Integer getSender() {
-        return sender_id;
+        return senderID;
     }
 
     public Integer getReceiver() {
-        return receiver_id;
+        return receiverID;
     }
 
     public String getMessage(){
@@ -63,7 +63,7 @@ public class Notification {
     }
 
     public Integer getMatch(){
-        return match_id;
+        return matchID;
     }
 
 }

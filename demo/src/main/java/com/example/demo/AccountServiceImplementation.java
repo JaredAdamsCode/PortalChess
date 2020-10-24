@@ -33,8 +33,8 @@ public class AccountServiceImplementation implements AccountService {
 	}
 
 	@Override
-	public List<Notification> getNotificationList(Integer account_id) {
-		return  accountDAO.getNotificationList(account_id);
+	public List<Notification> getNotificationList(Integer accountID) {
+		return  accountDAO.getNotificationList(accountID);
 	}
 
 	@Transactional
