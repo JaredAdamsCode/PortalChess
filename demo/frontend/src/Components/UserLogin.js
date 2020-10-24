@@ -67,7 +67,7 @@ export default function UserLogin() {
             body: JSON.stringify(toInput) // body data type must match "Content-Type" header
         });
         let body = await response.json();
-        if(!body.message){
+        if(!body.message && body.status != 400){
             history.push("/dashboard");
         }
         else{
