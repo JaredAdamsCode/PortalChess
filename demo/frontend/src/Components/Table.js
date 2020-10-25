@@ -44,6 +44,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SimpleTable() {
+
   const classes = useStyles();
 
   const [data, upDateData] = React.useState([]);
@@ -51,7 +52,7 @@ export default function SimpleTable() {
   let isLoading = true;
 
   const [searchString, setSearchString] = React.useState("");
-  const handleSearchStringChange = event => setSearchString(event.target.value);
+  const handleSearchStringChange = event => {setSearchString(event.target.value)};
 
   async function sampleFunc() {
     let response = await fetch("/api/account");
@@ -60,9 +61,9 @@ export default function SimpleTable() {
   }
 
   function interpretRow(row) {
-    /*let search = searchString.toLowerCase();
-    let uname = row.username.toString().toLowerCase();
-    if(searchString.length > 0 || uname.contains(search)) {*/
+    let search = searchString.toLowerCase();
+    let uname = row.username.toLowerCase();
+    if (searchString.length > 0 || uname.includes(search)) {
       return (
           <TableRow key={row.email}>
             <TableCell align="center">{row.username}</TableCell>
@@ -74,8 +75,9 @@ export default function SimpleTable() {
             </TableCell>
           </TableRow>
       );
-    //}
+    }
   }
+
 
   if (firstLoad) {
     sampleFunc();
@@ -101,8 +103,7 @@ export default function SimpleTable() {
           <div>{ '\xa0' /* For spacing */ }</div>
           <Grid container>
             <TextField variant="outlined" fullWidth id="user-search" value={searchString}
-                       label="Search Usernames" name="user-search" onChange={handleSearchStringChange}
-            />
+                       label="Search Usernames" name="user-search" onChange={handleSearchStringChange}/>
           </Grid>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
