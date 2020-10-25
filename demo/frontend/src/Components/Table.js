@@ -47,6 +47,12 @@ export default function SimpleTable() {
 
   const classes = useStyles();
 
+  async function sampleFunc() {
+    let response = await fetch("/api/account");
+    let body = await response.json();
+    upDateData(body);
+  }
+
   const [data, upDateData] = React.useState([]);
   const [firstLoad, setLoad] = React.useState(true);
   let isLoading = true;
@@ -54,31 +60,19 @@ export default function SimpleTable() {
   const [users, setUsers] = React.useState([]);
 
   const [searchString, setSearchString] = React.useState("");
+  React.useEffect(() => {setUsers(getFoundUsers())}, [searchString]);
   const handleSearchStringChange = event => {setSearchString(event.target.value)};
 
-  async function sampleFunc() {
-    let response = await fetch("/api/account");
-    let body = await response.json();
-    upDateData(body);
-  }
-
-  const updateUserSearch = event => {
-    handleSearchStringChange(event);
-    updateFoundUsers();
-    console.log(users);
-  };
-
-  function updateFoundUsers() {
+  function getFoundUsers() {
     let newUsers = [];
     let search = searchString.toLowerCase();
     data.map(row => {
       let uname = row.username.toLowerCase();
-      console.log("uname: ".concat(uname).concat(", search: ").concat(search))
       if (uname.includes(search)) {
         newUsers.push(row);
       }
     });
-    setUsers(newUsers);
+    return newUsers;
   }
 
   function interpretRow(row) {
@@ -120,7 +114,7 @@ export default function SimpleTable() {
           <div>{ '\xa0' /* For spacing */ }</div>
           <Grid container>
             <TextField variant="outlined" fullWidth id="user-search" value={searchString}
-                       label="Search Usernames" name="user-search" onChange={updateUserSearch}/>
+                       label="Search Usernames" name="user-search" onChange={handleSearchStringChange}/>
           </Grid>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
