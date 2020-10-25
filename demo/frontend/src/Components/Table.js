@@ -51,6 +51,8 @@ export default function SimpleTable() {
   const [firstLoad, setLoad] = React.useState(true);
   let isLoading = true;
 
+  const [users, setUsers] = React.useState([]);
+
   const [searchString, setSearchString] = React.useState("");
   const handleSearchStringChange = event => {setSearchString(event.target.value)};
 
@@ -60,22 +62,37 @@ export default function SimpleTable() {
     upDateData(body);
   }
 
-  function interpretRow(row) {
+  const updateUserSearch = event => {
+    handleSearchStringChange(event);
+    updateFoundUsers();
+    console.log(users);
+  };
+
+  function updateFoundUsers() {
+    let newUsers = [];
     let search = searchString.toLowerCase();
-    let uname = row.username.toLowerCase();
-    if (searchString.length > 0 || uname.includes(search)) {
-      return (
-          <TableRow key={row.email}>
-            <TableCell align="center">{row.username}</TableCell>
-            <TableCell align="center">
-              <Button>View Profile</Button>
-            </TableCell>
-            <TableCell align="center">
-              <Button>Send Game Invite</Button>
-            </TableCell>
-          </TableRow>
-      );
-    }
+    data.map(row => {
+      let uname = row.username.toLowerCase();
+      console.log("uname: ".concat(uname).concat(", search: ").concat(search))
+      if (uname.includes(search)) {
+        newUsers.push(row);
+      }
+    });
+    setUsers(newUsers);
+  }
+
+  function interpretRow(row) {
+    return (
+        <TableRow key={row.email}>
+          <TableCell align="center">{row.username}</TableCell>
+          <TableCell align="center">
+            <Button>View Profile</Button>
+          </TableCell>
+          <TableCell align="center">
+            <Button>Send Game Invite</Button>
+          </TableCell>
+        </TableRow>
+    );
   }
 
 
@@ -103,7 +120,7 @@ export default function SimpleTable() {
           <div>{ '\xa0' /* For spacing */ }</div>
           <Grid container>
             <TextField variant="outlined" fullWidth id="user-search" value={searchString}
-                       label="Search Usernames" name="user-search" onChange={handleSearchStringChange}/>
+                       label="Search Usernames" name="user-search" onChange={updateUserSearch}/>
           </Grid>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
@@ -114,7 +131,7 @@ export default function SimpleTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data?.map(row => (interpretRow(row)) )}
+              {users?.map(row => (interpretRow(row)) )}
             </TableBody>
           </Table>
         </TableContainer>
