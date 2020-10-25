@@ -7,11 +7,12 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import Avatar from "@material-ui/core/Avatar";
-import GroupIcon from "@material-ui/icons/Group";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -43,17 +44,51 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SimpleTable() {
-  const classes = useStyles();
 
-  const [data, upDateData] = React.useState([]);
-  const [firstLoad, setLoad] = React.useState(true);
-  let isLoading = true;
+  const classes = useStyles();
 
   async function sampleFunc() {
     let response = await fetch("/api/account");
     let body = await response.json();
     upDateData(body);
   }
+
+  const [data, upDateData] = React.useState([]);
+  const [firstLoad, setLoad] = React.useState(true);
+  let isLoading = true;
+
+  const [users, setUsers] = React.useState([]);
+
+  const [searchString, setSearchString] = React.useState("");
+  React.useEffect(() => {setUsers(getFoundUsers())}, [searchString]);
+  const handleSearchStringChange = event => {setSearchString(event.target.value)};
+
+  function getFoundUsers() {
+    let newUsers = [];
+    let search = searchString.toLowerCase();
+    data.map(row => {
+      let uname = row.username.toLowerCase();
+      if (uname.includes(search)) {
+        newUsers.push(row);
+      }
+    });
+    return newUsers;
+  }
+
+  function interpretRow(row) {
+    return (
+        <TableRow key={row.email}>
+          <TableCell align="center">{row.username}</TableCell>
+          <TableCell align="center">
+            <Button>View Profile</Button>
+          </TableCell>
+          <TableCell align="center">
+            <Button>Send Game Invite</Button>
+          </TableCell>
+        </TableRow>
+    );
+  }
+
 
   if (firstLoad) {
     sampleFunc();
@@ -64,13 +99,6 @@ export default function SimpleTable() {
 
   return (
     <div className={classes.paper}>
-      <Avatar className={classes.avatar}>
-        <GroupIcon />
-      </Avatar>
-      <Typography component="h1" variant="h5">
-        User Directory
-      </Typography>
-
       {isLoading ? (
         <CircularProgress />
       ) : (
@@ -78,32 +106,34 @@ export default function SimpleTable() {
           style={{ width: "80%", margin: "0 10px" }}
           component={Paper}
         >
+          <Grid container alignItems="center">
+            <Typography component="h1" variant="h5">
+              User Directory
+            </Typography>
+          </Grid>
+          <div>{ '\xa0' /* For spacing */ }</div>
+          <Grid container>
+            <TextField variant="outlined" fullWidth id="user-search" value={searchString}
+                       label="Search Usernames" name="user-search" onChange={handleSearchStringChange}/>
+          </Grid>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="center">email</TableCell>
-                <TableCell align="center">username</TableCell>
-                <TableCell align="center">games played</TableCell>
-                <TableCell align="center">games won</TableCell>
+                <TableCell align="center">Username</TableCell>
+                <TableCell align="center">Profile</TableCell>
+                <TableCell align="center">Invite to Game</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data?.map(row => (
-                <TableRow key={row.email}>
-                  <TableCell align="center">{row.email}</TableCell>
-                  <TableCell align="center">{row.username}</TableCell>
-                  <TableCell align="center">{row.games_Played}</TableCell>
-                  <TableCell align="center">{row.games_Won}</TableCell>
-                </TableRow>
-              ))}
+              {users?.map(row => (interpretRow(row)) )}
             </TableBody>
           </Table>
         </TableContainer>
       )}
-      <Link className={classes.link} to="/">
+      <Link className={classes.link} to="/dashboard">
         {" "}
         <Typography align="left">
-          &#x2190; Head back to save data
+          &#x2190; Back to Dashboard
         </Typography>{" "}
       </Link>
     </div>

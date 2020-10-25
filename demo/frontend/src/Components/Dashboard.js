@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-import {AccountCircle} from "@material-ui/icons";
+import {AccountCircle, SupervisorAccount} from "@material-ui/icons";
 
 import {Box, Typography, IconButton, Divider, MenuItem, TextField, Grid, Menu,Button, Paper, Container} from '@material-ui/core';
 
@@ -16,6 +17,11 @@ export default function Dashboard() {
         setAnchorEl(null);
     };
 
+    const handleLogout = () => {
+        document.location.href="/";
+        handleClose();
+    }
+
     let user = {
         name: 'testuser',
         matches: ['game1','game2', 'game3'],
@@ -27,7 +33,7 @@ export default function Dashboard() {
             <Box  style={{ height: '85vh' }}  color='white' bgcolor='black' textAlign="center"  height="100%" p={15} pt={1} m={8} mb={2} mt={0}>
                 <Box color='black' bgcolor='white'  textAlign="center" p={2} pb={3} mb={3} m={2} mt={8}>
                     <Grid container >
-                        <Grid container justify='flex-end'>
+                        <Grid container direction="row-reverse" justify='space-between' alignItems="baseline">
                             <Grid item>
                                 <Typography variant='h7'>
                                     {user.name}
@@ -44,8 +50,15 @@ export default function Dashboard() {
                                 >
                                     <MenuItem onClick={handleClose}>Profile</MenuItem>
                                     <MenuItem onClick={handleClose}>My account</MenuItem>
-                                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
                                 </Menu>
+                            </Grid>
+                            <Grid item>{/*Placeholder*/}</Grid>
+                            <Grid item>
+                                <IconButton component={Link} to="/users">
+                                    <SupervisorAccount/>
+                                </IconButton>
+                                <Typography variant="h7">Search Users</Typography>
                             </Grid>
                         </Grid>
                         <Grid container justify='center' >

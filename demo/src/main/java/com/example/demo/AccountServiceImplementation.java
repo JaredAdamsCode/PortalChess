@@ -4,18 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class AccountServiceImplementation implements AccountService {
 
 	  @Autowired
 	  private AccountDAO accountDAO;
-/*
+
 	@Transactional
 	 @Override
 	 public List<Account> get() {
 		return accountDAO.get();
 	 }
 
+	 /*
 	@Transactional
 	 @Override
 	 public Account get(int id) {
