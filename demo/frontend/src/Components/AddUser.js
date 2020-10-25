@@ -136,19 +136,6 @@ export default function AddUser() {
                 onChange={handlePasswordChange}
               />
             </Grid>
-            {/* <Grid item xs={12}>
-              <TextField
-                id="date"
-                label="Date of birth"
-                type="date"
-                defaultValue="1998-04-02"
-                className={classes.textField}
-                InputLabelProps={{
-                  shrink: true
-                }}
-                onChange={handleDateChange}
-              />
-            </Grid> */}
           </Grid>
           <Button fullWidth variant="contained" color="primary" preventDefault
                   className={classes.submit} onClick={handleSubmit}>OK
@@ -163,11 +150,6 @@ export default function AddUser() {
               <Link to="/">
                 <Button fullWidth variant="contained" color="primary" preventDefault>Close</Button>
               </Link>
-            </Grid>
-          </Grid>
-          <Grid container justify="center">
-            <Grid item>
-              <Link to="/view">View User Records</Link>
             </Grid>
           </Grid>
         </form>

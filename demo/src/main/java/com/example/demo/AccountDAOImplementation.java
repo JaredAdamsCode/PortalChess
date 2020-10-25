@@ -14,7 +14,12 @@ public class AccountDAOImplementation implements AccountDAO {
 	@Autowired
 	 private EntityManager entityManager;
 /*
-
+	@Override
+	public List<Account> get() {
+		Session currSession = entityManager.unwrap(Session.class);
+		Query<Account> query = currSession.createQuery("from Account", Account.class);
+		return query.getResultList();
+	}
 
 	@Override
 	public Account get(int id) {
@@ -35,6 +40,12 @@ public class AccountDAOImplementation implements AccountDAO {
 	 	Query<Account> query = currSession.createQuery("from Account", Account.class);
 		return query.getResultList();
      }
+
+	@Override
+	public Account get(int id) {
+		Session currSession = entityManager.unwrap(Session.class);
+		return currSession.get(Account.class, id);
+	}
 
 	@Override
 	public List<Notification> getNotificationList(Integer accountID) {

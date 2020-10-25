@@ -62,13 +62,14 @@ public class AccountController {
 	 public Account get(@PathVariable int id) {
 	  return accountService.get(id);
 	 }
-
+	 */
 
 	@GetMapping("/account")
 	public List<Account> get() {
 		return accountService.get();
 	}
 
+	/*
 	 @DeleteMapping("/account/{id}")
 	 public String delete(@PathVariable int id) {
 	  accountService.delete(id);

@@ -7,8 +7,9 @@ import java.util.List;
 
 @Repository
 public interface AccountService {
-/*
+
 	List<Account> get();
+	/*
 	void delete(int id);
 
 */

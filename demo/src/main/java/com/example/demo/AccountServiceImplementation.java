@@ -14,17 +14,15 @@ public class AccountServiceImplementation implements AccountService {
 /*
 	@Transactional
 	 @Override
-	 public List<Account> get() {
-		return accountDAO.get();
-	 }
-
-
-	 @Transactional
-	 @Override
-	 public void delete(int id) { accountDAO.delete(id);
-	 }
+	 public void delete(int id) { accountDAO.delete(id);}
 
 */
+
+	@Transactional
+	@Override
+	public Account get(int id) {
+		return accountDAO.get(id);
+	}
 
 	@Transactional
 	@Override
@@ -36,6 +34,7 @@ public class AccountServiceImplementation implements AccountService {
 	public List<Notification> getNotificationList(Integer accountID) {
 		return  accountDAO.getNotificationList(accountID);
 	}
+
 
 	@Transactional
 	@Override
