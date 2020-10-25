@@ -8,11 +8,11 @@ import java.util.List;
 @Repository
 public interface AccountService {
 
-	List<Account> get();
 	/*
 	void delete(int id);
+	*/
 
-*/
+	Account get(int id);
 
 	List<Account> get();
 
