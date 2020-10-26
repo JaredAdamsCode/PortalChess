@@ -8,11 +8,16 @@ import java.util.List;
 @Repository
 public interface AccountService {
 
-	List<Account> get();
 	/*
 	void delete(int id);
+	*/
+
 	Account get(int id);
-*/
+
+	List<Account> get();
+
+	List<Notification> getNotificationList(Integer accountID);
+
 	Account get(String username);
 	 
 	void save(Account account);

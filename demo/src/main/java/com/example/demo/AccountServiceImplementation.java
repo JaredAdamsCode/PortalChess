@@ -11,26 +11,31 @@ public class AccountServiceImplementation implements AccountService {
 
 	  @Autowired
 	  private AccountDAO accountDAO;
-
+/*
 	@Transactional
 	 @Override
-	 public List<Account> get() {
-		return accountDAO.get();
-	 }
-
-	 /*
-	@Transactional
-	 @Override
-	 public Account get(int id) {
-		return accountDAO.get(id);
-	 }
-
-	 @Transactional
-	 @Override
-	 public void delete(int id) { accountDAO.delete(id);
-	 }
+	 public void delete(int id) { accountDAO.delete(id);}
 
 */
+
+	@Transactional
+	@Override
+	public Account get(int id) {
+		return accountDAO.get(id);
+	}
+
+	@Transactional
+	@Override
+	public List<Account> get() {
+		return accountDAO.get();
+	}
+
+	@Override
+	public List<Notification> getNotificationList(Integer accountID) {
+		return  accountDAO.getNotificationList(accountID);
+	}
+
+
 	@Transactional
 	@Override
 	public Account get(String username) {

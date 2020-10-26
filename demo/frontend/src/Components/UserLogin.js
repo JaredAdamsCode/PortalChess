@@ -70,7 +70,7 @@ export default function UserLogin(props) {
          });
          let body = await response.json();
          if(!body.message && body.status != 400){
-             props.handleLogIn(response);
+             props.handleLogIn(body);
              props.history.push("/dashboard");
          }
          else{

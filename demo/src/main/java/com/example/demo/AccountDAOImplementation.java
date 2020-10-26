@@ -13,13 +13,20 @@ public class AccountDAOImplementation implements AccountDAO {
 	
 	@Autowired
 	 private EntityManager entityManager;
-
+/*
 	@Override
-	public List<Account> get() {
+	public void delete(int id) {
 		Session currSession = entityManager.unwrap(Session.class);
-		Query<Account> query = currSession.createQuery("from Account", Account.class);
-		return query.getResultList();
+		Account account = currSession.get(Account.class, id);
+		currSession.delete(account);
 	}
+*/
+	@Override
+	 public List<Account> get() {
+		Session currSession = entityManager.unwrap(Session.class);
+	 	Query<Account> query = currSession.createQuery("from Account", Account.class);
+		return query.getResultList();
+     }
 
 	@Override
 	public Account get(int id) {
@@ -27,14 +34,13 @@ public class AccountDAOImplementation implements AccountDAO {
 		return currSession.get(Account.class, id);
 	}
 
-	/*
-		@Override
-	public void delete(int id) {
+	@Override
+	public List<Notification> getNotificationList(Integer accountID) {
 		Session currSession = entityManager.unwrap(Session.class);
-		Account account = currSession.get(Account.class, id);
-		currSession.delete(account);
+		Query<Notification> query = currSession.createQuery("from Notification n where n.receiverID = :receiverID").setParameter("receiverID", accountID);
+		return query.getResultList();
 	}
-*/
+
 
 	@Override
 	public Account get(String username) {

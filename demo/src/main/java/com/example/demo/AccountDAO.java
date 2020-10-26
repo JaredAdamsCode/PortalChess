@@ -6,12 +6,15 @@ import java.util.List;
 
 @Service
 public interface AccountDAO {
-
-	List<Account> get();
-	Account get(int id);
-	/*
+/*
 	void delete(int id);
 */
+    List<Account> get();
+
+	Account get(int id);
+
+    List<Notification> getNotificationList(Integer accountID);
+
 	Account get(String username);
 
 	void save(Account account);

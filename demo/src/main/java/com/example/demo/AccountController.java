@@ -47,16 +47,15 @@ public class AccountController {
 		 return ResponseEntity.accepted().body(account);
 	 }
 
-	 /*
-	 @GetMapping("/login")
-	 public Account get(@PathVariable int id) {
-	  return accountService.get(id);
-	 }
-	 */
-
 	@GetMapping("/account")
 	public List<Account> get() {
 		return accountService.get();
+	}
+
+
+	@GetMapping("/getInviteList/{accountID}")
+	public List<Notification> get(@PathVariable int accountID) {
+		return accountService.getNotificationList(accountID);
 	}
 
 	/*
@@ -64,15 +63,7 @@ public class AccountController {
 	 public String delete(@PathVariable int id) {
 	  accountService.delete(id);
 	  return "User removed with id "+id;
-	  
-	 }
-	 
-	 @PutMapping("/account")
-	 public Account update(@RequestBody Account account) {
-	  //accountService.save(account);
-	  return account;
-	 }
-	 */
+	*/
 
 	//Captures the request from client with user object
 	@PostMapping(path = "/login", consumes = "application/json", produces = "application/json")
