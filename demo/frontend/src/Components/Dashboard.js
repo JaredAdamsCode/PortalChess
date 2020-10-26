@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 import {AccountCircle, SupervisorAccount} from "@material-ui/icons";
 
 import {Box, Typography, IconButton, Divider, MenuItem, TextField, Grid, Menu,Button, Paper, Container} from '@material-ui/core';
+import Header from './Header';
 
-export default function Dashboard() {
+export default function Dashboard(props) {
 
+    // console.log("dashboard props: ", props);
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
@@ -29,7 +31,9 @@ export default function Dashboard() {
     }
 
     return (
+        
         <div >
+            <Header {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut}/>
             <Box  style={{ height: '85vh' }}  color='white' bgcolor='black' textAlign="center"  height="100%" p={15} pt={1} m={8} mb={2} mt={0}>
                 <Box color='black' bgcolor='white'  textAlign="center" p={2} pb={3} mb={3} m={2} mt={8}>
                     <Grid container >
@@ -55,7 +59,7 @@ export default function Dashboard() {
                             </Grid>
                             <Grid item>{/*Placeholder*/}</Grid>
                             <Grid item>
-                                <IconButton component={Link} to="/users">
+                                <IconButton component={Link} to="/users" {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut}>
                                     <SupervisorAccount/>
                                 </IconButton>
                                 <Typography variant="h7">Search Users</Typography>
@@ -70,13 +74,13 @@ export default function Dashboard() {
                         </Grid>
                     </Grid>
 
-
-
                 </Box>
                 <Grid container spacing={3}>
 
                     <Grid container>
-                        <Button fullWidth ="true" variant="contained">Start New Match</Button>
+                        <Button fullWidth ="true" variant="contained"
+                            component={Link} to="/users"
+                        >Start New Match</Button>
                     </Grid>
                     <Grid item xs={6}>
                         <Paper>

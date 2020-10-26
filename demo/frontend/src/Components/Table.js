@@ -13,6 +13,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import Checkbox from '@material-ui/core/Checkbox';
+import axios from 'axios';
+import Header from './Header';
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -43,14 +46,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SimpleTable() {
+export default function SimpleTable(props) {
 
   const classes = useStyles();
 
-  async function sampleFunc() {
-    let response = await fetch("/api/account");
-    let body = await response.json();
-    upDateData(body);
+  const [selectedUsers, setSelectedUsers] = React.useState([]);
+
+  const sampleFunc = () => {
+
+    axios.get("/api/account")
+
+    .then(response => {
+      // console.log(response);
+      upDateData(response.data);
+    })
   }
 
   const [data, upDateData] = React.useState([]);
@@ -78,6 +87,12 @@ export default function SimpleTable() {
   function interpretRow(row) {
     return (
         <TableRow key={row.email}>
+          <TableCell>
+            <Checkbox
+              onClick={(event) => handleClick(event, row.email)}
+            />
+          </TableCell>
+
           <TableCell align="center">{row.username}</TableCell>
           <TableCell align="center">
             <Button>View Profile</Button>
@@ -89,6 +104,26 @@ export default function SimpleTable() {
     );
   }
 
+  // credit to: https://material-ui.com/components/tables/
+  const handleClick = (event, email) => {
+    let index = selectedUsers.indexOf(email);
+    let newUser = [];
+
+    if (index === -1) {
+      newUser = newUser.concat(selectedUsers, email);
+    } else if (index === 0) {
+      newUser = newUser.concat(selectedUsers.slice(1));
+    } else if (index === selectedUsers.length - 1) {
+      newUser = newUser.concat(selectedUsers.slice(0, -1));
+    } else if (index > 0) {
+      newUser = newUser.concat(
+        selectedUsers.slice(0, index),
+        selectedUsers.slice(index + 1),
+      );
+    }
+    setSelectedUsers(newUser);
+    // console.log("selected: ", selectedUsers);
+  };
 
   if (firstLoad) {
     sampleFunc();
@@ -99,6 +134,8 @@ export default function SimpleTable() {
 
   return (
     <div className={classes.paper}>
+      <Header {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut}/>
+
       {isLoading ? (
         <CircularProgress />
       ) : (
@@ -119,6 +156,12 @@ export default function SimpleTable() {
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
+                <TableCell >
+                  <Checkbox 
+                      // Todo: add select all functionality
+                  />
+                  Select All
+                </TableCell>
                 <TableCell align="center">Username</TableCell>
                 <TableCell align="center">Profile</TableCell>
                 <TableCell align="center">Invite to Game</TableCell>
@@ -136,6 +179,9 @@ export default function SimpleTable() {
           &#x2190; Back to Dashboard
         </Typography>{" "}
       </Link>
+      <Button variant="contained" > 
+        Send Invite(s)
+      </Button>
     </div>
   );
 }
