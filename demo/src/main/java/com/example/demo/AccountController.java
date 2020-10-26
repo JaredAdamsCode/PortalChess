@@ -92,7 +92,7 @@ public class AccountController {
 		//After validating the inputs are ok then check if an account with this info already exists
 		Account accountValue = accountService.getAccount(account); //Returns true if an account with this email address already exists
 		if(accountValue != null){
-			return ResponseEntity.accepted().body(account); //handle session
+			return ResponseEntity.accepted().body(accountValue); //handle session
 		}
 		else{
 			throw new InvalidRequest("No account with matching credentials was found.");
