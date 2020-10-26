@@ -20,7 +20,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getLoggedInStatus();
+    //this.getLoggedInStatus();
   }
 
   getLoggedInStatus(){
@@ -54,7 +54,7 @@ class App extends Component {
       <Router>
         <Switch>
           <Route exact path="/" render={
-            props => (<HomePage {...props} loggedInStatus={this.state.loggedInStatus}
+            props => (<UserLogin {...props} loggedInStatus={this.state.loggedInStatus}
               handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
               user={this.state.user} /> )}/>
 
