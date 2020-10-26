@@ -39,7 +39,7 @@ class App extends Component {
   handleLogIn(data){
     console.log("we are in handle login")
     this.setState({loggedInStatus: true});
-    this.setState({user: data.data});
+    this.setState({user: data});
   }
 
   handleLogOut(){

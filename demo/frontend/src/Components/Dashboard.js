@@ -8,9 +8,10 @@ import Header from './Header';
 
 export default function Dashboard(props) {
 
-    // console.log("dashboard props: ", props);
+    console.log("dashboard props: ", props);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [inviteList, upDateData] = React.useState([]);
+    const [matchesList, upDateMatches] = React.useState([]);
     const [firstLoad, setLoad] = React.useState(true);
 
 
@@ -20,11 +21,11 @@ export default function Dashboard(props) {
 
     const acceptInvite = (event) =>{
 
-    }
+    };
 
     const rejectInvite = (event) =>{
 
-    }
+    };
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -33,25 +34,24 @@ export default function Dashboard(props) {
     const handleLogout = () => {
         document.location.href="/";
         handleClose();
+    };
+/*
+    async function getMatchesList(userID) {
+        let response = await fetch('/api/getMatchesList/' + userID);
+        let body = await response.json();
+        upDateMatches(body);
     }
-
-    let user = {
-        name: 'testuser',
-        id: 5,
-        matches: ['game1','game2', 'game3'],
-        invitations: []
-    }
-
+*/
     async function getInviteList(userID) {
         let response = await fetch('/api/getInviteList/' + userID);
         let body = await response.json();
         upDateData(body);
-    }
+    };
 
      if (firstLoad) {
-       getInviteList(5); //5 will eventually be this.account.id
+       getInviteList(props.user.id);
        setLoad(false);
-     }
+     };
 
     return (
         
@@ -63,7 +63,7 @@ export default function Dashboard(props) {
                         <Grid container direction="row-reverse" justify='space-between' alignItems="baseline">
                             <Grid item>
                                 <Typography variant='h7'>
-                                    {user.name}
+                                    {props.user.username}
                                 </Typography>
                                 <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                     <AccountCircle/>
@@ -111,7 +111,7 @@ export default function Dashboard(props) {
                                 Current Matches
                             </Typography>
                             <Divider/>
-                            {user.matches.map((match) => (
+                            {matchesList.map((match) => (
                                 <Typography variant='h5'>
                                     {match}
                                 </Typography>
