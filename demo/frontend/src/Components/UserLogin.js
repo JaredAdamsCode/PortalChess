@@ -54,35 +54,37 @@ export default function UserLogin(props) {
     const [message, setMessage] = React.useState("Nothing saved in the session");
 
 
-    // async function loginFunc(toInput) {
-    //     const response = await fetch("/api/login", {
-    //         method: "POST", // *GET, POST, PUT, DELETE, etc.
-    //         mode: "cors", // no-cors, *cors, same-origin
-    //         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    //         credentials: "same-origin", // include, *same-origin, omit
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //             // 'Content-Type': 'application/x-www-form-urlencoded',
-    //         },
-    //         redirect: "follow", // manual, *follow, error
-    //         referrerPolicy: "no-referrer", // no-referrer, *client
-    //         body: JSON.stringify(toInput) // body data type must match "Content-Type" header
-    //     });
-    //     let body = await response.json();
-    //     if(!body.message && body.status != 400){
-    //         console.log(body);
-    //         history.push("/dashboard");
-    //     }
-    //     else{
-    //         setMessage(body.message);
-    //     }
+    async function loginFunc(toInput) {
+         const response = await fetch("/api/login", {
+             method: "POST", // *GET, POST, PUT, DELETE, etc.
+             mode: "cors", // no-cors, *cors, same-origin
+             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+             credentials: "same-origin", // include, *same-origin, omit
+             headers: {
+                 "Content-Type": "application/json"
+                 // 'Content-Type': 'application/x-www-form-urlencoded',
+             },
+             redirect: "follow", // manual, *follow, error
+             referrerPolicy: "no-referrer", // no-referrer, *client
+             body: JSON.stringify(toInput) // body data type must match "Content-Type" header
+         });
+         let body = await response.json();
+         if(!body.message && body.status != 400){
+             props.handleLogIn(response);
+             props.history.push("/dashboard");
+         }
+         else{
+             setMessage(body.message);
+             props.handleLogOut();
+         }
 
-    // }
+    }
 
     const handleSubmit = variables => {
         let toInput = { email: email, password: password };
-        // loginFunc(toInput);
+        loginFunc(toInput);
 
+    /*
         axios.post("/api/login", toInput)
         // if successful, set user and logged in status
             .then(response => {
@@ -94,9 +96,10 @@ export default function UserLogin(props) {
          console.log("error from get logged in status: ", error);
          props.handleLogOut();
        })
+    */
+
         setEmail("");
         setPassword("");
-
     };
 
     if (firstLoad) {
