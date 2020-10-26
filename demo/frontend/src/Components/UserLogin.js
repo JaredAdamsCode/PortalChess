@@ -8,6 +8,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
+import Header from './Header';
+import axios from 'axios';
+import { PictureInPictureSharp } from "@material-ui/icons";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -34,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function UserLogin() {
+export default function UserLogin(props) {
     const classes = useStyles();
     const history = useHistory();
 
@@ -50,33 +53,51 @@ export default function UserLogin() {
 
     const [message, setMessage] = React.useState("Nothing saved in the session");
 
+
     async function loginFunc(toInput) {
-        const response = await fetch("/api/login", {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
-            mode: "cors", // no-cors, *cors, same-origin
-            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: "same-origin", // include, *same-origin, omit
-            headers: {
-                "Content-Type": "application/json"
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: "follow", // manual, *follow, error
-            referrerPolicy: "no-referrer", // no-referrer, *client
-            body: JSON.stringify(toInput) // body data type must match "Content-Type" header
-        });
-        let body = await response.json();
-        if(!body.message && body.status != 400){
-            history.push("/dashboard");
-        }
-        else{
-            setMessage(body.message);
-        }
+         const response = await fetch("/api/login", {
+             method: "POST", // *GET, POST, PUT, DELETE, etc.
+             mode: "cors", // no-cors, *cors, same-origin
+             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+             credentials: "same-origin", // include, *same-origin, omit
+             headers: {
+                 "Content-Type": "application/json"
+                 // 'Content-Type': 'application/x-www-form-urlencoded',
+             },
+             redirect: "follow", // manual, *follow, error
+             referrerPolicy: "no-referrer", // no-referrer, *client
+             body: JSON.stringify(toInput) // body data type must match "Content-Type" header
+         });
+         let body = await response.json();
+         if(!body.message && body.status != 400){
+             props.handleLogIn(response);
+             props.history.push("/dashboard");
+         }
+         else{
+             setMessage(body.message);
+             props.handleLogOut();
+         }
 
     }
 
     const handleSubmit = variables => {
-        const toInput = { email, password };
+        let toInput = { email: email, password: password };
         loginFunc(toInput);
+
+    /*
+        axios.post("/api/login", toInput)
+        // if successful, set user and logged in status
+            .then(response => {
+                props.handleLogIn(response);
+                props.history.push("/dashboard");
+            })
+       // if fails, log the error and set loggedInStatus to false
+       .catch(error => {
+         console.log("error from get logged in status: ", error);
+         props.handleLogOut();
+       })
+    */
+
         setEmail("");
         setPassword("");
     };
@@ -88,6 +109,8 @@ export default function UserLogin() {
 
     return (
         <Container component="main" maxWidth="xs">
+            <Header {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut} />
+
             <CssBaseline />
             <div className={classes.paper}>
                 <Typography component="h1" variant="h5">

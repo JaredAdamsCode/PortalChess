@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import {ButtonGroup} from "@material-ui/core";
+import Header from './Header';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -36,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AddUser() {
+export default function AddUser(props) {
   const classes = useStyles();
   const [firstLoad, setLoad] = React.useState(true);
 
@@ -90,6 +91,8 @@ export default function AddUser() {
 
   return (
     <Container component="main" maxWidth="xs">
+      <Header {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut}/>
+
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">

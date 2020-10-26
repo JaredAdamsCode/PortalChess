@@ -8,6 +8,8 @@ import GroupIcon from "@material-ui/icons/Group";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Header from './Header';
+
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -34,10 +36,11 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function HomePage() {
+export default function HomePage(props) {
     const classes = useStyles();
     return (
         <Container component="main" maxWidth="xs">
+            <Header {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut} />
             <CssBaseline />
             <div className={classes.paper}>
                 <form className={classes.form} noValidate>
