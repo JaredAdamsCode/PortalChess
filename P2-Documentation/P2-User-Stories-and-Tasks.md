@@ -7,7 +7,7 @@ As a user, I would like to...
   * #11 Handle account creation request
   * #49 Validate account creation input
   * #12 Send account creation request to server
-  * #8 Creat homepage that has login or create account buttons
+  * #8 Create homepage that has login or create account buttons
   * #50 Create popup on client for inputting account information
 * Be able to log in once an account is created
   * #1 Server handle login request
