@@ -85,3 +85,11 @@ Closed issue #12<br/><br/>
 Discussed planning of the messaging system so users can send out invites<br/><br/>
 Need to create a game and notification table in the database<br/><br/>
 Need to create Traceability link matrix document<br/><br/>
+Closed epic #3<br/><br/>
+
+## Scrum Session 11  Daily Scrum 10/27/2020
+Decided P2 stopping after game invites can be sent further tasks completed will be in P3<br/><br/>
+Set up meeting time at 12:00-2:00 on Friday with PO, backup meeting time Thursday 10:00am<br/><br/>
+Start making slides for presentation<br/><br/>
+Closed issues #50, 51, 20, 77, 22, 19<br/><br/>
+Closed epic #5<br/><br/>
