@@ -5,6 +5,7 @@ import Table from "./Components/Table";
 import UserLogin from "./Components/UserLogin";
 import HomePage from "./Components/HomePage";
 import Dashboard from "./Components/Dashboard";
+import Inbox from "./Components/Inbox";
 import axios from 'axios';
 
 
@@ -77,6 +78,11 @@ class App extends Component {
             props => (<Dashboard {...props} loggedInStatus={this.state.loggedInStatus}
               handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
               user={this.state.user} />)}/>
+
+          <Route exact path="/inbox" render={
+            props => (<Inbox {...props} loggedInStatus={this.state.loggedInStatus}
+                                 handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
+                                 user={this.state.user} />)}/>
 
         </Switch>
       </Router>

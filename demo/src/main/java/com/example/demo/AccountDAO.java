@@ -24,4 +24,6 @@ public interface AccountDAO {
 	boolean checkUser(Account account);
 
     Account getAccount(Account account);
+
+	List<Notification> getPendingList(Integer accountID);
 }

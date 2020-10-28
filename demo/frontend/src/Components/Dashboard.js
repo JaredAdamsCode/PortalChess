@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import {AccountCircle, SupervisorAccount} from "@material-ui/icons";
+import {Mail, SupervisorAccount} from "@material-ui/icons";
 
 import {Box, Typography, IconButton, Divider, MenuItem, TextField, Grid, Menu,Button, Paper, Container} from '@material-ui/core';
 import Header from './Header';
@@ -45,7 +45,13 @@ export default function Dashboard(props) {
     async function getInviteList(userID) {
         let response = await fetch('/api/getInviteList/' + userID);
         let body = await response.json();
-        upDateData(body);
+        let filtered = [];
+        for (let i = 0; i < body.length; i++) {
+            if (body[i].message == "Invite" || body[i].message == "invite") {
+                filtered.push(body[i]);
+            }
+        }
+        upDateData(filtered);
     };
 
      if (firstLoad) {
@@ -57,28 +63,17 @@ export default function Dashboard(props) {
         
         <div >
             <Header {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut}/>
-            <Box  style={{ height: '85vh' }}  color='white' bgcolor='black' textAlign="center"  height="100%" p={15} pt={1} m={8} mb={2} mt={0}>
-                <Box color='black' bgcolor='white'  textAlign="center" p={2} pb={3} mb={3} m={2} mt={8}>
+            <Box  style={{ height: '85vh' }} textAlign="center"  height="100%" p={15} pt={1} m={8} mb={2} mt={0}>
+                <Box textAlign="center" p={2} pb={3} mb={3} m={2} mt={8}>
                     <Grid container >
                         <Grid container direction="row-reverse" justify='space-between' alignItems="baseline">
                             <Grid item>
                                 <Typography variant='h7'>
-                                    {props.user.username}
+                                    Inbox
                                 </Typography>
-                                <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                                    <AccountCircle/>
+                                <IconButton component={ Link } to="/inbox" onClick={handleClick}>
+                                    <Mail/>
                                 </IconButton>
-                                <Menu
-                                    id="simple-menu"
-                                    anchorEl={anchorEl}
-                                    keepMounted
-                                    open={Boolean(anchorEl)}
-                                    onClose={handleClose}
-                                >
-                                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                                </Menu>
                             </Grid>
                             <Grid item>{/*Placeholder*/}</Grid>
                             <Grid item>

@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react';
-import {IconButton, Menu, MenuItem} from '@material-ui/core';
+import {Grid, IconButton, Menu, MenuItem, Typography} from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
@@ -9,7 +9,8 @@ class AccountMenu extends Component {
   constructor(props){
     super(props);
     this.state = {
-      anchorEl: null
+      anchorEl: null,
+      name: props.user.username
 
     }
     this.handleClick = this.handleClick.bind(this);
@@ -35,9 +36,12 @@ class AccountMenu extends Component {
 
     return(
       <div>
+        <Typography variant='h6'>
+          {this.state.name}
         <IconButton aria-label="Account Circle" aria-haspopup="true" onClick={this.handleClick}>
           <AccountCircleIcon />
         </IconButton>
+        </Typography>
         <Menu
         id="simple-menu"
         anchorEl={this.state.anchorEl}
