@@ -20,7 +20,7 @@ class LogInOutButton extends Component{
         { !this.props.loggedInStatus ? <Button component={ Link } to="/createAccount" >
           Signup
         </Button> : null}
-        { this.props.loggedInStatus ? <AccountMenu handleLogOut={this.props.handleLogOut} />
+        { this.props.loggedInStatus ? <AccountMenu {...this.props} handleLogOut={this.props.handleLogOut} />
            : null }
       </div>
     );

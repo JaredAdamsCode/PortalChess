@@ -83,4 +83,11 @@ public class AccountDAOImplementation implements AccountDAO {
 
 	}
 
+	@Override
+	public List<Notification> getPendingList(Integer accountID) {
+		Session currSession = entityManager.unwrap(Session.class);
+		Query<Notification> query = currSession.createQuery("from Notification n where n.senderID = :senderID").setParameter("senderID", accountID);
+		return query.getResultList();
+	}
+
 }

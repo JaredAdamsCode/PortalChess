@@ -27,8 +27,6 @@ public interface AccountService {
 	Account getAccount(Account account);
 
 	boolean checkUser(Account account);
-	 
 
-
-
+	List<Notification> getPendingList(Integer accountID);
 }

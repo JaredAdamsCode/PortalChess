@@ -58,6 +58,11 @@ public class AccountController {
 		return accountService.getNotificationList(accountID);
 	}
 
+	@GetMapping("/getPendingList/{accountID}")
+	public List<Notification> getPending(@PathVariable int accountID) {
+		return accountService.getPendingList(accountID);
+	}
+
 	/*
 	 @DeleteMapping("/account/{id}")
 	 public String delete(@PathVariable int id) {

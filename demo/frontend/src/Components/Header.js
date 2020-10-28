@@ -34,7 +34,7 @@ class Header extends Component {
           </Grid>
 
           <Grid item>
-            <LogInOutButton loggedInStatus={this.props.loggedInStatus} 
+            <LogInOutButton {...this.props} loggedInStatus={this.props.loggedInStatus}
               handleLogOut={this.props.handleLogOut}
               /> 
           </Grid>

@@ -57,6 +57,11 @@ public class AccountServiceImplementation implements AccountService {
 	public boolean checkUser(Account account) { return accountDAO.checkUser(account); }
 
 	@Override
+	public List<Notification> getPendingList(Integer accountID) {
+		return  accountDAO.getPendingList(accountID);
+	}
+
+	@Override
 	public Account getAccount(Account account) {return accountDAO.getAccount(account);}
 
 }
