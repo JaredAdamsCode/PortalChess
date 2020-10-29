@@ -55,7 +55,7 @@ export default function UserStats(props) {
         if(gamesPlayed > 0) {
             return ((gamesWon/gamesPlayed) * 100).toFixed(2) + "%";
         }else{
-            return "0.00%";
+            return "Not Applicable";
         }
     }
 
@@ -73,7 +73,7 @@ export default function UserStats(props) {
                         <CloseIcon/>
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>
-                        {"Stats for " + props.uname}
+                        {props.uname}
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -86,6 +86,7 @@ export default function UserStats(props) {
                 <ListItem>
                     <ListItemText primary="Win Percentage" secondary={calcWinPercentage()}/>
                 </ListItem>
+                <Divider/>
             </List>
         </Dialog>
     );
