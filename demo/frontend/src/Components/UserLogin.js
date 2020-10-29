@@ -154,20 +154,8 @@ export default function UserLogin(props) {
                         className={classes.submit}
                         onClick={handleSubmit}
                     >
-                        OK
+                        LOGIN
                     </Button>
-                    <Grid container direction="row" justify="space-evenly" alignItems="center">
-                        <Grid item xs>
-                            <Link to="/createAccount">
-                                <Button fullWidth variant="contained" color="primary" preventDefault>Register</Button>
-                            </Link>
-                        </Grid>
-                        <Grid item xs>
-                            <Link to="/">
-                                <Button fullWidth variant="contained" color="primary" preventDefault>Close</Button>
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </form>
                 <Typography style={{ margin: 7 }} variant="body1">
                     Status: {message}
