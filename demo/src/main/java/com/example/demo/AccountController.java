@@ -63,6 +63,12 @@ public class AccountController {
 		return accountService.getPendingList(accountID);
 	}
 
+	@GetMapping("/getGamesPlayed/{accountID}")
+	public List<Integer> getGamesPlayed(@PathVariable int accountID) { return accountService.getGamesPlayed(accountID); }
+
+	@GetMapping("/getGamesWon/{accountID}")
+	public List<Integer> getGamesWon(@PathVariable int accountID) { return accountService.getGamesWon(accountID); }
+
 	/*
 	 @DeleteMapping("/account/{id}")
 	 public String delete(@PathVariable int id) {

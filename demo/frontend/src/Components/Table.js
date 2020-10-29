@@ -16,6 +16,9 @@ import TextField from "@material-ui/core/TextField";
 import Checkbox from '@material-ui/core/Checkbox';
 import axios from 'axios';
 import Header from './Header';
+import UserStats from "./UserStats";
+
+import Dialog from "@material-ui/core/Dialog";
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -52,25 +55,29 @@ export default function SimpleTable(props) {
 
   const [selectedUsers, setSelectedUsers] = React.useState([]);
 
-  const sampleFunc = () => {
-
-    axios.get("/api/account")
-
-    .then(response => {
-      // console.log(response);
-      upDateData(response.data);
-    })
-  }
-
   const [data, upDateData] = React.useState([]);
   const [firstLoad, setLoad] = React.useState(true);
-  let isLoading = true;
 
   const [users, setUsers] = React.useState([]);
 
   const [searchString, setSearchString] = React.useState("");
   React.useEffect(() => {setUsers(getFoundUsers())}, [searchString]);
   const handleSearchStringChange = event => {setSearchString(event.target.value)};
+
+  const [showStatsWindow, setShowStatsWindow] = React.useState(false);
+
+
+  const openStatsWindow = () => { setShowStatsWindow(true); };
+  const closeStatsWindow = () => { setShowStatsWindow(false); };
+
+  let isLoading = true;
+
+  const retrieveAccounts = () => {
+    axios.get("/api/account").then(response => {
+      // console.log(response);
+      upDateData(response.data);
+    })
+  }
 
   function getFoundUsers() {
     let newUsers = [];
@@ -84,28 +91,8 @@ export default function SimpleTable(props) {
     return newUsers;
   }
 
-  function interpretRow(row) {
-    return (
-        <TableRow key={row.email}>
-          <TableCell>
-            <Checkbox
-              onClick={(event) => handleClick(event, row.email)}
-            />
-          </TableCell>
-
-          <TableCell align="center">{row.username}</TableCell>
-          <TableCell align="center">
-            <Button>View Profile</Button>
-          </TableCell>
-          <TableCell align="center">
-            <Button>Send Game Invite</Button>
-          </TableCell>
-        </TableRow>
-    );
-  }
-
   // credit to: https://material-ui.com/components/tables/
-  const handleClick = (event, email) => {
+  const clickCheckBox = (event, email) => {
     let index = selectedUsers.indexOf(email);
     let newUser = [];
 
@@ -126,7 +113,7 @@ export default function SimpleTable(props) {
   };
 
   if (firstLoad) {
-    sampleFunc();
+    retrieveAccounts();
     setLoad(false);
   }
 
@@ -135,7 +122,6 @@ export default function SimpleTable(props) {
   return (
     <div className={classes.paper}>
       <Header {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut}/>
-
       {isLoading ? (
         <CircularProgress />
       ) : (
@@ -156,15 +142,13 @@ export default function SimpleTable(props) {
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell >
+                <TableCell width={15}>
                   <Checkbox 
                       // Todo: add select all functionality
                   />
-                  Select All
                 </TableCell>
                 <TableCell align="center">Username</TableCell>
                 <TableCell align="center">Profile</TableCell>
-                <TableCell align="center">Invite to Game</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -184,4 +168,27 @@ export default function SimpleTable(props) {
       </Button>
     </div>
   );
+
+  function interpretRow(row) {
+    return (
+        <TableRow key={row.email}>
+          <TableCell width={15}>
+            <Checkbox
+                onClick={(event) => clickCheckBox(event, row.email)}
+            />
+          </TableCell>
+
+          <TableCell align="center">{row.username}</TableCell>
+          <TableCell align="center">
+            <Button onClick={() => openStatsWindow()}>View Profile</Button>
+            {renderUserStats(row.id, row.username)}
+          </TableCell>
+        </TableRow>
+    );
+  }
+
+  function renderUserStats(uid, uname) {
+      return <UserStats {...props} open={showStatsWindow} closeWindow={() => closeStatsWindow()}
+                        uID={uid} uname={uname}/>;
+  }
 }
