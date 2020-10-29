@@ -93,3 +93,19 @@ Set up meeting time at 12:00-2:00 on Friday with PO, backup meeting time Thursda
 Start making slides for presentation<br/><br/>
 Closed issues #50, 51, 20, 77, 22, 19<br/><br/>
 Closed epic #5<br/><br/>
+
+## Scrum Session 12  Daily Scrum 10/29/2020
+Jared brought up issues with sending out game invites, discussed possible solutions
+Cory brought up issues with displaying account information, state was loading the previous account not the current one, discussed possible solutions
+Mike showed off the Chessboard he has made, looks very nice
+Conor/Jon created the wiki page and updated all of the files that are a part of this page with everything for P2
+
+Sprint Review meeting setup for Friday 10/30/20 at 12:00pm
+Problems <br/><br/>
+Some tasks not thought out fully, some overlapped with others. So when a pull request was put out it would sometimes override another. Then later on the task would still be in the backlog, and we would have to discuss whether it had been finished or not.<br/><br/>
+Building the project from the start was difficult had to add correct folders/files into gitignore in order to get rid of issues.<br/><br/> 
+
+What went well<br/><br/>
+Once everything was in place we all jumped into tasks and started working efficiently. Got a lot done in a short amount of time.<br/><br/> 
+Good Zenhub etiquette, everyone followed rules on taking a task putting it into "In Progress". Then when finished would make pull requests and ask people to test it and review it before having someone merge it.<br/><br/> 
+
