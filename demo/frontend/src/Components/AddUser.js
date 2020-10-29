@@ -141,20 +141,8 @@ export default function AddUser(props) {
             </Grid>
           </Grid>
           <Button fullWidth variant="contained" color="primary" preventDefault
-                  className={classes.submit} onClick={handleSubmit}>OK
+                  className={classes.submit} onClick={handleSubmit}>SIGN UP
           </Button>
-          <Grid container direction="row" justify="space-evenly" alignItems="center">
-            <Grid item xs>
-              <Link to="/login">
-                <Button fullWidth variant="contained" color="primary" preventDefault>Login</Button>
-              </Link>
-            </Grid>
-            <Grid item xs>
-              <Link to="/">
-                <Button fullWidth variant="contained" color="primary" preventDefault>Close</Button>
-              </Link>
-            </Grid>
-          </Grid>
         </form>
         <Typography style={{ margin: 7 }} variant="body1">
           Status: {message}
