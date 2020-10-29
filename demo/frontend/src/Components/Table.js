@@ -1,24 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
+         Typography, Button, Grid, TextField, Checkbox, CircularProgress } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import Checkbox from '@material-ui/core/Checkbox';
 import axios from 'axios';
 import Header from './Header';
 import UserStats from "./UserStats";
-
-import Dialog from "@material-ui/core/Dialog";
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -53,30 +40,24 @@ export default function SimpleTable(props) {
 
   const classes = useStyles();
 
-  const [selectedUsers, setSelectedUsers] = React.useState([]);
-
   const [data, upDateData] = React.useState([]);
   const [firstLoad, setLoad] = React.useState(true);
 
   const [users, setUsers] = React.useState([]);
+  const [selectedUsers, setSelectedUsers] = React.useState([]);
 
   const [searchString, setSearchString] = React.useState("");
   React.useEffect(() => {setUsers(getFoundUsers())}, [searchString]);
   const handleSearchStringChange = event => {setSearchString(event.target.value)};
 
   const [showStatsWindow, setShowStatsWindow] = React.useState(false);
-
-
   const openStatsWindow = () => { setShowStatsWindow(true); };
   const closeStatsWindow = () => { setShowStatsWindow(false); };
 
   let isLoading = true;
 
   const retrieveAccounts = () => {
-    axios.get("/api/account").then(response => {
-      // console.log(response);
-      upDateData(response.data);
-    })
+    axios.get("/api/account").then(response => {upDateData(response.data);})
   }
 
   function getFoundUsers() {
@@ -109,7 +90,6 @@ export default function SimpleTable(props) {
       );
     }
     setSelectedUsers(newUser);
-    // console.log("selected: ", selectedUsers);
   };
 
   if (firstLoad) {
@@ -181,14 +161,10 @@ export default function SimpleTable(props) {
           <TableCell align="center">{row.username}</TableCell>
           <TableCell align="center">
             <Button onClick={() => openStatsWindow()}>View Profile</Button>
-            {renderUserStats(row.id, row.username)}
+            <UserStats {...props} open={showStatsWindow} closeWindow={() => closeStatsWindow()}
+                       uID={row.id} uname={row.username}/>
           </TableCell>
         </TableRow>
     );
-  }
-
-  function renderUserStats(uid, uname) {
-      return <UserStats {...props} open={showStatsWindow} closeWindow={() => closeStatsWindow()}
-                        uID={uid} uname={uname}/>;
   }
 }
