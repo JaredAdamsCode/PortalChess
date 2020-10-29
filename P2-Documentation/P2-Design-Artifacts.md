@@ -13,3 +13,6 @@
 ### Class Diagram
 (Please click to enlarge for a clearer image)
 ![P2 Class Diagram](P2-Class-Diagram.png)
+
+## Database Diagram
+![P2 Database Diagram](P2-Database-ER-Diagram.png)
