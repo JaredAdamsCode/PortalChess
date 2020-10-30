@@ -35,6 +35,11 @@ public class AccountServiceImplementation implements AccountService {
 		return  accountDAO.getNotificationList(accountID);
 	}
 
+	@Override
+	public List<Integer> getGamesPlayed(Integer accountID) { return accountDAO.getGamesPlayed(accountID); }
+
+	@Override
+	public List<Integer> getGamesWon(Integer accountID) { return accountDAO.getGamesWon(accountID); }
 
 	@Transactional
 	@Override

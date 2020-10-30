@@ -41,6 +41,19 @@ public class AccountDAOImplementation implements AccountDAO {
 		return query.getResultList();
 	}
 
+	@Override
+	public List<Integer> getGamesPlayed(Integer accountID) {
+		Session currSession = entityManager.unwrap(Session.class);
+		Query<Integer> query = currSession.createQuery("select games_played from Account a where a.id = :acctID").setParameter("acctID", accountID);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<Integer> getGamesWon(Integer accountID) {
+		Session currSession = entityManager.unwrap(Session.class);
+		Query<Integer> query = currSession.createQuery("select games_won from Account a where a.id = :acctID").setParameter("acctID", accountID);
+		return query.getResultList();
+	}
 
 	@Override
 	public Account get(String username) {

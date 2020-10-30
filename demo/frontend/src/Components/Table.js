@@ -1,21 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
+         Typography, Button, Grid, TextField, Checkbox, CircularProgress } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import Checkbox from '@material-ui/core/Checkbox';
 import axios from 'axios';
 import Header from './Header';
+import UserStats from "./UserStats";
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -50,27 +40,45 @@ export default function SimpleTable(props) {
 
   const classes = useStyles();
 
-  const [selectedUsers, setSelectedUsers] = React.useState([]);
-
-  const sampleFunc = () => {
-
-    axios.get("/api/account")
-
-    .then(response => {
-      // console.log(response);
-      upDateData(response.data);
-    })
-  }
-
   const [data, upDateData] = React.useState([]);
   const [firstLoad, setLoad] = React.useState(true);
-  let isLoading = true;
 
   const [users, setUsers] = React.useState([]);
+  const [selectedUsers, setSelectedUsers] = React.useState([]);
 
   const [searchString, setSearchString] = React.useState("");
   React.useEffect(() => {setUsers(getFoundUsers())}, [searchString]);
   const handleSearchStringChange = event => {setSearchString(event.target.value)};
+
+  /*const [showStatsWindow, setShowStatsWindow] = React.useState(false);
+  const [profileID, setProfileID] = React.useState();
+  const openStatsWindow = (uid) => { setProfileID(uid); };
+  React.useEffect(() => {setShowStatsWindow(true);}, [profileID]);
+  const closeStatsWindow = () => { setShowStatsWindow(false); };*/
+  const [profileID, setProfileID] = React.useState({
+      id: -1,
+      name: "",
+      shown: false
+  });
+  const openStatsWindow = (uid, uname) => {
+      setProfileID({
+          id: uid,
+          name: uname,
+          shown: true
+      });
+  };
+  const closeStatsWindow = () => {
+      setProfileID({
+          id: -1,
+          name: "",
+          shown: false
+      });
+  };
+  let isLoading = true;
+
+  const retrieveAccounts = () => {
+    axios.get("/api/account").then(response => {upDateData(response.data);})
+  }
 
   function getFoundUsers() {
     let newUsers = [];
@@ -84,28 +92,8 @@ export default function SimpleTable(props) {
     return newUsers;
   }
 
-  function interpretRow(row) {
-    return (
-        <TableRow key={row.email}>
-          <TableCell>
-            <Checkbox
-              onClick={(event) => handleClick(event, row.email)}
-            />
-          </TableCell>
-
-          <TableCell align="center">{row.username}</TableCell>
-          <TableCell align="center">
-            <Button>View Profile</Button>
-          </TableCell>
-          <TableCell align="center">
-            <Button>Send Game Invite</Button>
-          </TableCell>
-        </TableRow>
-    );
-  }
-
   // credit to: https://material-ui.com/components/tables/
-  const handleClick = (event, email) => {
+  const clickCheckBox = (event, email) => {
     let index = selectedUsers.indexOf(email);
     let newUser = [];
 
@@ -122,11 +110,10 @@ export default function SimpleTable(props) {
       );
     }
     setSelectedUsers(newUser);
-    // console.log("selected: ", selectedUsers);
   };
 
   if (firstLoad) {
-    sampleFunc();
+    retrieveAccounts();
     setLoad(false);
   }
 
@@ -135,7 +122,6 @@ export default function SimpleTable(props) {
   return (
     <div className={classes.paper}>
       <Header {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut}/>
-
       {isLoading ? (
         <CircularProgress />
       ) : (
@@ -156,15 +142,13 @@ export default function SimpleTable(props) {
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell >
+                <TableCell width={15}>
                   <Checkbox 
                       // Todo: add select all functionality
                   />
-                  Select All
                 </TableCell>
                 <TableCell align="center">Username</TableCell>
                 <TableCell align="center">Profile</TableCell>
-                <TableCell align="center">Invite to Game</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -184,4 +168,31 @@ export default function SimpleTable(props) {
       </Button>
     </div>
   );
+
+  function interpretRow(row) {
+    return (
+        <TableRow key={row.email}>
+          <TableCell width={15}>
+            <Checkbox
+                onClick={(event) => clickCheckBox(event, row.email)}
+            />
+          </TableCell>
+
+          <TableCell align="center">{row.username}</TableCell>
+          <TableCell align="center">
+              <Button onClick={() => openStatsWindow(row.id, row.username)}>View Profile</Button>
+              {renderStats(row.id)}
+          </TableCell>
+        </TableRow>
+    );
+  }
+
+  function renderStats(uid) {
+      if(profileID.id == uid) {
+          return (
+              <UserStats {...props} open={profileID.shown} closeWindow={() => closeStatsWindow()}
+                         uID={profileID.id} uname={profileID.name}/>
+          );
+      }
+  }
 }

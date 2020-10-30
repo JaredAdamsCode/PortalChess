@@ -15,6 +15,9 @@ public interface AccountDAO {
 
     List<Notification> getNotificationList(Integer accountID);
 
+    List<Integer> getGamesPlayed(Integer accountID);
+    List<Integer> getGamesWon(Integer accountID);
+
 	Account get(String username);
 
 	void save(Account account);
