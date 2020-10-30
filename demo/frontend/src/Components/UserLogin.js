@@ -136,6 +136,7 @@ export default function UserLogin(props) {
                                 variant="outlined"
                                 required
                                 fullWidth
+                                type="password"
                                 id="password"
                                 value={password}
                                 label="password"
