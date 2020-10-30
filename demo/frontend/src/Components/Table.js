@@ -50,11 +50,6 @@ export default function SimpleTable(props) {
   React.useEffect(() => {setUsers(getFoundUsers())}, [searchString]);
   const handleSearchStringChange = event => {setSearchString(event.target.value)};
 
-  /*const [showStatsWindow, setShowStatsWindow] = React.useState(false);
-  const [profileID, setProfileID] = React.useState();
-  const openStatsWindow = (uid) => { setProfileID(uid); };
-  React.useEffect(() => {setShowStatsWindow(true);}, [profileID]);
-  const closeStatsWindow = () => { setShowStatsWindow(false); };*/
   const [profileID, setProfileID] = React.useState({
       id: -1,
       name: "",

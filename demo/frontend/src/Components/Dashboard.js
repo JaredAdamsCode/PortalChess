@@ -36,6 +36,7 @@ export default function Dashboard(props) {
         handleClose();
     };
 /*
+    This will be used later:
     async function getMatchesList(userID) {
         let response = await fetch('/api/getMatchesList/' + userID);
         let body = await response.json();

@@ -14,7 +14,7 @@ class LogInOutButton extends Component{
   render(){
     return (
       <div>
-        {!this.props.loggedInStatus ? <Button component={ Link } to="/login" >
+        {!this.props.loggedInStatus ? <Button component={ Link } to="/" >
           Login
         </Button> : null}
         { !this.props.loggedInStatus ? <Button component={ Link } to="/createAccount" >

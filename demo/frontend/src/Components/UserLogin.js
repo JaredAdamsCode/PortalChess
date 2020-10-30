@@ -2,15 +2,11 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { useHistory } from "react-router-dom";
 import Header from './Header';
-import axios from 'axios';
-import { PictureInPictureSharp } from "@material-ui/icons";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -39,11 +35,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function UserLogin(props) {
     const classes = useStyles();
-    const history = useHistory();
-
-    const [data, upDateData] = React.useState([]);
-    const [firstLoad, setLoad] = React.useState(true);
-    let isLoading = true;
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -51,7 +42,7 @@ export default function UserLogin(props) {
     const handleEmailChange = event => setEmail(event.target.value);
     const handlePasswordChange = event => setPassword(event.target.value);
 
-    const [message, setMessage] = React.useState("Nothing saved in the session");
+    const [message, setMessage] = React.useState("");
 
 
     async function loginFunc(toInput) {
@@ -84,28 +75,9 @@ export default function UserLogin(props) {
         let toInput = { email: email, password: password };
         loginFunc(toInput);
 
-    /*
-        axios.post("/api/login", toInput)
-        // if successful, set user and logged in status
-            .then(response => {
-                props.handleLogIn(response);
-                props.history.push("/dashboard");
-            })
-       // if fails, log the error and set loggedInStatus to false
-       .catch(error => {
-         console.log("error from get logged in status: ", error);
-         props.handleLogOut();
-       })
-    */
-
         setEmail("");
         setPassword("");
     };
-
-    if (firstLoad) {
-        // sampleFunc();
-        setLoad(false);
-    }
 
     return (
         <Container component="main" maxWidth="xs">
