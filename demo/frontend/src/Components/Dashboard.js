@@ -7,8 +7,6 @@ import {Box, Typography, IconButton, Divider, MenuItem, TextField, Grid, Menu,Bu
 import Header from './Header';
 
 export default function Dashboard(props) {
-
-    console.log("dashboard props: ", props);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [inviteList, upDateData] = React.useState([]);
     const [matchesList, upDateMatches] = React.useState([]);
