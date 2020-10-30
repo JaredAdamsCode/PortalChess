@@ -3,24 +3,24 @@
 ### Must have
 
 As a user, I would like to...
-* Create an account on the system by providing an email and creating a username/nickname and password
-  * #11 Handle account creation request
-  * #49 Validate account creation input
-  * #12 Send account creation request to server
-  * #8 Create homepage that has login or create account buttons
-  * #50 Create popup on client for inputting account information
-* Be able to log in once an account is created
-  * #1 Server handle login request
-  * #9 Client send login request to server
-  * #51 Client launch dashboard 
+* Create an account on the system by providing an email and creating a username/nickname and password {Completed}
+  * #11 Handle account creation request {Completed}
+  * #49 Validate account creation input {Completed}
+  * #12 Send account creation request to server {Completed}
+  * #8 Create homepage that has login or create account buttons {Completed}
+  * #50 Create popup on client for inputting account information {Completed}
+* Be able to log in once an account is created {Completed}
+  * #1 Server handle login request {Completed}
+  * #9 Client send login request to server {Completed}
+  * #51 Client launch dashboard {Completed}
 * Create a new match
-  * #19 Create a button to start a chess match in UI
-  * #22 Create an invite to match screen
+  * #19 Create a button to start a chess match in UI {Completed}
+  * #22 Create an invite to match screen {Completed}
   * #18 Create a new match in the system
 * Invite friends/opponents to the match
-  * #20 Seach users
-  * #77 Populate invitation list on the dashboard
-  * #52 Create inbox button
+  * #20 Seach users {Completed}
+  * #77 Populate invitation list on the dashboard {Completed}
+  * #52 Create inbox button {Completed}
   * #34 Send game invites
   * #23 Server handle game invite request 
 * Start the game when enough people have joined
@@ -55,7 +55,7 @@ As a user, I would like to...
 ### Could have
 
 As a user, I would like to...
-* Be able to log out
+* Be able to log out {Completed}
 * Unregister the account
   * #13 Create unregister account button in UI
 * Switch between multiple games at once
