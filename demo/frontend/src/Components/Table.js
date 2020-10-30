@@ -50,10 +50,30 @@ export default function SimpleTable(props) {
   React.useEffect(() => {setUsers(getFoundUsers())}, [searchString]);
   const handleSearchStringChange = event => {setSearchString(event.target.value)};
 
-  const [showStatsWindow, setShowStatsWindow] = React.useState(false);
-  const openStatsWindow = () => { setShowStatsWindow(true); };
-  const closeStatsWindow = () => { setShowStatsWindow(false); };
-
+  /*const [showStatsWindow, setShowStatsWindow] = React.useState(false);
+  const [profileID, setProfileID] = React.useState();
+  const openStatsWindow = (uid) => { setProfileID(uid); };
+  React.useEffect(() => {setShowStatsWindow(true);}, [profileID]);
+  const closeStatsWindow = () => { setShowStatsWindow(false); };*/
+  const [profileID, setProfileID] = React.useState({
+      id: -1,
+      name: "",
+      shown: false
+  });
+  const openStatsWindow = (uid, uname) => {
+      setProfileID({
+          id: uid,
+          name: uname,
+          shown: true
+      });
+  };
+  const closeStatsWindow = () => {
+      setProfileID({
+          id: -1,
+          name: "",
+          shown: false
+      });
+  };
   let isLoading = true;
 
   const retrieveAccounts = () => {
@@ -160,11 +180,19 @@ export default function SimpleTable(props) {
 
           <TableCell align="center">{row.username}</TableCell>
           <TableCell align="center">
-            <Button onClick={() => openStatsWindow()}>View Profile</Button>
-            <UserStats {...props} open={showStatsWindow} closeWindow={() => closeStatsWindow()}
-                       uID={row.id} uname={row.username}/>
+              <Button onClick={() => openStatsWindow(row.id, row.username)}>View Profile</Button>
+              {renderStats(row.id)}
           </TableCell>
         </TableRow>
     );
+  }
+
+  function renderStats(uid) {
+      if(profileID.id == uid) {
+          return (
+              <UserStats {...props} open={profileID.shown} closeWindow={() => closeStatsWindow()}
+                         uID={profileID.id} uname={profileID.name}/>
+          );
+      }
   }
 }

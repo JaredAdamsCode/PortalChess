@@ -39,7 +39,7 @@ export default function UserStats(props) {
     const [gamesPlayed, setGamesPlayed] = React.useState(0);
     const [gamesWon, setGamesWon] = React.useState(0);
 
-    async function getGamesPlayed(userID) {
+    async function getGamesPlayed(userID, run) {
         let response = await fetch('/api/getGamesPlayed/' + userID);
         let body = await response.json();
         setGamesPlayed(body);
