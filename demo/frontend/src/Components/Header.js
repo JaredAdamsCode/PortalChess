@@ -1,10 +1,8 @@
-
 import React, {Component} from 'react';
 import {AppBar, Toolbar, Typography, Grid, IconButton} from '@material-ui/core';
 import LogInOutButton from './LogInOutButton';
 import HomeIcon from '@material-ui/icons/Home';
 import {Link} from 'react-router-dom';
-
 
 class Header extends Component {
   constructor(props){

@@ -7,8 +7,6 @@ import {Box, Typography, IconButton, Divider, MenuItem, TextField, Grid, Menu,Bu
 import Header from './Header';
 
 export default function Dashboard(props) {
-
-    console.log("dashboard props: ", props);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [inviteList, upDateData] = React.useState([]);
     const [matchesList, upDateMatches] = React.useState([]);
@@ -19,23 +17,11 @@ export default function Dashboard(props) {
         setAnchorEl(event.currentTarget);
     };
 
-    const acceptInvite = (event) =>{
-
-    };
-
-    const rejectInvite = (event) =>{
-
-    };
-
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-    const handleLogout = () => {
-        document.location.href="/";
-        handleClose();
-    };
 /*
+    This will be used later:
     async function getMatchesList(userID) {
         let response = await fetch('/api/getMatchesList/' + userID);
         let body = await response.json();
@@ -75,7 +61,7 @@ export default function Dashboard(props) {
                                     <Mail/>
                                 </IconButton>
                             </Grid>
-                            <Grid item>{/*Placeholder*/}</Grid>
+                            <Grid item>{/*For Spacing*/}</Grid>
                             <Grid item>
                                 <IconButton component={Link} to="/users" {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut}>
                                     <SupervisorAccount/>
@@ -122,8 +108,8 @@ export default function Dashboard(props) {
                                {inviteList.map(invite => (
                                 <p key={invite.id}>
                                 {invite.message} from user id {invite.sender}
-                                  <button className="extend-button"onClick={acceptInvite}>Accept</button>
-                                  <button className="extend-button"onClick={rejectInvite}>Reject</button>
+                                  <button className="extend-button">Accept</button>
+                                  <button className="extend-button">Reject</button>
                                    </p>
                             ))}
                         </Paper>

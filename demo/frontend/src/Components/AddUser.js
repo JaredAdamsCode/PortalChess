@@ -1,15 +1,11 @@
 import React from "react";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import GroupIcon from "@material-ui/icons/Group";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import {ButtonGroup} from "@material-ui/core";
 import Header from './Header';
 
 const useStyles = makeStyles(theme => ({
@@ -39,8 +35,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function AddUser(props) {
   const classes = useStyles();
-  const [firstLoad, setLoad] = React.useState(true);
-
 
   const [email, setEmail] = React.useState("");
   const [username, setUsername] = React.useState("");
@@ -50,7 +44,7 @@ export default function AddUser(props) {
   const handleUsernameChange = event => setUsername(event.target.value);
   const handlePasswordChange = event => setPassword(event.target.value);
 
-  const [message, setMessage] = React.useState("Nothing saved in the session");
+  const [message, setMessage] = React.useState("");
 
   async function sampleFunc(toInput) {
     const response = await fetch("/api/createAccount", {
@@ -83,11 +77,6 @@ export default function AddUser(props) {
     setUsername("");
     setPassword("");
   };
-
-  if (firstLoad) {
-    // sampleFunc();
-    setLoad(false);
-  }
 
   return (
     <Container component="main" maxWidth="xs">

@@ -3,7 +3,6 @@ import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import AddUser from "./Components/AddUser";
 import Table from "./Components/Table";
 import UserLogin from "./Components/UserLogin";
-import HomePage from "./Components/HomePage";
 import Dashboard from "./Components/Dashboard";
 import Inbox from "./Components/Inbox";
 import axios from 'axios';
@@ -18,10 +17,6 @@ class App extends Component {
     }
     this.handleLogIn = this.handleLogIn.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
-  }
-
-  componentDidMount() {
-    //this.getLoggedInStatus();
   }
 
   getLoggedInStatus(){
@@ -58,11 +53,6 @@ class App extends Component {
             props => (<UserLogin {...props} loggedInStatus={this.state.loggedInStatus}
               handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
               user={this.state.user} /> )}/>
-
-          <Route exact path="/login" render={
-            props => (<UserLogin {...props} loggedInStatus={this.state.loggedInStatus}
-              handleLogIn={this.handleLogIn} handleLogOut={this.handleLogOut}/>)} 
-              user={this.state.user}/>
 
           <Route exact path="/createAccount" render={
             props => (<AddUser {...props} loggedInStatus={this.state.loggedInStatus}

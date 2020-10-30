@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react';
 import {Grid, IconButton, Menu, MenuItem, Typography} from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -28,7 +27,6 @@ class AccountMenu extends Component {
 
   logout = () =>{
     this.handleClose();
-    console.log("props: ", this.props);
     this.props.handleLogOut();
   }
 
@@ -50,7 +48,6 @@ class AccountMenu extends Component {
         onClose={this.handleClose}
         >
           <MenuItem component={ Link } to="/Dashboard">Dashboard</MenuItem>
-          {/* <MenuItem onClick={this.handleClose}>My account</MenuItem> */}
           <MenuItem onClick={this.logout} component={ Link } to="/">Logout</MenuItem>
         </Menu>
 

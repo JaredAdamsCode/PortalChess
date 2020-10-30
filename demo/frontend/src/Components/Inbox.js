@@ -1,23 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
-import {Mail, SupervisorAccount} from "@material-ui/icons";
-
-import {Box, Typography, IconButton, Divider, MenuItem, TextField, Grid, Menu,Button, Paper, Container} from '@material-ui/core';
+import {Box, Typography, Divider, Grid, Paper} from '@material-ui/core';
 import Header from './Header';
 
-export default function Dashboard(props) {
+export default function Inbox(props) {
 
     const [pendingList, upDatePending] = React.useState([]);
     const [firstLoad, setLoad] = React.useState(true);
-
-    const acceptInvite = (event) =>{
-
-    };
-
-    const rejectInvite = (event) =>{
-
-    };
 
     async function getPendingList(userID) {
         let response = await fetch('/api/getPendingList/' + userID);
