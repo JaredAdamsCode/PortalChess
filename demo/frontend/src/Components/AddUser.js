@@ -131,6 +131,7 @@ export default function AddUser(props) {
                 variant="outlined"
                 required
                 fullWidth
+                type="password"
                 id="password"
                 value={password}
                 label="password"
