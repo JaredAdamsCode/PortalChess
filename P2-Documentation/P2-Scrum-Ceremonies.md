@@ -113,12 +113,12 @@ Good Zenhub etiquette, everyone followed rules on taking a task putting it into 
 Conor and Jon demonstrated the current state of the application to the Product Owner. Conor showed off the functionality of the sign up page and logged in to the application. Jon showed off the dashboard, inbox, the ability to search for users, and the stats pages for multiple users.
 
 Feedback from the Product Owner<br/><br/>
-The password should be hidden when signing up and logging in. 
-After signing out, a user should not be able to be able to access pages within the app by hitting the back button in their browser.
-The inheritance arrows in the class diagram need to be reversed.
-Include JavaScript classes in class diagram with a distinction between packages.
-Include all implemented Java classes in class diagram.
-Reconsider whether or not the Invite class and Notification class should have an is-a relationship.
-Reconsider whether or not the Match class and Game class should have an is-a relationship.
+The password should be hidden when signing up and logging in.<br/> 
+After signing out, a user should not be able to be able to access pages within the app by hitting the back button in their browser.<br/>
+The inheritance arrows in the class diagram need to be reversed.<br/>
+Include JavaScript classes in class diagram with a distinction between packages.<br/>
+Include all implemented Java classes in class diagram.<br/>
+Reconsider whether or not the Invite class and Notification class should have an is-a relationship.<br/>
+Reconsider whether or not the Match class and Game class should have an is-a relationship.<br/>
 
 
