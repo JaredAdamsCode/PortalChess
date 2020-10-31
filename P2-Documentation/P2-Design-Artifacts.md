@@ -16,3 +16,6 @@
 
 ## Database Diagram
 ![P2 Database Diagram](P2-Database-ER-Diagram.png)
+
+## Frontend Diagram
+![P2 Frontend Diagram](P2-Frontend-diagram.png)
