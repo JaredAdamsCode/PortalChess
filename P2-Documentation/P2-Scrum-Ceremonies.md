@@ -121,4 +121,8 @@ Include all implemented Java classes in class diagram.<br/>
 Reconsider whether or not the Invite class and Notification class should have an is-a relationship.<br/>
 Reconsider whether or not the Match class and Game class should have an is-a relationship.<br/>
 
-
+## Scrum Session 14 Daily Scrum 10/31/2020
+Created the presentation slides for P2<br/> 
+Recorded presentation video<br/> 
+Finalized all documentation for P2<br/> 
+Released P2 on Github<br/> 
