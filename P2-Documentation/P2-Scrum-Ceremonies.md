@@ -107,5 +107,18 @@ Building the project from the start was difficult had to add correct folders/fil
 
 What went well<br/><br/>
 Once everything was in place we all jumped into tasks and started working efficiently. Got a lot done in a short amount of time.<br/><br/> 
-Good Zenhub etiquette, everyone followed rules on taking a task putting it into "In Progress". Then when finished would make pull requests and ask people to test it and review it before having someone merge it.<br/><br/> 
+Good Zenhub etiquette, everyone followed rules on taking a task putting it into "In Progress". Then when finished would make pull requests and ask people to test it and review it before having someone merge it.<br/><br/>
+
+## Scrum Session 13 Sprint Review 10/30/2020
+Conor and Jon demonstrated the current state of the application to the Product Owner. Conor showed off the functionality of the sign up page and logged in to the application. Jon showed off the dashboard, inbox, the ability to search for users, and the stats pages for multiple users.
+
+Feedback from the Product Owner<br/><br/>
+The password should be hidden when signing up and logging in. 
+After signing out, a user should not be able to be able to access pages within the app by hitting the back button in their browser.
+The inheritance arrows in the class diagram need to be reversed.
+Include JavaScript classes in class diagram with a distinction between packages.
+Include all implemented Java classes in class diagram.
+Reconsider whether or not the Invite class and Notification class should have an is-a relationship.
+Reconsider whether or not the Match class and Game class should have an is-a relationship.
+
 
