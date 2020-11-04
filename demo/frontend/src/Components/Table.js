@@ -87,13 +87,24 @@ export default function SimpleTable(props) {
     return newUsers;
   }
 
+  async function handleInvites(){
+      for(let i = 0; i < selectedUsers.length; i++){
+          let userID1 = props.user.id;
+          let userID2 = selectedUsers[i].id;
+
+          let response = await fetch('/api/createMatch/' + userID1+ '/' +userID2);
+          let matchID = response.message();
+          response = await fetch('/api/createInvite/' + userID1+ '/' +userID2 + '/' + matchID);
+      }
+  }
+
   // credit to: https://material-ui.com/components/tables/
-  const clickCheckBox = (event, email) => {
-    let index = selectedUsers.indexOf(email);
+  const clickCheckBox = (event, row) => {
+    let index = selectedUsers.indexOf(row);
     let newUser = [];
 
     if (index === -1) {
-      newUser = newUser.concat(selectedUsers, email);
+      newUser = newUser.concat(selectedUsers, row);
     } else if (index === 0) {
       newUser = newUser.concat(selectedUsers.slice(1));
     } else if (index === selectedUsers.length - 1) {
@@ -106,6 +117,8 @@ export default function SimpleTable(props) {
     }
     setSelectedUsers(newUser);
   };
+
+
 
   if (firstLoad) {
     retrieveAccounts();
@@ -158,7 +171,7 @@ export default function SimpleTable(props) {
           &#x2190; Back to Dashboard
         </Typography>{" "}
       </Link>
-      <Button variant="contained" > 
+      <Button variant="contained" onClick={handleInvites} >
         Send Invite(s)
       </Button>
     </div>
@@ -169,7 +182,7 @@ export default function SimpleTable(props) {
         <TableRow key={row.email}>
           <TableCell width={15}>
             <Checkbox
-                onClick={(event) => clickCheckBox(event, row.email)}
+                onClick={(event) => clickCheckBox(event, row)}
             />
           </TableCell>
 
