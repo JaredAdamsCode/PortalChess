@@ -13,7 +13,6 @@ public class MatchController {
 
     @PostMapping(path = "/createMatch", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> createMatch(@RequestBody Match match){
-        System.out.println(match);
         int matchID = matchService.createMatch(match);
         return ResponseEntity.accepted().body(matchID);
     }
