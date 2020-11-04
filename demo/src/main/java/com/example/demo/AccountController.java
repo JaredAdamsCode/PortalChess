@@ -13,7 +13,7 @@ public class AccountController {
 	@Autowired
 	 private AccountService accountService;
 
-	 //Captures the request from client with user object
+	 //Captures the request from client to create an Account, given email address, username, and password strings
 	 @PostMapping(path = "/createAccount", consumes = "application/json", produces = "application/json")
 	 public ResponseEntity<?> save(@RequestBody Account account){
 
@@ -47,36 +47,7 @@ public class AccountController {
 		 return ResponseEntity.accepted().body(account);
 	 }
 
-	@GetMapping("/account")
-	public List<Account> get() {
-		return accountService.get();
-	}
-
-
-	@GetMapping("/getInviteList/{accountID}")
-	public List<Notification> get(@PathVariable int accountID) {
-		return accountService.getNotificationList(accountID);
-	}
-
-	@GetMapping("/getPendingList/{accountID}")
-	public List<Notification> getPending(@PathVariable int accountID) {
-		return accountService.getPendingList(accountID);
-	}
-
-	@GetMapping("/getGamesPlayed/{accountID}")
-	public List<Integer> getGamesPlayed(@PathVariable int accountID) { return accountService.getGamesPlayed(accountID); }
-
-	@GetMapping("/getGamesWon/{accountID}")
-	public List<Integer> getGamesWon(@PathVariable int accountID) { return accountService.getGamesWon(accountID); }
-
-	/*
-	 @DeleteMapping("/account/{id}")
-	 public String delete(@PathVariable int id) {
-	  accountService.delete(id);
-	  return "User removed with id "+id;
-	*/
-
-	//Captures the request from client with user object
+	//Captures the request from client for logging into an account, given email address and password as strings
 	@PostMapping(path = "/login", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<?> getAccount(@RequestBody Account account){
 
@@ -100,4 +71,22 @@ public class AccountController {
 			throw new InvalidRequest("No account with matching credentials was found.");
 		}
 	}
+
+	@GetMapping("/account")
+	public List<Account> get() {
+		return accountService.get();
+	}
+
+	@GetMapping("/getGamesPlayed/{accountID}")
+	public List<Integer> getGamesPlayed(@PathVariable int accountID) { return accountService.getGamesPlayed(accountID); }
+
+	@GetMapping("/getGamesWon/{accountID}")
+	public List<Integer> getGamesWon(@PathVariable int accountID) { return accountService.getGamesWon(accountID); }
+
+	/*
+	 @DeleteMapping("/account/{id}")
+	 public String delete(@PathVariable int id) {
+	  accountService.delete(id);
+	  return "User removed with id "+id;
+	*/
 }

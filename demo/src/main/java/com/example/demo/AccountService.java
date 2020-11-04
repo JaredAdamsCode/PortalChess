@@ -16,9 +16,8 @@ public interface AccountService {
 
 	List<Account> get();
 
-	List<Notification> getNotificationList(Integer accountID);
-
 	List<Integer> getGamesPlayed(Integer accountID);
+
 	List<Integer> getGamesWon(Integer accountID);
 
 	Account get(String username);
@@ -30,6 +29,4 @@ public interface AccountService {
 	Account getAccount(Account account);
 
 	boolean checkUser(Account account);
-
-	List<Notification> getPendingList(Integer accountID);
 }
