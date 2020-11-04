@@ -12,4 +12,5 @@ public interface NotificationService {
 
     List<Notification> getPendingList(Integer accountID);
 
+    int createNotification(Notification notification);
 }

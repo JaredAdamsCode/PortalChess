@@ -9,45 +9,46 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "matches")
+
 public class Match {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Integer id;
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+     @Column
+     private Integer id;
 
     @Column
-    private Integer senderID;
+     private Integer senderID;
 
     @Column
-    private Integer receiverID;
+     private Integer receiverID;
 
     @Override
-    public String toString() {
-        return "Match [id= " + id + ", senderID= " + senderID + ", receiverID= " + receiverID + "]";
+     public String toString() {
+        return "Match [id = " + id + ", senderId = " + senderID + ", receiverId = " + receiverID + "]";
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public void setSender(Integer id) {
-        this.senderID = id;
+    public void setSenderID(Integer senderId) {
+        this.senderID = senderId;
     }
 
-    public void setReceiver(Integer id) {
-        this.receiverID = id;
+    public void setReceiverID(Integer receiverId) {
+        this.receiverID = receiverId;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public Integer getSender() {
+    public Integer getSenderID() {
         return senderID;
     }
 
-    public Integer getReceiver() {
+    public Integer getReceiverID() {
         return receiverID;
     }
 

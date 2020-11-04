@@ -29,4 +29,10 @@ public class NotificationDAOImplementation implements  NotificationDAO{
         return query.getResultList();
     }
 
+    @Override
+    public int createNotification(Notification notification) {
+        Session currSession = entityManager.unwrap(Session.class);
+        return (int) currSession.save(notification);
+    }
+
 }

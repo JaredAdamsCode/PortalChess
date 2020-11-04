@@ -1,10 +1,8 @@
 package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +22,12 @@ public class NotificationController {
     public List<Notification> getPending(@PathVariable int accountID) {
         return notificationService.getPendingList(accountID);
     }
+
+    @PostMapping(path = "/createInvite", consumes = "application/json", produces = "application/json")
+    public void createMatch(@RequestBody Notification notification){
+        notificationService.createNotification(notification);
+    }
+
+
 
 }

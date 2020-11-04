@@ -26,7 +26,7 @@ public class Notification {
 
     @Override
     public String toString() {
-        return "Notification [id= " + id + ", senderID= " +senderID + ", receiverID= " + receiverID + ", message=" + message + ", matchID= "
+        return "Notification [id = " + id + ", senderID = " + senderID + ", receiverID = " + receiverID + ", message=" + message + ", matchID = "
                 + matchID + "]";
     }
 
@@ -34,29 +34,29 @@ public class Notification {
         this.id = id;
     }
 
-    public void setSender(Integer id) {
-        this.senderID = id;
+    public void setSender(Integer senderID) {
+        this.senderID = senderID;
     }
 
-    public void setReceiver(Integer id) {
-        this.receiverID = id;
+    public void setReceiver(Integer receiverID) {
+        this.receiverID = receiverID;
     }
 
     public void setMessage(String message) {
         this.message = message;
     }
 
-    public void setMatch(Integer id){this.matchID = id;}
+    public void setMatch(Integer matchID){this.matchID = matchID;}
 
     public Integer getId() {
         return id;
     }
 
-    public Integer getSender() {
+    public Integer getSenderID() {
         return senderID;
     }
 
-    public Integer getReceiver() {
+    public Integer getReceiverID() {
         return receiverID;
     }
 
@@ -64,7 +64,7 @@ public class Notification {
             return message;
     }
 
-    public Integer getMatch(){
+    public Integer getMatchID(){
         return matchID;
     }
 

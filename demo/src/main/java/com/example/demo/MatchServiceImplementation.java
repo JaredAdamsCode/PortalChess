@@ -11,7 +11,7 @@ public class MatchServiceImplementation implements MatchService{
 
 
     @Override
-    public int createMatch(int account1ID, int account2ID) {
-        return matchDAO.createMatch(account1ID,account2ID);
+    public int createMatch(Match match) {
+        return matchDAO.createMatch(match);
     }
 }

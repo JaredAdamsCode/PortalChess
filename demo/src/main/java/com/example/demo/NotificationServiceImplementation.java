@@ -23,5 +23,8 @@ public class NotificationServiceImplementation implements  NotificationService{
         return notificationDAO.getPendingList(accountID);
     }
 
-
+    @Override
+    public int createNotification(Notification notification) {
+        return notificationDAO.createNotification(notification);
+    }
 }

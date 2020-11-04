@@ -14,14 +14,9 @@ public class MatchDAOImplementation implements  MatchDAO{
 
 
     @Override
-    public int createMatch(int account1ID, int account2ID) {
-        Match match = new Match();
-        match.setReceiver(account1ID);
-        match.setSender(account2ID);
+    public int createMatch(Match match) {
         Session currSession = entityManager.unwrap(Session.class);
-        int test = (int) currSession.save(match);
-        System.out.println(test);
-        return test;
+        return (int) currSession.save(match);
     }
 
 }
