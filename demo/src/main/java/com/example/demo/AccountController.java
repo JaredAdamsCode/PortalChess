@@ -100,4 +100,15 @@ public class AccountController {
 			throw new InvalidRequest("No account with matching credentials was found.");
 		}
 	}
+
+	@PostMapping(path = "/createMatch", consumes = "application/json", produces = "application/json")
+	public ResponseEntity<?> createMatch(@RequestBody Account account){
+		return ResponseEntity.accepted().body(0);
+		//todo perform match creation query
+	}
+
+	@PostMapping(path = "/createInvite", consumes = "application/json", produces = "application/json")
+	public void createInvite(@RequestBody Account account){
+		//todo perform invite creation query
+	}
 }

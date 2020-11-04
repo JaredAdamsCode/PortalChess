@@ -89,12 +89,41 @@ export default function SimpleTable(props) {
 
   async function handleInvites(){
       for(let i = 0; i < selectedUsers.length; i++){
-          let userID1 = props.user.id;
-          let userID2 = selectedUsers[i].id;
+            let senderID = props.user.id;
+            let receiverID = selectedUsers[i].id;
+            const userIDs = {senderID, receiverID};
 
-          let response = await fetch('/api/createMatch/' + userID1+ '/' +userID2);
-          let matchID = response.message();
-          response = await fetch('/api/createInvite/' + userID1+ '/' +userID2 + '/' + matchID);
+            //Create the match before the invite is sent out
+            const response = await fetch("/api/createMatch", {
+              method: "POST", // *GET, POST, PUT, DELETE, etc.
+              mode: "cors", // no-cors, *cors, same-origin
+              cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+              credentials: "same-origin", // include, *same-origin, omit
+              headers: {
+                  "Content-Type": "application/json"},
+                  redirect: "follow", // manual, *follow, error
+                  referrerPolicy: "no-referrer", // no-referrer, *client
+                  body: JSON.stringify(userIDs) // body data type must match "Content-Type" header
+            });
+            const matchID = parseInt(await response.json());
+            console.log("matches called");
+            console.log(response);
+            let message = "Invite";
+            const matchIDs = {senderID, receiverID, message, matchID};
+            const inviteResponse = await fetch("/api/createInvite", {
+              method: "POST", // *GET, POST, PUT, DELETE, etc.
+              mode: "cors", // no-cors, *cors, same-origin
+              cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+              credentials: "same-origin", // include, *same-origin, omit
+              headers: {
+                  "Content-Type": "application/json"},
+                  redirect: "follow", // manual, *follow, error
+                  referrerPolicy: "no-referrer", // no-referrer, *client
+                  body: JSON.stringify(matchIDs) // body data type must match "Content-Type" header
+            });
+            //Update client with successful invites sent
+            console.log("invites called");
+            console.log(inviteResponse);
       }
   }
 
