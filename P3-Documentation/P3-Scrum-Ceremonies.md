@@ -11,5 +11,6 @@ Merged Jons' pull request for client sending invitation requests to server close
 Conor showed a demo sending invites to players and having it show up in their invitation list<br/>
 - Need to work on players not being able to invite themselves
 - Need a confirmation that the invite(s) were sent and then redirect back to dashboard
-- Need to add a status to matches table to show whether a match has been accepted, rejected, abandoned, or pending
+- Need to add a status to matches table to show whether a match has been accepted, rejected, abandoned, or pending<br/>
+
 Planning on having Sprint Planning meeting with PO on Tuesday at 12:00pm<br/>
