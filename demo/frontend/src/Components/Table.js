@@ -87,13 +87,53 @@ export default function SimpleTable(props) {
     return newUsers;
   }
 
+  async function handleInvites(){
+      for(let i = 0; i < selectedUsers.length; i++){
+            let senderID = props.user.id;
+            let receiverID = selectedUsers[i].id;
+            const userIDs = {senderID, receiverID};
+
+            //Create the match before the invite is sent out
+            const response = await fetch("/api/createMatch", {
+              method: "POST", // *GET, POST, PUT, DELETE, etc.
+              mode: "cors", // no-cors, *cors, same-origin
+              cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+              credentials: "same-origin", // include, *same-origin, omit
+              headers: {
+                  "Content-Type": "application/json"},
+                  redirect: "follow", // manual, *follow, error
+                  referrerPolicy: "no-referrer", // no-referrer, *client
+                  body: JSON.stringify(userIDs) // body data type must match "Content-Type" header
+            });
+            const matchID = parseInt(await response.json());
+            console.log("matches called");
+            console.log(response);
+            let message = "Invite";
+            const matchIDs = {senderID, receiverID, message, matchID};
+            const inviteResponse = await fetch("/api/createInvite", {
+              method: "POST", // *GET, POST, PUT, DELETE, etc.
+              mode: "cors", // no-cors, *cors, same-origin
+              cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+              credentials: "same-origin", // include, *same-origin, omit
+              headers: {
+                  "Content-Type": "application/json"},
+                  redirect: "follow", // manual, *follow, error
+                  referrerPolicy: "no-referrer", // no-referrer, *client
+                  body: JSON.stringify(matchIDs) // body data type must match "Content-Type" header
+            });
+            //Update client with successful invites sent
+            console.log("invites called");
+            console.log(inviteResponse);
+      }
+  }
+
   // credit to: https://material-ui.com/components/tables/
-  const clickCheckBox = (event, email) => {
-    let index = selectedUsers.indexOf(email);
+  const clickCheckBox = (event, row) => {
+    let index = selectedUsers.indexOf(row);
     let newUser = [];
 
     if (index === -1) {
-      newUser = newUser.concat(selectedUsers, email);
+      newUser = newUser.concat(selectedUsers, row);
     } else if (index === 0) {
       newUser = newUser.concat(selectedUsers.slice(1));
     } else if (index === selectedUsers.length - 1) {
@@ -106,6 +146,8 @@ export default function SimpleTable(props) {
     }
     setSelectedUsers(newUser);
   };
+
+
 
   if (firstLoad) {
     retrieveAccounts();
@@ -158,7 +200,7 @@ export default function SimpleTable(props) {
           &#x2190; Back to Dashboard
         </Typography>{" "}
       </Link>
-      <Button variant="contained" > 
+      <Button variant="contained" onClick={handleInvites} >
         Send Invite(s)
       </Button>
     </div>
@@ -169,7 +211,7 @@ export default function SimpleTable(props) {
         <TableRow key={row.email}>
           <TableCell width={15}>
             <Checkbox
-                onClick={(event) => clickCheckBox(event, row.email)}
+                onClick={(event) => clickCheckBox(event, row)}
             />
           </TableCell>
 
