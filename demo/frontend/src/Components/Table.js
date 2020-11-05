@@ -55,6 +55,9 @@ export default function SimpleTable(props) {
       name: "",
       shown: false
   });
+
+  const [statusMessage, setStatusMessage] = React.useState("");
+
   const openStatsWindow = (uid, uname) => {
       setProfileID({
           id: uid,
@@ -88,10 +91,11 @@ export default function SimpleTable(props) {
   }
 
   async function handleInvites(){
+      let userNames = [];
       for(let i = 0; i < selectedUsers.length; i++){
-
           let senderID = props.user.id;
           let receiverID = selectedUsers[i].id;
+          userNames.push(selectedUsers[i].name);
           const userIDs = {senderID, receiverID};
 
           //Create the match before the invite is sent out
@@ -120,7 +124,13 @@ export default function SimpleTable(props) {
                 referrerPolicy: "no-referrer", // no-referrer, *client
                 body: JSON.stringify(matchIDs) // body data type must match "Content-Type" header
           });
-          //Update client with successful invites sent
+      }
+      if(selectedUsers.length > 0) {
+          setStatusMessage("Invite(s) sent to selected user(s)");
+          setSelectedUsers([]);
+          setTimeout(function () {
+              setStatusMessage("")
+          }.bind(this), 2000);
       }
   }
 
@@ -200,18 +210,15 @@ export default function SimpleTable(props) {
       <Button variant="contained" onClick={handleInvites} >
         Send Invite(s)
       </Button>
+        {" "}
+        {statusMessage}
     </div>
   );
 
   function interpretRow(row) {
     return (
         <TableRow key={row.email}>
-          <TableCell width={15}>
-            <Checkbox
-                onClick={(event) => clickCheckBox(event, row)}
-            />
-          </TableCell>
-
+          <TableCell width={15}>{renderCheckBox(row)}</TableCell>
           <TableCell align="center">{row.username}</TableCell>
           <TableCell align="center">
               <Button onClick={() => openStatsWindow(row.id, row.username)}>View Profile</Button>
@@ -219,6 +226,15 @@ export default function SimpleTable(props) {
           </TableCell>
         </TableRow>
     );
+  }
+
+  function renderCheckBox(row) {
+      if(row.username != props.user.username) {
+          return (
+              <Checkbox color="primary" checked={selectedUsers.includes(row, selectedUsers.indexOf(row))}
+                        onClick={(event) => clickCheckBox(event, row)}/>
+          );
+      }
   }
 
   function renderStats(uid) {
