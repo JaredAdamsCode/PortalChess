@@ -22,10 +22,10 @@ public class NotificationTest {
         testNotification.setMatch(4);
 
         assertThat(testNotification.getId()).isEqualTo(5);
-        assertThat(testNotification.getSender()).isEqualTo(33);
-        assertThat(testNotification.getReceiver()).isEqualTo(21);
+        assertThat(testNotification.getSenderID()).isEqualTo(33);
+        assertThat(testNotification.getReceiverID()).isEqualTo(21);
         assertThat(testNotification.getMessage()).isEqualTo("Test Message");
-        assertThat(testNotification.getMatch()).isEqualTo(4);
+        assertThat(testNotification.getMatchID()).isEqualTo(4);
     }
 
 }

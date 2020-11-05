@@ -13,9 +13,8 @@ public interface AccountDAO {
 
 	Account get(int id);
 
-    List<Notification> getNotificationList(Integer accountID);
-
     List<Integer> getGamesPlayed(Integer accountID);
+
     List<Integer> getGamesWon(Integer accountID);
 
 	Account get(String username);
@@ -28,5 +27,4 @@ public interface AccountDAO {
 
     Account getAccount(Account account);
 
-	List<Notification> getPendingList(Integer accountID);
 }

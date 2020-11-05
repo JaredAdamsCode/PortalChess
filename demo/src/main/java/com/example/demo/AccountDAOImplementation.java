@@ -35,13 +35,6 @@ public class AccountDAOImplementation implements AccountDAO {
 	}
 
 	@Override
-	public List<Notification> getNotificationList(Integer accountID) {
-		Session currSession = entityManager.unwrap(Session.class);
-		Query<Notification> query = currSession.createQuery("from Notification n where n.receiverID = :receiverID").setParameter("receiverID", accountID);
-		return query.getResultList();
-	}
-
-	@Override
 	public List<Integer> getGamesPlayed(Integer accountID) {
 		Session currSession = entityManager.unwrap(Session.class);
 		Query<Integer> query = currSession.createQuery("select games_played from Account a where a.id = :acctID").setParameter("acctID", accountID);
@@ -95,12 +88,4 @@ public class AccountDAOImplementation implements AccountDAO {
 		}
 
 	}
-
-	@Override
-	public List<Notification> getPendingList(Integer accountID) {
-		Session currSession = entityManager.unwrap(Session.class);
-		Query<Notification> query = currSession.createQuery("from Notification n where n.senderID = :senderID").setParameter("senderID", accountID);
-		return query.getResultList();
-	}
-
 }

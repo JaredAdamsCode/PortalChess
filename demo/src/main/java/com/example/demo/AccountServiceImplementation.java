@@ -31,11 +31,6 @@ public class AccountServiceImplementation implements AccountService {
 	}
 
 	@Override
-	public List<Notification> getNotificationList(Integer accountID) {
-		return  accountDAO.getNotificationList(accountID);
-	}
-
-	@Override
 	public List<Integer> getGamesPlayed(Integer accountID) { return accountDAO.getGamesPlayed(accountID); }
 
 	@Override
@@ -48,8 +43,8 @@ public class AccountServiceImplementation implements AccountService {
 	}
 
 	@Transactional
-	 @Override
-	 public void save(Account account) {
+	@Override
+	public void save(Account account) {
 		accountDAO.save(account);
 	 }
 
@@ -60,11 +55,6 @@ public class AccountServiceImplementation implements AccountService {
 
 	@Override
 	public boolean checkUser(Account account) { return accountDAO.checkUser(account); }
-
-	@Override
-	public List<Notification> getPendingList(Integer accountID) {
-		return  accountDAO.getPendingList(accountID);
-	}
 
 	@Override
 	public Account getAccount(Account account) {return accountDAO.getAccount(account);}

@@ -107,7 +107,7 @@ export default function Dashboard(props) {
                             <Divider/>
                                {inviteList.map(invite => (
                                 <p key={invite.id}>
-                                {invite.message} from user id {invite.sender}
+                                {invite.message} from user id {invite.senderID}
                                   <button className="extend-button">Accept</button>
                                   <button className="extend-button">Reject</button>
                                    </p>
