@@ -1,6 +1,7 @@
 import React from "react";
 import {Box, Typography, Divider, Grid, Paper} from '@material-ui/core';
 import Header from './Header';
+import {Redirect} from "react-router-dom";
 
 export default function Inbox(props) {
 
@@ -18,6 +19,10 @@ export default function Inbox(props) {
         }
         upDatePending(filtered);
     };
+
+    if (!props.loggedInStatus){
+        return (<Redirect to = "/"/>);
+    }
 
      if (firstLoad) {
        getPendingList(props.user.id);
