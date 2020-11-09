@@ -101,13 +101,6 @@ Mike showed off the Chessboard he has made, looks very nice
 Conor/Jon created the wiki page and updated all of the files that are a part of this page with everything for P2
 
 Sprint Review meeting setup for Friday 10/30/20 at 12:00pm
-Problems <br/><br/>
-Some tasks not thought out fully, some overlapped with others. So when a pull request was put out it would sometimes override another. Then later on the task would still be in the backlog, and we would have to discuss whether it had been finished or not.<br/><br/>
-Building the project from the start was difficult had to add correct folders/files into gitignore in order to get rid of issues.<br/><br/> 
-
-What went well<br/><br/>
-Once everything was in place we all jumped into tasks and started working efficiently. Got a lot done in a short amount of time.<br/><br/> 
-Good Zenhub etiquette, everyone followed rules on taking a task putting it into "In Progress". Then when finished would make pull requests and ask people to test it and review it before having someone merge it.<br/><br/>
 
 ## Scrum Session 13 Sprint Review 10/30/2020
 Conor and Jon demonstrated the current state of the application to the Product Owner. Conor showed off the functionality of the sign up page and logged in to the application. Jon showed off the dashboard, inbox, the ability to search for users, and the stats pages for multiple users.
@@ -126,3 +119,13 @@ Created the presentation slides for P2<br/>
 Recorded presentation video<br/> 
 Finalized all documentation for P2<br/> 
 Released P2 on Github<br/> 
+
+
+## Scrum Session 15 Sprint Retrospective 10/31/2020
+Problems <br/><br/>
+Some tasks not thought out fully, some overlapped with others. So when a pull request was put out it would sometimes override another. Then later on the task would still be in the backlog, and we would have to discuss whether it had been finished or not.<br/><br/>
+Building the project from the start was difficult had to add correct folders/files into gitignore in order to get rid of issues.<br/><br/> 
+
+What went well<br/><br/>
+Once everything was in place we all jumped into tasks and started working efficiently. Got a lot done in a short amount of time.<br/><br/> 
+Good Zenhub etiquette, everyone followed rules on taking a task putting it into "In Progress". Then when finished would make pull requests and ask people to test it and review it before having someone merge it.<br/><br/>
