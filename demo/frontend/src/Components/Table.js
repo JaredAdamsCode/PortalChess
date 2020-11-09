@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
          Typography, Button, Grid, TextField, Checkbox, CircularProgress } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import axios from 'axios';
 import Header from './Header';
 import UserStats from "./UserStats";
@@ -154,7 +154,9 @@ export default function SimpleTable(props) {
     setSelectedUsers(newUser);
   };
 
-
+  if (!props.loggedInStatus){
+      return (<Redirect to = "/"/>);
+  }
 
   if (firstLoad) {
     retrieveAccounts();
