@@ -154,6 +154,21 @@ export default function SimpleTable(props) {
     setSelectedUsers(newUser);
   };
 
+  const selectAllClick = (event) => {
+    if (event.target.checked) {
+      let newSelecteds = [];
+      for(let i = 0; i < users.length; i++){
+        if(users[i].username != props.user.username) {
+          newSelecteds.push(users[i]);
+        }
+      }
+      setSelectedUsers(newSelecteds);
+      return;
+    }
+    console.log("selected: ", selectedUsers);
+    setSelectedUsers([]);
+  };
+
   if (!props.loggedInStatus){
       return (<Redirect to = "/"/>);
   }
@@ -191,6 +206,7 @@ export default function SimpleTable(props) {
                 <TableCell width={15}>
                   <Checkbox 
                       // Todo: add select all functionality
+                      onClick={(event) => selectAllClick(event)}
                   />
                 </TableCell>
                 <TableCell align="center">Username</TableCell>
