@@ -30,7 +30,7 @@ public class MatchDAOImplementation implements  MatchDAO{
     @Override
     public int setStatus(int matchID, String newStatus) {
         Session currSession = entityManager.unwrap(Session.class);
-        Query<Notification> query = currSession.createQuery("update Match m set status = :status where m.id = :mID")
+        Query<Match> query = currSession.createQuery("update Match m set status = :status where m.id = :mID")
                 .setParameter("status", newStatus)
                 .setParameter("mID", matchID);
         return query.executeUpdate();

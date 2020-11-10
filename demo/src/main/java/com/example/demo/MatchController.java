@@ -24,8 +24,8 @@ public class MatchController {
         return matchService.getMatchesList(accountID);
     }
 
-    @PostMapping(path = "/updateMatchStatus/{matchID}/{newStatus}")
-    public void setNotificationMessage(@PathVariable int matchID, @PathVariable String newStatus) {
+    @PatchMapping(path = "/updateMatchStatus", consumes = "application/json")
+    public void setMatchStatus(@PathVariable int matchID, @PathVariable String newStatus) {
         matchService.setStatus(matchID, newStatus);
     }
 }

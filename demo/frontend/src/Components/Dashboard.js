@@ -1,9 +1,8 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
-
 import {Mail, SupervisorAccount} from "@material-ui/icons";
-
 import {Box, Typography, IconButton, Divider, Grid,Button, Paper} from '@material-ui/core';
+import axios from 'axios';
 import Header from './Header';
 
 export default function Dashboard(props) {
@@ -86,9 +85,12 @@ export default function Dashboard(props) {
     }
 
      async function rejectInvite(invite) {
-         await fetch('api/updateNotificationMessage/' + invite.id + '/rejected');
+         //await patch('api/updateNotificationMessage/' + invite.id + '/rejected');
+         await axios.patch('api/updateNotificationMessage/', {notificationID: invite.id, newMessage: 'rejected'})
+             .catch(error => console.log(error.message));
          let matchID = await fetch('api/getMatchID/' + invite.id);
-         await fetch('api/updateMatchStatus/' + matchID + '/Denied');
+         await axios.patch('api/updateMatchStatus/', {matchID: matchID, newStatus: 'Denied'})
+             .catch(error => console.log(error.message));
          setLoad(true);
      }
 
