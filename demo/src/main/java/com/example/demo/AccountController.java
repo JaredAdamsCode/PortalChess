@@ -83,6 +83,9 @@ public class AccountController {
 	@GetMapping("/getGamesWon/{accountID}")
 	public List<Integer> getGamesWon(@PathVariable int accountID) { return accountService.getGamesWon(accountID); }
 
+	@GetMapping("/getUsername/{accountID}")
+	public Account getUsername(@PathVariable int accountID) { return accountService.get(accountID); }
+
 	/*
 	 @DeleteMapping("/account/{id}")
 	 public String delete(@PathVariable int id) {

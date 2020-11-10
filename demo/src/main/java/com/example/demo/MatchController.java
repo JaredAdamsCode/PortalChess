@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class MatchController {
@@ -16,4 +18,10 @@ public class MatchController {
         int matchID = matchService.createMatch(match);
         return ResponseEntity.accepted().body(matchID);
     }
+
+    @GetMapping("/getMatchesList/{accountID}")
+    public List<Match> get(@PathVariable int accountID) {
+        return matchService.getMatchesList(accountID);
+    }
+
 }

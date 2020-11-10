@@ -10,8 +10,8 @@ export default function Dashboard(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [inviteList, upDateData] = React.useState([]);
     const [matchesList, upDateMatches] = React.useState([]);
-    const [firstLoad, setLoad] = React.useState(true);
 
+    const [firstLoad, setLoad] = React.useState(true);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -20,23 +20,53 @@ export default function Dashboard(props) {
     const handleClose = () => {
         setAnchorEl(null);
     };
-/*
-    This will be used later:
+
     async function getMatchesList(userID) {
+        //Gets list of matches with the userID
         let response = await fetch('/api/getMatchesList/' + userID);
         let body = await response.json();
-        upDateMatches(body);
+        let filtered = [];
+
+        //Filters this list to only show the In Progress matches
+        for (let i = 0; i < body.length; i++) {
+            if (body[i].status == "In Progress") {
+                filtered.push(body[i]);
+                }
+        }
+
+        //Adds the username into the matches list for each match to be shown in the list later
+        for(const element of filtered){
+                 let nameResponse = await fetch('/api/getUsername/' + element.senderID);
+                 let nameBody = await nameResponse.json();
+                 let username = nameBody.username;
+                 element.username = username;
+        }
+
+        //Updates state of the matches list
+        upDateMatches(filtered);
     }
-*/
+
     async function getInviteList(userID) {
+        //Gets the list of notifications for the current user
         let response = await fetch('/api/getInviteList/' + userID);
         let body = await response.json();
+
+        //Filters these notifications to only show the Invites
         let filtered = [];
         for (let i = 0; i < body.length; i++) {
             if (body[i].message == "Invite" || body[i].message == "invite") {
                 filtered.push(body[i]);
             }
         }
+
+        //Adds the username into the minvites list for each notification to be shown in the list later
+        for(const element of filtered){
+            let nameResponse = await fetch('/api/getUsername/' + element.senderID);
+            let nameBody = await nameResponse.json();
+            let username = nameBody.username;
+            element.username = username;
+        }
+
         upDateData(filtered);
     };
 
@@ -46,11 +76,13 @@ export default function Dashboard(props) {
 
      if (firstLoad) {
        getInviteList(props.user.id);
+       getMatchesList(props.user.id);
+
        setLoad(false);
      };
 
     return (
-        
+
         <div >
             <Header {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut}/>
             <Box  style={{ height: '85vh' }} textAlign="center"  height="100%" p={15} pt={1} m={8} mb={2} mt={0}>
@@ -97,10 +129,11 @@ export default function Dashboard(props) {
                             </Typography>
                             <Divider/>
                             {matchesList.map((match) => (
-                                <Typography variant='h5'>
-                                    {match}
-                                </Typography>
-                            ))}
+                                <p key={match.id}>
+                                {match.status} game with {match.username}
+                                <button className="extend-button">Play Game</button>
+                                </p>
+                                ))}
                         </Paper>
                     </Grid>
                     <Grid item xs={6}>
@@ -111,7 +144,7 @@ export default function Dashboard(props) {
                             <Divider/>
                                {inviteList.map(invite => (
                                 <p key={invite.id}>
-                                {invite.message} from user id {invite.senderID}
+                                {invite.message} from {invite.username}
                                   <button className="extend-button">Accept</button>
                                   <button className="extend-button">Reject</button>
                                    </p>

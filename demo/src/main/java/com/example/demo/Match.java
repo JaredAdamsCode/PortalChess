@@ -23,9 +23,12 @@ public class Match {
     @Column
      private Integer receiverID;
 
+    @Column
+    private String status;
+
     @Override
      public String toString() {
-        return "Match [id = " + id + ", senderId = " + senderID + ", receiverId = " + receiverID + "]";
+        return "Match [id = " + id + ", senderId = " + senderID + ", receiverId = " + receiverID + ", status = " + status + "]";
     }
 
     public void setId(Integer id) {
@@ -40,6 +43,10 @@ public class Match {
         this.receiverID = receiverId;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -50,6 +57,10 @@ public class Match {
 
     public Integer getReceiverID() {
         return receiverID;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
 }
