@@ -165,7 +165,6 @@ export default function SimpleTable(props) {
       setSelectedUsers(newSelecteds);
       return;
     }
-    console.log("selected: ", selectedUsers);
     setSelectedUsers([]);
   };
 
