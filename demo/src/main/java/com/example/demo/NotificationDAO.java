@@ -15,5 +15,5 @@ public interface NotificationDAO {
 
     int createNotification(Notification notification);
 
-    int setNotificationMessage(Integer notificationID, String message);
+    void setNotificationMessage(Integer notificationID, String message);
 }

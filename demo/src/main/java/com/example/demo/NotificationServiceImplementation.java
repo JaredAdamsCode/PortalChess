@@ -32,7 +32,7 @@ public class NotificationServiceImplementation implements  NotificationService{
     }
 
     @Override
-    public int setNotificationMessage(Integer notificationID, String message) {
-        return notificationDAO.setNotificationMessage(notificationID, message);
+    public void setNotificationMessage(Integer notificationID, String message) {
+        notificationDAO.setNotificationMessage(notificationID, message);
     }
 }
