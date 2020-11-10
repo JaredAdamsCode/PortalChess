@@ -3,7 +3,7 @@ import {Link, Redirect} from "react-router-dom";
 
 import {Mail, SupervisorAccount} from "@material-ui/icons";
 
-import {Box, Typography, IconButton, Divider, MenuItem, TextField, Grid, Menu,Button, Paper, Container} from '@material-ui/core';
+import {Box, Typography, IconButton, Divider, Grid,Button, Paper} from '@material-ui/core';
 import Header from './Header';
 
 export default function Dashboard(props) {
@@ -81,6 +81,17 @@ export default function Dashboard(props) {
        setLoad(false);
      };
 
+    async function acceptInvite(invite) {
+        console.log("Implement Accept Invite");
+    }
+
+     async function rejectInvite(invite) {
+         await fetch('api/updateNotificationMessage/' + invite.id + '/rejected');
+         let matchID = await fetch('api/getMatchID/' + invite.id);
+         await fetch('api/updateMatchStatus/' + matchID + '/Denied');
+         setLoad(true);
+     }
+
     return (
 
         <div >
@@ -143,12 +154,16 @@ export default function Dashboard(props) {
                             </Typography>
                             <Divider/>
                                {inviteList.map(invite => (
-                                <p key={invite.id}>
-                                {invite.message} from {invite.username}
-                                  <button className="extend-button">Accept</button>
-                                  <button className="extend-button">Reject</button>
-                                   </p>
-                            ))}
+                                    <p key={invite.id}>
+                                    {invite.message} from {invite.username}
+                                      <button className="extend-button"
+                                              onClick={() => acceptInvite(invite)}>Accept
+                                      </button>
+                                      <button className="extend-button"
+                                              onClick={() => rejectInvite(invite)}>Reject
+                                      </button>
+                                    </p>
+                                ))}
                         </Paper>
                     </Grid>
                 </Grid>

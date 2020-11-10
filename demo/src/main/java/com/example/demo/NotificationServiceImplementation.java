@@ -1,6 +1,5 @@
 package com.example.demo;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,6 @@ public class NotificationServiceImplementation implements  NotificationService{
 
     @Autowired
     private NotificationDAO notificationDAO;
-
 
     @Override
     public List<Notification> getNotificationList(Integer accountID) {
@@ -24,7 +22,17 @@ public class NotificationServiceImplementation implements  NotificationService{
     }
 
     @Override
+    public List<Notification> getMatchID(Integer notificationID) {
+        return notificationDAO.getMatchID(notificationID);
+    }
+
+    @Override
     public int createNotification(Notification notification) {
         return notificationDAO.createNotification(notification);
+    }
+
+    @Override
+    public int setNotificationMessage(Integer notificationID, String message) {
+        return notificationDAO.setNotificationMessage(notificationID, message);
     }
 }

@@ -14,7 +14,6 @@ public class MatchDAOImplementation implements  MatchDAO{
     @Autowired
     private EntityManager entityManager;
 
-
     @Override
     public int createMatch(Match match) {
         Session currSession = entityManager.unwrap(Session.class);
@@ -28,4 +27,12 @@ public class MatchDAOImplementation implements  MatchDAO{
         return query.getResultList();
     }
 
+    @Override
+    public int setStatus(int matchID, String newStatus) {
+        Session currSession = entityManager.unwrap(Session.class);
+        Query<Notification> query = currSession.createQuery("update Match m set status = :status where m.id = :mID")
+                .setParameter("status", newStatus)
+                .setParameter("mID", matchID);
+        return query.executeUpdate();
+    }
 }

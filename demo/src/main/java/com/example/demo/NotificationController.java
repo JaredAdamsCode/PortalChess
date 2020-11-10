@@ -22,9 +22,18 @@ public class NotificationController {
         return notificationService.getPendingList(accountID);
     }
 
+    @GetMapping("/getMatchID/{notificationID}")
+    public List<Notification> getMatchID(@PathVariable int notificationID) {
+        return notificationService.getMatchID(notificationID);
+    }
+
     @PostMapping(path = "/createInvite", consumes = "application/json", produces = "application/json")
     public void createMatch(@RequestBody Notification notification){
         notificationService.createNotification(notification);
     }
 
+    @PostMapping(path = "/updateNotificationMessage/{notificationID}/{newMessage}")
+    public void setNotificationMessage(@PathVariable int notificationID, @PathVariable String newMessage) {
+        notificationService.setNotificationMessage(notificationID, newMessage);
+    }
 }
