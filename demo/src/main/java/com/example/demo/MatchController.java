@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import com.example.demo.chessboard.ChessBoard;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,4 +31,13 @@ public class MatchController {
     public int setMatchStatus(@PathVariable int matchID, @PathVariable String newStatus) {
         return matchService.setStatus(matchID, newStatus);
     }
+
+
+    @GetMapping("/createBoard")
+    public String get() throws JsonProcessingException {
+        ChessBoard newBoard = new ChessBoard();
+        newBoard.initialize();
+        return newBoard.getBoardString();
+    }
+
 }

@@ -89,6 +89,11 @@ export default function Dashboard(props) {
         let matchIDResponse = await fetch('api/getMatchID/' + invite.id);
         let matchID = await matchIDResponse.json();
         await fetch('api/updateMatchStatus/' + matchID + '/In Progress', {method: 'PATCH'});
+
+        let response = await fetch('/api/createBoard');
+        let body = await response.json();
+        console.log(body);
+
         setLoad(true);
     }
 
