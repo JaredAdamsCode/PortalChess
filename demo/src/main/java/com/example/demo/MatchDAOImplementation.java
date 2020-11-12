@@ -23,7 +23,9 @@ public class MatchDAOImplementation implements  MatchDAO{
     @Override
     public List<Match> getMatchesList(int accountID) {
         Session currSession = entityManager.unwrap(Session.class);
-        Query<Match> query = currSession.createQuery("from Match m where m.receiverID = :receiverID").setParameter("receiverID", accountID);
+        Query<Match> query = currSession.createQuery("from Match m where m.receiverID = :receiverID or m.senderID = :senderID")
+                .setParameter("receiverID", accountID)
+                .setParameter("senderID", accountID);
         return query.getResultList();
     }
 

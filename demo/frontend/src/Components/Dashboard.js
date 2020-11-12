@@ -34,10 +34,16 @@ export default function Dashboard(props) {
 
         //Adds the username into the matches list for each match to be shown in the list later
         for(const element of filtered){
-                 let nameResponse = await fetch('/api/getUsername/' + element.senderID);
-                 let nameBody = await nameResponse.json();
-                 let username = nameBody.username;
-                 element.username = username;
+            let opponentID = -1;
+            if(element.senderID == userID) {
+                opponentID = element.receiverID;
+            }else {
+                opponentID = element.senderID;
+            }
+            let nameResponse = await fetch('/api/getUsername/' +opponentID);
+            let nameBody = await nameResponse.json();
+            let username = nameBody.username;
+            element.username = username;
         }
 
         //Updates state of the matches list
@@ -79,7 +85,11 @@ export default function Dashboard(props) {
     };
 
     async function acceptInvite(invite) {
-        console.log("Implement Accept Invite");
+        await fetch('api/updateNotificationMessage/' + invite.id + '/accepted', {method: 'PATCH'});
+        let matchIDResponse = await fetch('api/getMatchID/' + invite.id);
+        let matchID = await matchIDResponse.json();
+        await fetch('api/updateMatchStatus/' + matchID + '/In Progress', {method: 'PATCH'});
+        setLoad(true);
     }
 
      async function rejectInvite(invite) {
@@ -91,7 +101,6 @@ export default function Dashboard(props) {
      }
 
     return (
-
         <div >
             <Header {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut}/>
             <Box  style={{ height: '85vh' }} textAlign="center"  height="100%" p={15} pt={1} m={8} mb={2} mt={0}>
