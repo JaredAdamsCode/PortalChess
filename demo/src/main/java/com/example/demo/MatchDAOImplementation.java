@@ -37,4 +37,16 @@ public class MatchDAOImplementation implements  MatchDAO{
                 .setParameter("mID", matchID);
         return query.executeUpdate();
     }
+
+    @Override
+    public void createBoard(int matchID, String storeBoard) {
+        System.out.println(storeBoard);
+        Session currSession = entityManager.unwrap(Session.class);
+        Query<Match> query = currSession.createQuery("update Match m set m.board = :board where m.id = :mID")
+                .setParameter("board", storeBoard)
+                .setParameter("mID", matchID);
+
+        //This line below for actually executing the query is what breaks it
+        //query.executeUpdate();
+    }
 }

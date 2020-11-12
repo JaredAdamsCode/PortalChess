@@ -90,7 +90,7 @@ export default function Dashboard(props) {
         let matchID = await matchIDResponse.json();
         await fetch('api/updateMatchStatus/' + matchID + '/In Progress', {method: 'PATCH'});
 
-        let response = await fetch('/api/createBoard');
+        let response = await fetch('/api/createBoard/' + matchID + '/', {method: 'PATCH'});
         let body = await response.json();
         console.log(body);
 
