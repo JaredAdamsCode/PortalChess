@@ -10,4 +10,6 @@ public interface MatchDAO {
     int createMatch(Match match);
 
     List<Match> getMatchesList(int accountID);
+
+    int setStatus(int matchID, String newStatus);
 }

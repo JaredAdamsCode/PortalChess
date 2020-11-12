@@ -24,4 +24,8 @@ public class MatchController {
         return matchService.getMatchesList(accountID);
     }
 
+    @PatchMapping(path = "/updateMatchStatus/{matchID}/{newStatus}")
+    public int setMatchStatus(@PathVariable int matchID, @PathVariable String newStatus) {
+        return matchService.setStatus(matchID, newStatus);
+    }
 }

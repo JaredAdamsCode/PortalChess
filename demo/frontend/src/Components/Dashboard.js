@@ -1,9 +1,7 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
-
 import {Mail, SupervisorAccount} from "@material-ui/icons";
-
-import {Box, Typography, IconButton, Divider, MenuItem, TextField, Grid, Menu,Button, Paper, Container} from '@material-ui/core';
+import {Box, Typography, IconButton, Divider, Grid,Button, Paper} from '@material-ui/core';
 import Header from './Header';
 
 export default function Dashboard(props) {
@@ -36,10 +34,16 @@ export default function Dashboard(props) {
 
         //Adds the username into the matches list for each match to be shown in the list later
         for(const element of filtered){
-                 let nameResponse = await fetch('/api/getUsername/' + element.senderID);
-                 let nameBody = await nameResponse.json();
-                 let username = nameBody.username;
-                 element.username = username;
+            let opponentID = -1;
+            if(element.senderID == userID) {
+                opponentID = element.receiverID;
+            }else {
+                opponentID = element.senderID;
+            }
+            let nameResponse = await fetch('/api/getUsername/' +opponentID);
+            let nameBody = await nameResponse.json();
+            let username = nameBody.username;
+            element.username = username;
         }
 
         //Updates state of the matches list
@@ -74,15 +78,29 @@ export default function Dashboard(props) {
         return (<Redirect to = "/"/>);
     }
 
-     if (firstLoad) {
+    if (firstLoad) {
        getInviteList(props.user.id);
        getMatchesList(props.user.id);
-
        setLoad(false);
-     };
+    };
+
+    async function acceptInvite(invite) {
+        await fetch('api/updateNotificationMessage/' + invite.id + '/accepted', {method: 'PATCH'});
+        let matchIDResponse = await fetch('api/getMatchID/' + invite.id);
+        let matchID = await matchIDResponse.json();
+        await fetch('api/updateMatchStatus/' + matchID + '/In Progress', {method: 'PATCH'});
+        setLoad(true);
+    }
+
+     async function rejectInvite(invite) {
+         await fetch('api/updateNotificationMessage/' + invite.id + '/rejected', {method: 'PATCH'});
+         let matchIDResponse = await fetch('api/getMatchID/' + invite.id);
+         let matchID = await matchIDResponse.json();
+         await fetch('api/updateMatchStatus/' + matchID + '/Denied', {method: 'PATCH'});
+         setLoad(true);
+     }
 
     return (
-
         <div >
             <Header {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut}/>
             <Box  style={{ height: '85vh' }} textAlign="center"  height="100%" p={15} pt={1} m={8} mb={2} mt={0}>
@@ -143,12 +161,16 @@ export default function Dashboard(props) {
                             </Typography>
                             <Divider/>
                                {inviteList.map(invite => (
-                                <p key={invite.id}>
-                                {invite.message} from {invite.username}
-                                  <button className="extend-button">Accept</button>
-                                  <button className="extend-button">Reject</button>
-                                   </p>
-                            ))}
+                                    <p key={invite.id}>
+                                    {invite.message} from {invite.username}
+                                      <button className="extend-button"
+                                              onClick={() => acceptInvite(invite)}>Accept
+                                      </button>
+                                      <button className="extend-button"
+                                              onClick={() => rejectInvite(invite)}>Reject
+                                      </button>
+                                    </p>
+                                ))}
                         </Paper>
                     </Grid>
                 </Grid>

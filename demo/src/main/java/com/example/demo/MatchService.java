@@ -11,4 +11,5 @@ public interface MatchService {
 
     List<Match> getMatchesList(int accountID);
 
+    int setStatus(int matchID, String newStatus);
 }
