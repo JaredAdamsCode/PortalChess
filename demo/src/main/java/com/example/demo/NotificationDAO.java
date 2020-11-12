@@ -11,7 +11,7 @@ public interface NotificationDAO {
 
     List<Notification> getPendingList(Integer accountID);
 
-    List<Notification> getMatchID(Integer notificationID);
+    List<Integer> getMatchID(Integer notificationID);
 
     int createNotification(Notification notification);
 

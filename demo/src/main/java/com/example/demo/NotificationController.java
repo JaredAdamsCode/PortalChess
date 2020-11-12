@@ -23,7 +23,7 @@ public class NotificationController {
     }
 
     @GetMapping("/getMatchID/{notificationID}")
-    public List<Notification> getMatchID(@PathVariable int notificationID) {
+    public List<Integer> getMatchID(@PathVariable int notificationID) {
         return notificationService.getMatchID(notificationID);
     }
 

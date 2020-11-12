@@ -2,7 +2,6 @@ import React from "react";
 import {Link, Redirect} from "react-router-dom";
 import {Mail, SupervisorAccount} from "@material-ui/icons";
 import {Box, Typography, IconButton, Divider, Grid,Button, Paper} from '@material-ui/core';
-import axios from 'axios';
 import Header from './Header';
 
 export default function Dashboard(props) {
@@ -73,12 +72,11 @@ export default function Dashboard(props) {
         return (<Redirect to = "/"/>);
     }
 
-     if (firstLoad) {
+    if (firstLoad) {
        getInviteList(props.user.id);
        getMatchesList(props.user.id);
-
        setLoad(false);
-     };
+    };
 
     async function acceptInvite(invite) {
         console.log("Implement Accept Invite");
@@ -86,7 +84,8 @@ export default function Dashboard(props) {
 
      async function rejectInvite(invite) {
          await fetch('api/updateNotificationMessage/' + invite.id + '/rejected', {method: 'PATCH'});
-         let matchID = await fetch('api/getMatchID/' + invite.id);
+         let matchIDResponse = await fetch('api/getMatchID/' + invite.id);
+         let matchID = await matchIDResponse.json();
          await fetch('api/updateMatchStatus/' + matchID + '/Denied', {method: 'PATCH'});
          setLoad(true);
      }

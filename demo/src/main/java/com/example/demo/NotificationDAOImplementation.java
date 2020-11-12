@@ -30,9 +30,9 @@ public class NotificationDAOImplementation implements  NotificationDAO{
     }
 
     @Override
-    public List<Notification> getMatchID(Integer notificationID) {
+    public List<Integer> getMatchID(Integer notificationID) {
         Session currSession = entityManager.unwrap(Session.class);
-        Query<Notification> query = currSession.createQuery("select matchID from Notification n where n.id = :nID")
+        Query<Integer> query = currSession.createQuery("select matchID from Notification n where n.id = :nID")
                 .setParameter("nID", notificationID);
         return query.getResultList();
     }

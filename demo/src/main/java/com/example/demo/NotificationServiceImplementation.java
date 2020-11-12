@@ -23,7 +23,7 @@ public class NotificationServiceImplementation implements  NotificationService{
     }
 
     @Override
-    public List<Notification> getMatchID(Integer notificationID) {
+    public List<Integer> getMatchID(Integer notificationID) {
         return notificationDAO.getMatchID(notificationID);
     }
 
