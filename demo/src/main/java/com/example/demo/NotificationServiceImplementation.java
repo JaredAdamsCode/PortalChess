@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,7 +33,8 @@ public class NotificationServiceImplementation implements  NotificationService{
     }
 
     @Override
-    public void setNotificationMessage(Integer notificationID, String message) {
-        notificationDAO.setNotificationMessage(notificationID, message);
+    @Transactional
+    public int setNotificationMessage(int notificationID, String message) {
+        return notificationDAO.setNotificationMessage(notificationID, message);
     }
 }

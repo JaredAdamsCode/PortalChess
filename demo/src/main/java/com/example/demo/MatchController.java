@@ -25,7 +25,7 @@ public class MatchController {
     }
 
     @PatchMapping(path = "/updateMatchStatus", consumes = "application/json")
-    public void setMatchStatus(@PathVariable int matchID, @PathVariable String newStatus) {
-        matchService.setStatus(matchID, newStatus);
+    public int setMatchStatus(@RequestBody int matchID, @RequestBody String newStatus) {
+        return matchService.setStatus(matchID, newStatus);
     }
 }

@@ -23,16 +23,16 @@ public class MatchDAOImplementation implements  MatchDAO{
     @Override
     public List<Match> getMatchesList(int accountID) {
         Session currSession = entityManager.unwrap(Session.class);
-        Query<Match> query = currSession.createQuery("from Match n where n.receiverID = :receiverID").setParameter("receiverID", accountID);
+        Query<Match> query = currSession.createQuery("from Match m where m.receiverID = :receiverID").setParameter("receiverID", accountID);
         return query.getResultList();
     }
 
     @Override
-    public void setStatus(int matchID, String newStatus) {
+    public int setStatus(int matchID, String newStatus) {
         Session currSession = entityManager.unwrap(Session.class);
-        Query<Match> query = currSession.createQuery("update Match m set status = :status where m.id = :mID")
+        Query<Match> query = currSession.createQuery("update Match m set m.status = :status where m.id = :mID")
                 .setParameter("status", newStatus)
                 .setParameter("mID", matchID);
-        query.executeUpdate();
+        return query.executeUpdate();
     }
 }

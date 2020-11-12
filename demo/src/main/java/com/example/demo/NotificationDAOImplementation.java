@@ -44,12 +44,12 @@ public class NotificationDAOImplementation implements  NotificationDAO{
     }
 
     @Override
-    public void setNotificationMessage(Integer notificationID, String message) {
+    public int setNotificationMessage(int notificationID, String message) {
         Session currSession = entityManager.unwrap(Session.class);
-        Query<Notification> query = currSession.createQuery("update Notification n set message = :message where n.id = :nID")
+        Query<Notification> query = currSession.createQuery("update Notification n set n.message = :message where n.id = :nID")
                 .setParameter("message", message)
                 .setParameter("nID", notificationID);
-        query.executeUpdate();
+        return query.executeUpdate();
     }
 
 }

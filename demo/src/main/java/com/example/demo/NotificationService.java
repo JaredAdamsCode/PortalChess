@@ -16,5 +16,5 @@ public interface NotificationService {
 
     int createNotification(Notification notification);
 
-    void setNotificationMessage(Integer notificationID, String message);
+    int setNotificationMessage(int notificationID, String message);
 }

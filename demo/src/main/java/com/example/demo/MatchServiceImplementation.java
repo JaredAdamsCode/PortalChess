@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,5 +21,6 @@ public class MatchServiceImplementation implements MatchService{
     public List<Match> getMatchesList(int accountID) {return matchDAO.getMatchesList(accountID);}
 
     @Override
-    public void setStatus(int matchID, String newStatus) { matchDAO.setStatus(matchID, newStatus); }
+    @Transactional
+    public int setStatus(int matchID, String newStatus) { return matchDAO.setStatus(matchID, newStatus); }
 }
