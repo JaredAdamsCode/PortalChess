@@ -32,8 +32,8 @@ public class NotificationController {
         notificationService.createNotification(notification);
     }
 
-    @PatchMapping(path = "/updateNotificationMessage", consumes = "application/json")
-    public int setNotificationMessage(@RequestBody int notificationID, @RequestBody String newMessage) {
+    @PatchMapping(path = "/updateNotificationMessage/{notificationID}/{newMessage}")
+    public int setNotificationMessage(@PathVariable int notificationID, @PathVariable String newMessage) {
         return notificationService.setNotificationMessage(notificationID, newMessage);
     }
 }

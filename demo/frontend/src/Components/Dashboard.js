@@ -85,12 +85,9 @@ export default function Dashboard(props) {
     }
 
      async function rejectInvite(invite) {
-         //await patch('api/updateNotificationMessage/' + invite.id + '/rejected');
-         await axios.patch('api/updateNotificationMessage/', {notificationID: invite.id, newMessage: "rejected"})
-             .catch(error => console.log(error.message));
+         await fetch('api/updateNotificationMessage/' + invite.id + '/rejected', {method: 'PATCH'});
          let matchID = await fetch('api/getMatchID/' + invite.id);
-         await axios.patch('api/updateMatchStatus/', {matchID: matchID, newStatus: "Denied"})
-             .catch(error => console.log(error.message));
+         await fetch('api/updateMatchStatus/' + matchID + '/Denied', {method: 'PATCH'});
          setLoad(true);
      }
 
