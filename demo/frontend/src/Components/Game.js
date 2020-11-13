@@ -38,7 +38,7 @@ export default function Game(props) {
                     <Grid item xs ={12} style={{paddingLeft: 0, paddingRight: 0}}>
                         <Paper>
                             <Typography variant='h4' align="center">
-                                Inbox
+                                Chess Game
                             </Typography>
                             <Divider/>
                         </Paper>
