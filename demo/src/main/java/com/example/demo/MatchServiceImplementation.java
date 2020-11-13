@@ -26,4 +26,7 @@ public class MatchServiceImplementation implements MatchService{
 
     @Override
     public void createBoard(int matchID, String storeBoard) { matchDAO.createBoard(matchID, storeBoard);}
+
+    @Override
+    public Match getMatch(int matchID) { return matchDAO.getMatch(matchID);}
 }

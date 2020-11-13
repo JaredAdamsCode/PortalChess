@@ -6,6 +6,7 @@ import UserLogin from "./Components/UserLogin";
 import Dashboard from "./Components/Dashboard";
 import Inbox from "./Components/Inbox";
 import axios from 'axios';
+import Game from "./Components/Game";
 
 
 class App extends Component {
@@ -72,6 +73,11 @@ class App extends Component {
             props => (<Inbox {...props} loggedInStatus={this.state.loggedInStatus}
                                  handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
                                  user={this.state.user} />)}/>
+
+          <Route exact path="/game" render={
+            props => (<Game {...props} loggedInStatus={this.state.loggedInStatus}
+                             handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
+                             user={this.state.user} />)}/>
 
         </Switch>
       </Router>

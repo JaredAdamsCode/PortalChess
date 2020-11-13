@@ -11,6 +11,8 @@ export default function Dashboard(props) {
 
     const [firstLoad, setLoad] = React.useState(true);
 
+    const [matchState, setMatch] = React.useState(null);
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -92,7 +94,6 @@ export default function Dashboard(props) {
 
         let response = await fetch('/api/createBoard/' + matchID + '/', {method: 'PATCH'});
         let body = await response.json();
-        console.log(body);
 
         setLoad(true);
     }
@@ -104,6 +105,12 @@ export default function Dashboard(props) {
          await fetch('api/updateMatchStatus/' + matchID + '/Denied', {method: 'PATCH'});
          setLoad(true);
      }
+
+    async function playGame(matchID) {
+        let response = await fetch('/api/getMatch/' + matchID);
+        let body = await response.json();
+        setMatch(body);
+    }
 
     return (
         <div >
@@ -154,7 +161,9 @@ export default function Dashboard(props) {
                             {matchesList.map((match) => (
                                 <p key={match.id}>
                                 {match.status} game with {match.username}
-                                <button className="extend-button">Play Game</button>
+                                <button className="extend-button"
+                                        component={ Link } to="/game" onClick={handleClick}> Play Game
+                                </button>
                                 </p>
                                 ))}
                         </Paper>

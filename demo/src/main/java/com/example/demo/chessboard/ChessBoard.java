@@ -21,12 +21,6 @@ public class ChessBoard {
 		createQueens();
 		createKings();
 	}
-
-	public String getBoardString() throws JsonProcessingException {
-		ObjectMapper mapper = new ObjectMapper();
-		String boardString = mapper.writeValueAsString(board);
-		return boardString;
-	}
 	
 	public ChessPiece getPiece(String position) throws IllegalPositionException{
 		if(position.length() != 2) {
@@ -256,6 +250,11 @@ public class ChessBoard {
 		ChessBoard board = new ChessBoard();
 		board.initialize();
 		return board;
+	}
+
+	public String getBoardString() throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(board);
 	}
 	
 }

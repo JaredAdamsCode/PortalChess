@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.example.demo.chessboard.ChessBoard;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.gson.annotations.SerializedName;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +31,7 @@ public class Match {
     private String status;
 
     @Column
+    @SerializedName("chessboard")
     private String board;
 
     @Override

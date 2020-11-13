@@ -2,6 +2,8 @@ package com.example.demo;
 
 import com.example.demo.chessboard.ChessBoard;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +42,14 @@ public class MatchController {
         matchService.createBoard(matchID,storeBoard);
         return storeBoard;
     }
+
+    @GetMapping("/getMatch/{matchID}")
+    public Match getMatch(@PathVariable int matchID) throws JsonProcessingException {
+        Match match = matchService.getMatch(matchID);
+        System.out.println(match.getBoard());
+        return match;
+    }
+
+
 
 }
