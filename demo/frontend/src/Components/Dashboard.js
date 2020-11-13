@@ -16,18 +16,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-
 export default function Dashboard(props) {
-
 
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [inviteList, upDateData] = React.useState([]);
     const [matchesList, upDateMatches] = React.useState([]);
-
     const [firstLoad, setLoad] = React.useState(true);
-
-    const [matchState, setMatch] = React.useState(null);
+    const [playMatch, setMatchState] = React.useState(false);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -95,6 +91,9 @@ export default function Dashboard(props) {
     if (!props.loggedInStatus){
         return (<Redirect to = "/"/>);
     }
+    if(playMatch){
+        return (<Redirect to = "/game"/>);
+    }
 
     if (firstLoad) {
        getInviteList(props.user.id);
@@ -108,9 +107,7 @@ export default function Dashboard(props) {
         let matchID = await matchIDResponse.json();
         await fetch('api/updateMatchStatus/' + matchID + '/In Progress', {method: 'PATCH'});
 
-        let response = await fetch('/api/createBoard/' + matchID + '/', {method: 'PATCH'});
-        let body = await response.json();
-
+        await fetch('/api/createBoard/' + matchID + '/', {method: 'PATCH'});
         setLoad(true);
     }
 
@@ -125,7 +122,7 @@ export default function Dashboard(props) {
     async function playGame(matchID) {
         let response = await fetch('/api/getMatch/' + matchID);
         let body = await response.json();
-        setMatch(body);
+        props.setMatch(body);
     }
 
     return (
@@ -183,7 +180,7 @@ export default function Dashboard(props) {
                                     size="small"
                                     className={classes.button}
                                     startIcon={<VideogameAssetIcon />}
-                                    component={Link} to="/game">
+                                    onClick={() => playGame(match.id)}>
                                     Play
                                 </Button>
                                 </p>

@@ -40,6 +40,7 @@ export default function Game(props) {
                             <Typography variant='h4' align="center">
                                 Chess Game
                             </Typography>
+                            {props.match}
                             <Divider/>
                         </Paper>
                     </Grid>

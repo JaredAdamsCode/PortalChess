@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import {Route, Switch, BrowserRouter as Router, useHistory} from "react-router-dom";
 import AddUser from "./Components/AddUser";
 import Table from "./Components/Table";
 import UserLogin from "./Components/UserLogin";
@@ -9,15 +9,18 @@ import axios from 'axios';
 import Game from "./Components/Game";
 
 
+
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
       loggedInStatus: false,
-      user: {}
+      user: {},
+      match: null
     }
     this.handleLogIn = this.handleLogIn.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
+    this.setMatch = this.setMatch.bind(this);
   }
 
   getLoggedInStatus(){
@@ -41,7 +44,14 @@ class App extends Component {
   handleLogOut(){
     this.setState({
       loggedInStatus: false, 
-      user: {}
+      user: {},
+      match: null
+    });
+  }
+
+  setMatch(currentMatch){
+    this.setState({
+      match: currentMatch
     });
   }
 
@@ -67,7 +77,7 @@ class App extends Component {
           <Route exact path="/dashboard" render={
             props => (<Dashboard {...props} loggedInStatus={this.state.loggedInStatus}
               handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
-              user={this.state.user} />)}/>
+              user={this.state.user} setMatch={this.setMatch} match={this.state.match}/>)}/>
 
           <Route exact path="/inbox" render={
             props => (<Inbox {...props} loggedInStatus={this.state.loggedInStatus}
@@ -77,7 +87,7 @@ class App extends Component {
           <Route exact path="/game" render={
             props => (<Game {...props} loggedInStatus={this.state.loggedInStatus}
                              handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
-                             user={this.state.user} />)}/>
+                             user={this.state.user} setMatch={this.setMatch} match={this.state.match}/>)}/>
 
         </Switch>
       </Router>
