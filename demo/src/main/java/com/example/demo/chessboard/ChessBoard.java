@@ -2,6 +2,7 @@ package com.example.demo.chessboard;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -253,8 +254,8 @@ public class ChessBoard {
 	}
 
 	public String getBoardString() throws JsonProcessingException {
-		ObjectMapper mapper = new ObjectMapper();
-		return mapper.writeValueAsString(board);
+		Gson gson = new Gson();
+		return gson.toJson(board);
 	}
 	
 }

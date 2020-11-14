@@ -23,7 +23,6 @@ export default function Dashboard(props) {
     const [inviteList, upDateData] = React.useState([]);
     const [matchesList, upDateMatches] = React.useState([]);
     const [firstLoad, setLoad] = React.useState(true);
-    const [playMatch, setMatchState] = React.useState(false);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -91,9 +90,6 @@ export default function Dashboard(props) {
     if (!props.loggedInStatus){
         return (<Redirect to = "/"/>);
     }
-    if(playMatch){
-        return (<Redirect to = "/game"/>);
-    }
 
     if (firstLoad) {
        getInviteList(props.user.id);
@@ -119,11 +115,10 @@ export default function Dashboard(props) {
          setLoad(true);
      }
 
-    async function playGame(matchID) {
-        let response = await fetch('/api/getMatch/' + matchID);
-        let body = await response.json();
-        props.setMatch(body);
+    const playGame = (matchID) => {
+        props.setMatchID(matchID);
     }
+
 
     return (
         <div >
@@ -180,7 +175,8 @@ export default function Dashboard(props) {
                                     size="small"
                                     className={classes.button}
                                     startIcon={<VideogameAssetIcon />}
-                                    onClick={() => playGame(match.id)}>
+                                    onClick={() => playGame(match.id)}
+                                    component={Link} to="/game">
                                     Play
                                 </Button>
                                 </p>

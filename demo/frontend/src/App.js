@@ -16,11 +16,11 @@ class App extends Component {
     this.state = {
       loggedInStatus: false,
       user: {},
-      match: null
+      matchID: null
     }
     this.handleLogIn = this.handleLogIn.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
-    this.setMatch = this.setMatch.bind(this);
+    this.setMatchID = this.setMatchID.bind(this);
   }
 
   getLoggedInStatus(){
@@ -45,14 +45,12 @@ class App extends Component {
     this.setState({
       loggedInStatus: false, 
       user: {},
-      match: null
+      matchID: null
     });
   }
 
-  setMatch(currentMatch){
-    this.setState({
-      match: currentMatch
-    });
+  setMatchID(currentMatchID){
+    this.setState({matchID: currentMatchID});
   }
 
   render() {
@@ -77,7 +75,7 @@ class App extends Component {
           <Route exact path="/dashboard" render={
             props => (<Dashboard {...props} loggedInStatus={this.state.loggedInStatus}
               handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
-              user={this.state.user} setMatch={this.setMatch} match={this.state.match}/>)}/>
+              user={this.state.user} setMatchID={this.setMatchID} matchID={this.state.matchID}/>)}/>
 
           <Route exact path="/inbox" render={
             props => (<Inbox {...props} loggedInStatus={this.state.loggedInStatus}
@@ -87,7 +85,7 @@ class App extends Component {
           <Route exact path="/game" render={
             props => (<Game {...props} loggedInStatus={this.state.loggedInStatus}
                              handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
-                             user={this.state.user} setMatch={this.setMatch} match={this.state.match}/>)}/>
+                             user={this.state.user} setMatchID={this.setMatchID} matchID={this.state.matchID}/>)}/>
 
         </Switch>
       </Router>

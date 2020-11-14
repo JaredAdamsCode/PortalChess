@@ -8,16 +8,32 @@ export default function Game(props) {
 
     const [pendingList, upDatePending] = React.useState([]);
     const [firstLoad, setLoad] = React.useState(true);
+    const [matchData, updateMatchData] = React.useState([]);
+    const [chessboard, chessboardData] = React.useState([]);
 
     if (!props.loggedInStatus){
         return (<Redirect to = "/"/>);
     }
 
     if (firstLoad) {
+        getMatchData();
         setLoad(false);
-    };
+    }
+    if(!firstLoad){
+        console.log(chessboard);
+    }
 
-    return (
+    async function getMatchData(){
+        let matchID = props.matchID;
+        let response = await fetch('/api/getMatch/' + matchID);
+        let body = await response.json();
+
+        chessboardData(body.board);
+
+    }
+
+
+return (
 
         <div >
             <Header {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut}/>
@@ -38,14 +54,15 @@ export default function Game(props) {
                     <Grid item xs ={12} style={{paddingLeft: 0, paddingRight: 0}}>
                         <Paper>
                             <Typography variant='h4' align="center">
-                                Chess Game
+                                Chessboard
                             </Typography>
-                            {props.match}
                             <Divider/>
+
                         </Paper>
                     </Grid>
                 </Grid>
             </Box>
         </div>
     );
+
 }
