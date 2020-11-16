@@ -27,9 +27,8 @@ export default function Game(props) {
         let matchID = props.matchID;
         let response = await fetch('/api/getMatch/' + matchID);
         let body = await response.json();
-
-        chessboardData(body.board);
-
+        let chess = JSON.parse(body.board);
+        chessboardData(chess);
     }
 
 
