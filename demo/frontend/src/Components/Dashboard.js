@@ -1,13 +1,14 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
 import {Mail, SupervisorAccount} from "@material-ui/icons";
-import {Box, Typography, IconButton, Divider, Grid,Button, Paper} from '@material-ui/core';
+import {Box, Typography, IconButton, Divider, Grid, Button, Paper, Popover} from '@material-ui/core';
 import Header from './Header';
 
 export default function Dashboard(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [inviteList, upDateData] = React.useState([]);
     const [matchesList, upDateMatches] = React.useState([]);
+    const [anchorPOP, setAnchorPOP] = React.useState(null);
 
     const [firstLoad, setLoad] = React.useState(true);
 
@@ -15,8 +16,16 @@ export default function Dashboard(props) {
         setAnchorEl(event.currentTarget);
     };
 
+    const handlePop = () => {
+        setAnchorPOP(!anchorPOP);
+    };
+
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleClosePOP = () => {
+        setAnchorPOP(null);
     };
 
     async function getMatchesList(userID) {
@@ -100,6 +109,12 @@ export default function Dashboard(props) {
          setLoad(true);
      }
 
+    async function unregisterAccount(userID) {
+        await fetch('api/unregister/' + userID , {method: 'PATCH'});
+        console.log("unregistering account: " + userID);
+        props.handleLogOut();
+    }
+
     return (
         <div >
             <Header {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut}/>
@@ -174,6 +189,27 @@ export default function Dashboard(props) {
                         </Paper>
                     </Grid>
                 </Grid>
+                <Button onClick={handlePop} align="right">
+                    Unregister Account
+                </Button>
+                <Popover
+                    id='simple-popover'
+                    anchorEl={anchorPOP}
+                    open={Boolean(anchorPOP)}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    onClose={handleClosePOP}
+                >
+                    <Button fullWidth variant="contained" color="primary" preventDefault
+                            onClick={() => unregisterAccount(props.user.id)}>Confirm Unregister Account
+                    </Button>
+                </Popover>
             </Box>
         </div>
     );
