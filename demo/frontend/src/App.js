@@ -5,6 +5,7 @@ import Table from "./Components/Table";
 import UserLogin from "./Components/UserLogin";
 import Dashboard from "./Components/Dashboard";
 import Inbox from "./Components/Inbox";
+import Match from "./Components/Match";
 import axios from 'axios';
 import Game from "./Components/Game";
 
@@ -57,7 +58,7 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" render={
+          <Route exact path="/test" render={
             props => (<UserLogin {...props} loggedInStatus={this.state.loggedInStatus}
               handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
               user={this.state.user} /> )}/>
@@ -81,6 +82,10 @@ class App extends Component {
             props => (<Inbox {...props} loggedInStatus={this.state.loggedInStatus}
                                  handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
                                  user={this.state.user} />)}/>
+          <Route exact path="/" render={
+            props => (<Match {...props} loggedInStatus={this.state.loggedInStatus}
+                             handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
+                             user={this.state.user} />)}/>
 
           <Route exact path="/game" render={
             props => (<Game {...props} loggedInStatus={this.state.loggedInStatus}

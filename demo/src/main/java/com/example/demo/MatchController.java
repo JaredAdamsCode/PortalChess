@@ -24,6 +24,17 @@ public class MatchController {
         return ResponseEntity.accepted().body(matchID);
     }
 
+
+    @PostMapping(path = "/attemptMove", consumes = "application/json", produces = "application/json")
+    public String[][] attemptMove(@RequestBody Move move){
+        String[][] board = new String[8][8];
+        //board[0][0] = "White King";
+        return board;
+    }
+
+
+
+
     @GetMapping("/getMatchesList/{accountID}")
     public List<Match> get(@PathVariable int accountID) {
         return matchService.getMatchesList(accountID);
