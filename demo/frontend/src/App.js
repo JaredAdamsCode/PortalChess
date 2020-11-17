@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import {Route, Switch, BrowserRouter as Router, useHistory} from "react-router-dom";
 import AddUser from "./Components/AddUser";
 import Table from "./Components/Table";
 import UserLogin from "./Components/UserLogin";
 import Dashboard from "./Components/Dashboard";
 import Inbox from "./Components/Inbox";
 import axios from 'axios';
+import Game from "./Components/Game";
+
 
 
 class App extends Component {
@@ -13,10 +15,12 @@ class App extends Component {
     super(props);
     this.state = {
       loggedInStatus: false,
-      user: {}
+      user: {},
+      matchID: null
     }
     this.handleLogIn = this.handleLogIn.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
+    this.setMatchID = this.setMatchID.bind(this);
   }
 
   getLoggedInStatus(){
@@ -40,8 +44,13 @@ class App extends Component {
   handleLogOut(){
     this.setState({
       loggedInStatus: false, 
-      user: {}
+      user: {},
+      matchID: null
     });
+  }
+
+  setMatchID(currentMatchID){
+    this.setState({matchID: currentMatchID});
   }
 
   render() {
@@ -66,12 +75,17 @@ class App extends Component {
           <Route exact path="/dashboard" render={
             props => (<Dashboard {...props} loggedInStatus={this.state.loggedInStatus}
               handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
-              user={this.state.user} />)}/>
+              user={this.state.user} setMatchID={this.setMatchID} matchID={this.state.matchID}/>)}/>
 
           <Route exact path="/inbox" render={
             props => (<Inbox {...props} loggedInStatus={this.state.loggedInStatus}
                                  handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
                                  user={this.state.user} />)}/>
+
+          <Route exact path="/game" render={
+            props => (<Game {...props} loggedInStatus={this.state.loggedInStatus}
+                             handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
+                             user={this.state.user} setMatchID={this.setMatchID} matchID={this.state.matchID}/>)}/>
 
         </Switch>
       </Router>
