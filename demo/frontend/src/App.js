@@ -58,7 +58,7 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" render={
+          <Route exact path="/test" render={
             props => (<UserLogin {...props} loggedInStatus={this.state.loggedInStatus}
               handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
               user={this.state.user} /> )}/>
@@ -82,7 +82,7 @@ class App extends Component {
             props => (<Inbox {...props} loggedInStatus={this.state.loggedInStatus}
                                  handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
                                  user={this.state.user} />)}/>
-          <Route exact path="/match" render={
+          <Route exact path="/" render={
             props => (<Match {...props} loggedInStatus={this.state.loggedInStatus}
                              handleLogOut={this.handleLogOut} handleLogIn={this.handleLogIn}
                              user={this.state.user} />)}/>
