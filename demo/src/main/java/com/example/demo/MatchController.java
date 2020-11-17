@@ -27,9 +27,6 @@ public class MatchController {
         return board;
     }
 
-
-
-
     @GetMapping("/getMatchesList/{accountID}")
     public List<Match> get(@PathVariable int accountID) {
         return matchService.getMatchesList(accountID);
