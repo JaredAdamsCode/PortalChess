@@ -25,3 +25,16 @@ Talked with PO about what to work on next <br/>
 
 Corey is working on getting Invitations Accepted/Rejected<br/>
 Rest of team needs to figure out the board object being passed from client/server/database will work<br/>
+
+## Scrum Session 4 Daily Scrum 11/15/2020
+
+Discussed possible solutions with creating and storing the ChessBoard object in the database<br/>
+- Potentially have it stored as a JSON string in database, then transferring it around will be easy
+- Client/Server would both need the ability to parse the JSON string into an object array
+
+## Scrum Session 5 Daily Scrum 11/17/2020
+- Showed off accepting an invite initializing chessboard object, clicking play game sends request to server to get the Chessboard state on client
+- Working on server being able to pull the JSON string from database and translate that into a ChessBoard object
+- Working on unregistering an account, brought up issues with deleting an account with their ID cascading with other tables. Talked about solutions
+- Working on implementing Chesspieces that arent already finished, brought up issues of adding the Portal piece and how that affects other pieces
+- Working on getting the client to send a move to the server and having the server process that move

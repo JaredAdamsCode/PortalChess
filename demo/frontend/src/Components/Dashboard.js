@@ -2,9 +2,24 @@ import React from "react";
 import {Link, Redirect} from "react-router-dom";
 import {Mail, SupervisorAccount} from "@material-ui/icons";
 import {Box, Typography, IconButton, Divider, Grid, Button, Paper, Popover} from '@material-ui/core';
+import VideogameAssetIcon from '@material-ui/icons/VideogameAsset';
+import DoneIcon from '@material-ui/icons/Done';
+import ClearIcon from '@material-ui/icons/Clear';
+import {Box, Typography, IconButton, Divider, Grid,Button, Paper} from '@material-ui/core';
 import Header from './Header';
+import makeStyles from "@material-ui/core/styles/makeStyles";
+
+
+const useStyles = makeStyles((theme) => ({
+    button: {
+        fontSize: theme.sizeSmall,
+        margin: theme.spacing(1),
+    }
+}));
 
 export default function Dashboard(props) {
+
+    const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [inviteList, upDateData] = React.useState([]);
     const [matchesList, upDateMatches] = React.useState([]);
@@ -98,6 +113,8 @@ export default function Dashboard(props) {
         let matchIDResponse = await fetch('api/getMatchID/' + invite.id);
         let matchID = await matchIDResponse.json();
         await fetch('api/updateMatchStatus/' + matchID + '/In Progress', {method: 'PATCH'});
+
+        await fetch('/api/createBoard/' + matchID + '/', {method: 'PATCH'});
         setLoad(true);
     }
 
@@ -108,6 +125,11 @@ export default function Dashboard(props) {
          await fetch('api/updateMatchStatus/' + matchID + '/Denied', {method: 'PATCH'});
          setLoad(true);
      }
+
+    const playGame = (matchID) => {
+        props.setMatchID(matchID);
+    }
+
 
     async function unregisterAccount(userID) {
         console.log(matchesList);
@@ -176,7 +198,16 @@ export default function Dashboard(props) {
                             {matchesList.map((match) => (
                                 <p key={match.id}>
                                 {match.status} game with {match.username}
-                                <button className="extend-button">Play Game</button>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    size="small"
+                                    className={classes.button}
+                                    startIcon={<VideogameAssetIcon />}
+                                    onClick={() => playGame(match.id)}
+                                    component={Link} to="/game">
+                                    Play
+                                </Button>
                                 </p>
                                 ))}
                         </Paper>
@@ -190,12 +221,25 @@ export default function Dashboard(props) {
                                {inviteList.map(invite => (
                                     <p key={invite.id}>
                                     {invite.message} from {invite.username}
-                                      <button className="extend-button"
-                                              onClick={() => acceptInvite(invite)}>Accept
-                                      </button>
-                                      <button className="extend-button"
-                                              onClick={() => rejectInvite(invite)}>Reject
-                                      </button>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            size='small'
+                                            className={classes.button}
+                                            startIcon={<DoneIcon />}
+                                            onClick={() => acceptInvite(invite)}>
+                                            Accept
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            size='small'
+                                            className={classes.button}
+                                            startIcon={<ClearIcon />}
+                                            onClick={() => rejectInvite(invite)}>
+                                            Reject
+                                        </Button>
+
                                     </p>
                                 ))}
                         </Paper>

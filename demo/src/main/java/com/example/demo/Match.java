@@ -1,5 +1,9 @@
 package com.example.demo;
 
+import com.example.demo.chessboard.ChessBoard;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.gson.annotations.SerializedName;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +30,10 @@ public class Match {
     @Column
     private String status;
 
+    @Column
+    @SerializedName("chessboard")
+    private String board;
+
     @Override
      public String toString() {
         return "Match [id = " + id + ", senderId = " + senderID + ", receiverId = " + receiverID + ", status = " + status + "]";
@@ -47,6 +55,8 @@ public class Match {
         this.status = status;
     }
 
+    public void setBoard(String board){this.board = board;}
+
     public Integer getId() {
         return id;
     }
@@ -62,5 +72,7 @@ public class Match {
     public String getStatus() {
         return status;
     }
+
+    public String getBoard(){return board;}
 
 }

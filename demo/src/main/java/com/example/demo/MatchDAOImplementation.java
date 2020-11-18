@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -36,5 +37,23 @@ public class MatchDAOImplementation implements  MatchDAO{
                 .setParameter("status", newStatus)
                 .setParameter("mID", matchID);
         return query.executeUpdate();
+    }
+
+    @Transactional
+    @Override
+    public void createBoard(int matchID, String storeBoard) {
+        Session currSession = entityManager.unwrap(Session.class);
+        Query<Match> query = currSession.createQuery("update Match m set m.board = :board where m.id = :mID")
+                .setParameter("board", storeBoard)
+                .setParameter("mID", matchID);
+        query.executeUpdate();
+    }
+
+    @Override
+    public Match getMatch(int matchID) {
+        Session currSession = entityManager.unwrap(Session.class);
+        Query<Match> query = currSession.createQuery("from Match m where m.id = :mID")
+                .setParameter("mID", matchID);
+        return query.getSingleResult();
     }
 }

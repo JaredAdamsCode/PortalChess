@@ -12,4 +12,8 @@ public interface MatchService {
     List<Match> getMatchesList(int accountID);
 
     int setStatus(int matchID, String newStatus);
+
+    void createBoard(int matchID, String storeBoard);
+
+    Match getMatch(int matchID);
 }
