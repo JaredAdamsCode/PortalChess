@@ -5,7 +5,6 @@ import {Box, Typography, IconButton, Divider, Grid, Button, Paper, Popover} from
 import VideogameAssetIcon from '@material-ui/icons/VideogameAsset';
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
-import {Box, Typography, IconButton, Divider, Grid,Button, Paper} from '@material-ui/core';
 import Header from './Header';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
