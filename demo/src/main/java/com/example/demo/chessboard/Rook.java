@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Rook extends ChessPiece{
 
-	public Rook(ChessBoard board, Color color) {
-		super(board, color);
+	public Rook(ChessBoard board, Color color, String type) {
+		super(board, color, type);
 	}
 
 	@Override

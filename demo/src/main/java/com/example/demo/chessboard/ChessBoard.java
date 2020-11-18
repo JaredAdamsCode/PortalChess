@@ -2,6 +2,8 @@ package com.example.demo.chessboard;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -154,13 +156,13 @@ public class ChessBoard {
 		// create WHITE pawns
 		String position;
 		for(int i = 1; i <= 8; i++) {
-			Pawn pawn = new Pawn(this, ChessPiece.Color.WHITE);
+			Pawn pawn = new Pawn(this, ChessPiece.Color.WHITE, "Pawn");
 			position = createPositionString(2, i);
 			placePiece(pawn, position);
 		}
 		// create BLACK pawns
 		for(int i = 1; i <= 8; i++) {
-			Pawn pawn = new Pawn(this, ChessPiece.Color.BLACK);
+			Pawn pawn = new Pawn(this, ChessPiece.Color.BLACK, "Pawn");
 			position = createPositionString(7, i);
 			placePiece(pawn, position);
 		}
@@ -168,57 +170,57 @@ public class ChessBoard {
 	
 	private void createRooks() {
 		String position;
-		Rook whiteRook1 = new Rook(this, ChessPiece.Color.WHITE);
+		Rook whiteRook1 = new Rook(this, ChessPiece.Color.WHITE, "Rook");
 		position = createPositionString(1, 1);
 		placePiece(whiteRook1, position);
 		
-		Rook whiteRook2 = new Rook(this, ChessPiece.Color.WHITE);
+		Rook whiteRook2 = new Rook(this, ChessPiece.Color.WHITE, "Rook");
 		position = createPositionString(1, 8);
 		placePiece(whiteRook2, position);
 		
-		Rook blackRook1 = new Rook(this, ChessPiece.Color.BLACK);
+		Rook blackRook1 = new Rook(this, ChessPiece.Color.BLACK, "Rook");
 		position = createPositionString(8, 1);
 		placePiece(blackRook1, position);
 		
-		Rook blackRook2 = new Rook(this, ChessPiece.Color.BLACK);
+		Rook blackRook2 = new Rook(this, ChessPiece.Color.BLACK, "Rook");
 		position = createPositionString(8, 8);
 		placePiece(blackRook2, position);
 	}
 	
 	private void createKnights() {
 		String position;
-		Knight whiteKnight1 = new Knight(this, ChessPiece.Color.WHITE);
+		Knight whiteKnight1 = new Knight(this, ChessPiece.Color.WHITE, "Knight");
 		position = createPositionString(1, 2);
 		placePiece(whiteKnight1, position);
 		
-		Knight whiteKnight2 = new Knight(this, ChessPiece.Color.WHITE);
+		Knight whiteKnight2 = new Knight(this, ChessPiece.Color.WHITE, "Knight");
 		position = createPositionString(1, 7);
 		placePiece(whiteKnight2, position);
 		
-		Knight blackKnight1 = new Knight(this, ChessPiece.Color.BLACK);
+		Knight blackKnight1 = new Knight(this, ChessPiece.Color.BLACK, "Knight");
 		position = createPositionString(8, 2);
 		placePiece(blackKnight1, position);
 		
-		Knight blackKnight2 = new Knight(this, ChessPiece.Color.BLACK);
+		Knight blackKnight2 = new Knight(this, ChessPiece.Color.BLACK, "Knight");
 		position = createPositionString(8, 7);
 		placePiece(blackKnight2, position);
 	}
 	
 	private void createBishops() {
 		String position;
-		Bishop whiteBishop1 = new Bishop(this, ChessPiece.Color.WHITE);
+		Bishop whiteBishop1 = new Bishop(this, ChessPiece.Color.WHITE, "Bishop");
 		position = createPositionString(1, 3);
 		placePiece(whiteBishop1, position);
 		
-		Bishop whiteBishop2 = new Bishop(this, ChessPiece.Color.WHITE);
+		Bishop whiteBishop2 = new Bishop(this, ChessPiece.Color.WHITE, "Bishop");
 		position = createPositionString(1, 6);
 		placePiece(whiteBishop2, position);
 		
-		Bishop blackBishop1 = new Bishop(this, ChessPiece.Color.BLACK);
+		Bishop blackBishop1 = new Bishop(this, ChessPiece.Color.BLACK, "Bishop");
 		position = createPositionString(8, 3);
 		placePiece(blackBishop1, position);
 		
-		Bishop blackBishop2 = new Bishop(this, ChessPiece.Color.BLACK);
+		Bishop blackBishop2 = new Bishop(this, ChessPiece.Color.BLACK, "Bishop");
 		position = createPositionString(8, 6);
 		placePiece(blackBishop2, position);
 
@@ -226,22 +228,22 @@ public class ChessBoard {
 	
 	private void createQueens() {
 		String position;
-		Queen whiteQueen = new Queen(this, ChessPiece.Color.WHITE);
+		Queen whiteQueen = new Queen(this, ChessPiece.Color.WHITE, "Queen");
 		position = createPositionString(1, 4);
 		placePiece(whiteQueen, position);
 		
-		Queen blackQueen = new Queen(this, ChessPiece.Color.BLACK);
+		Queen blackQueen = new Queen(this, ChessPiece.Color.BLACK, "Queen");
 		position = createPositionString(8, 4);
 		placePiece(blackQueen, position);
 	}
 	
 	private void createKings() {
 		String position;
-		King whiteKing = new King(this, ChessPiece.Color.WHITE);
+		King whiteKing = new King(this, ChessPiece.Color.WHITE, "King");
 		position = createPositionString(1, 5);
 		placePiece(whiteKing, position);
 		
-		King blackKing = new King(this, ChessPiece.Color.BLACK);
+		King blackKing = new King(this, ChessPiece.Color.BLACK, "King");
 		position = createPositionString(8, 5);
 		placePiece(blackKing, position);
 	}
@@ -254,7 +256,52 @@ public class ChessBoard {
 
 	public String getBoardString() throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
-		return mapper.writeValueAsString(board);
+		return mapper.writeValueAsString(this.board);
 	}
-	
+
+	public ChessPiece[][] getBoard(){
+		return this.board;
+	}
+
+	public void createChessPieceObject(JSONObject obj, ChessBoard tempBoard) throws JSONException {
+
+		String color = obj.getString("color");
+		String position = obj.getString("position");
+		String type = obj.getString("type");
+
+		ChessPiece piece;
+		ChessPiece.Color pieceColor;
+
+		if (color.equals("WHITE")) {
+			pieceColor = ChessPiece.Color.WHITE;
+		} else {
+			pieceColor = ChessPiece.Color.BLACK;
+		}
+
+		switch (type) {
+			case "Rook":
+				piece = new Rook(tempBoard, pieceColor, "Rook");
+				break;
+			case "Knight":
+				piece = new Knight(tempBoard, pieceColor, "Knight");
+				break;
+			case "Bishop":
+				piece = new Bishop(tempBoard, pieceColor, "Bishop");
+				break;
+			case "Queen":
+				piece = new Queen(tempBoard, pieceColor, "Queen");
+				break;
+			case "King":
+				piece = new King(tempBoard, pieceColor, "King");
+				break;
+			case "Pawn":
+				piece = new Pawn(tempBoard, pieceColor, "Pawn");
+				break;
+			default:
+				throw new IllegalStateException("Unexpected value: " + type);
+		}
+
+		placePiece(piece,position);
+
+	}
 }

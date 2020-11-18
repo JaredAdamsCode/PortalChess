@@ -15,15 +15,20 @@ public abstract class ChessPiece {
 	protected int column;
 	
 	protected Color color;
+
+	protected String type;
 	
-	public ChessPiece(ChessBoard board, Color color) {
+	public ChessPiece(ChessBoard board, Color color, String type) {
 		this.board = board;
 		this.color = color;
+		this.type = type;
 	}
 	
 	public Color getColor() {	
 		return this.color;
 	}
+
+	public String getType(){return this.type;}
 	
 	public String getPosition() {
 		char columnChar = (char) (column + 96);

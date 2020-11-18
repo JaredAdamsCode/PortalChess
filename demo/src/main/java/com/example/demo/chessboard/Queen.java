@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Queen extends ChessPiece{
 
-	public Queen(ChessBoard board, Color color) {
-		super(board, color);
+	public Queen(ChessBoard board, Color color, String type) {
+		super(board, color, type);
 	}
 
 	@Override
