@@ -45,7 +45,7 @@ public class MatchController {
     }
 
     @GetMapping("/getMatch/{matchID}")
-    public Match getMatch(@PathVariable int matchID) throws JSONException, IllegalMoveException {
+    public Match getMatch(@PathVariable int matchID) {
         return matchService.getMatch(matchID);
     }
 
@@ -84,7 +84,7 @@ public class MatchController {
         for(int i = 0; i < outerArray.length(); i++){
             JSONArray innerArray = outerArray.getJSONArray(i);
             for (int j = 0; j < innerArray.length(); j++) {
-                if(!JSONObject.NULL.equals(innerArray.get(i))){
+                if(!JSONObject.NULL.equals(innerArray.get(j))){
                     JSONObject obj = innerArray.getJSONObject(j);
                     tempBoard.createChessPieceObject(obj,tempBoard);
                 }
