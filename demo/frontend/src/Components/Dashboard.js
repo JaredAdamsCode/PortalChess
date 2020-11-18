@@ -110,9 +110,21 @@ export default function Dashboard(props) {
      }
 
     async function unregisterAccount(userID) {
-        await fetch('api/unregister/' + userID , {method: 'PATCH'});
+        console.log(matchesList);
+        for(const element of matchesList){
+            let opponentID = -1;
+            if(element.senderID == userID) {
+                opponentID = element.receiverID;
+            }else {
+                opponentID = element.senderID;
+            }
+            await fetch('api/unregisterNotification/' + opponentID , {method: 'POST'});
+            console.log(opponentID);
+        }
         console.log("unregistering account: " + userID);
-        props.handleLogOut();
+        await fetch('api/unregister/' + userID , {method: 'PATCH'});
+
+        //props.handleLogOut();
     }
 
     return (
@@ -197,11 +209,11 @@ export default function Dashboard(props) {
                     anchorEl={anchorPOP}
                     open={Boolean(anchorPOP)}
                     anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'right',
+                        vertical: 'center',
+                        horizontal: 'center',
                     }}
                     transformOrigin={{
-                        vertical: 'bottom',
+                        vertical: 'center',
                         horizontal: 'center',
                     }}
                     onClose={handleClosePOP}

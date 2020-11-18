@@ -36,4 +36,10 @@ public class NotificationController {
     public int setNotificationMessage(@PathVariable int notificationID, @PathVariable String newMessage) {
         return notificationService.setNotificationMessage(notificationID, newMessage);
     }
+
+    @PostMapping(path = "/unregisterNotification/{userID}")
+    public Boolean createUnregisterNotification(@PathVariable int userID) {
+        System.out.println("sending account unregistration notice to user: "+ userID);
+        return false;
+    }
 }
