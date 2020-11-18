@@ -52,4 +52,10 @@ public class NotificationDAOImplementation implements  NotificationDAO{
         return query.executeUpdate();
     }
 
+    @Override
+    public void createUnregisterNotification(Notification notification) {
+        Session currSession = entityManager.unwrap(Session.class);
+        currSession.save(notification);
+    }
+
 }
