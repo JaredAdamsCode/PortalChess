@@ -1,13 +1,14 @@
 package com.example.demo;
 
 import com.example.demo.chessboard.ChessBoard;
+import com.example.demo.chessboard.IllegalMoveException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -44,10 +45,52 @@ public class MatchController {
     }
 
     @GetMapping("/getMatch/{matchID}")
-    public Match getMatch(@PathVariable int matchID) throws JsonProcessingException {
+    public Match getMatch(@PathVariable int matchID) throws JSONException, IllegalMoveException {
+        return matchService.getMatch(matchID);
+    }
+
+
+    /* Example for updating the board with a move
+    Client will send a request that contains at minimum the matchID and two moves
+        First grab the Match from the database with the matchID
         Match match = matchService.getMatch(matchID);
-        System.out.println(match.getBoard());
-        return match;
+
+        Get the state of the board from match into a String
+        String boardString = match.getBoard();
+
+        Send this String to then be transformed into a ChessBoard object that can then be used
+        ChessBoard tempBoard = stringToObject(boardString);
+
+        You can then use this tempBoard like you would use any sort of ChessBoard object
+        System.out.println(tempBoard);
+        tempBoard.move("a2","a3");
+        System.out.println(tempBoard);
+
+        If the moves given are valid you will then need to create something to update the board saved in the database with this move
+
+        This will give you the updated ChessBoard object and turn it into a string that can be stored
+        String storeBoard = tempBoard.getBoardString();
+
+        We can then send this string and the matchID to the database to be updated, and return the updated Match object
+        return matchService.updateBoard(matchID,storeBoard); -updateBoard does not exist yet
+
+     */
+
+    public ChessBoard stringToObject(String boardString) throws JSONException {
+
+        JSONArray outerArray = new JSONArray(boardString);
+        ChessBoard tempBoard = new ChessBoard();
+
+        for(int i = 0; i < outerArray.length(); i++){
+            JSONArray innerArray = outerArray.getJSONArray(i);
+            for (int j = 0; j < innerArray.length(); j++) {
+                if(!JSONObject.NULL.equals(innerArray.get(i))){
+                    JSONObject obj = innerArray.getJSONObject(j);
+                    tempBoard.createChessPieceObject(obj,tempBoard);
+                }
+            }
+        }
+        return tempBoard;
     }
 
 

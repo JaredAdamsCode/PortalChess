@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class Knight extends ChessPiece {
 
-	public Knight(ChessBoard board, Color color) {
-		super(board, color);
+	public Knight(ChessBoard board, Color color, String type) {
+		super(board, color, type);
 	}
 
 	@Override
