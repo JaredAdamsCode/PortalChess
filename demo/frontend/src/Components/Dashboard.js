@@ -143,7 +143,7 @@ export default function Dashboard(props) {
             console.log(opponentID);
         }
         console.log("unregistering account: " + userID);
-        await fetch('api/unregister/' + userID , {method: 'PATCH'});
+        await fetch('api/unregister/' + userID , {method: 'DELETE'});
 
         //props.handleLogOut();
     }

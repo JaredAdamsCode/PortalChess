@@ -89,4 +89,10 @@ public class AccountDAOImplementation implements AccountDAO {
 
 	}
 
+	@Override
+	public void unregister(int userID) {
+		Session currSession = entityManager.unwrap(Session.class);
+		currSession.createQuery("delete from Account a where a.id = :ID").setParameter("ID", userID);
+	}
+
 }

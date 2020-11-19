@@ -57,6 +57,11 @@ public class AccountServiceImplementation implements AccountService {
 	public boolean checkUser(Account account) { return accountDAO.checkUser(account); }
 
 	@Override
+	public void unregister(int userID) {
+		accountDAO.unregister(userID);
+	}
+
+	@Override
 	public Account getAccount(Account account) {return accountDAO.getAccount(account);}
 
 }

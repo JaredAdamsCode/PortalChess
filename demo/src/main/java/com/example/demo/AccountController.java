@@ -93,9 +93,9 @@ public class AccountController {
 	  return "User removed with id "+id;
 	*/
 
-	@PatchMapping(path = "/unregister/{userID}")
-	public Boolean unregisterAccount(@PathVariable int userID) {
+	@DeleteMapping(path = "/unregister/{userID}")
+	public void unregisterAccount(@PathVariable int userID) {
 		System.out.println("unregistering account: " + userID);
-		return false;
+		accountService.unregister(userID);
 	}
 }

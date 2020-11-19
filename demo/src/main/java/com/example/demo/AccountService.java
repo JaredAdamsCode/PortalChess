@@ -29,4 +29,6 @@ public interface AccountService {
 	Account getAccount(Account account);
 
 	boolean checkUser(Account account);
+
+    void unregister(int userID);
 }
