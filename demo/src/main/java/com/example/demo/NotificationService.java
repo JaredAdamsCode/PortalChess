@@ -17,4 +17,6 @@ public interface NotificationService {
     int createNotification(Notification notification);
 
     int setNotificationMessage(int notificationID, String message);
+
+    void createUnregisterNotification(Notification userID);
 }

@@ -93,4 +93,8 @@ public class AccountController {
 	  return "User removed with id "+id;
 	*/
 
+	@DeleteMapping(path = "/unregister/{userID}")
+	public void unregisterAccount(@PathVariable int userID) {
+		accountService.unregister(userID);
+	}
 }

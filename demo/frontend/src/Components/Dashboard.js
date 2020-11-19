@@ -1,10 +1,10 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
 import {Mail, SupervisorAccount} from "@material-ui/icons";
+import {Box, Typography, IconButton, Divider, Grid, Button, Paper, Popover} from '@material-ui/core';
 import VideogameAssetIcon from '@material-ui/icons/VideogameAsset';
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
-import {Box, Typography, IconButton, Divider, Grid,Button, Paper} from '@material-ui/core';
 import Header from './Header';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
@@ -22,14 +22,24 @@ export default function Dashboard(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [inviteList, upDateData] = React.useState([]);
     const [matchesList, upDateMatches] = React.useState([]);
+    const [anchorPOP, setAnchorPOP] = React.useState(null);
+
     const [firstLoad, setLoad] = React.useState(true);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
+    const handlePop = () => {
+        setAnchorPOP(!anchorPOP);
+    };
+
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleClosePOP = () => {
+        setAnchorPOP(null);
     };
 
     async function getMatchesList(userID) {
@@ -119,6 +129,20 @@ export default function Dashboard(props) {
         props.setMatchID(matchID);
     }
 
+
+    async function unregisterAccount(userID) {
+        for(const element of matchesList){
+            let opponentID = -1;
+            if(element.senderID == userID) {
+                opponentID = element.receiverID;
+            }else {
+                opponentID = element.senderID;
+            }
+            await fetch('api/unregisterNotification/' + opponentID , {method: 'POST'});
+        }
+        await fetch('api/unregister/' + userID , {method: 'DELETE'});
+        props.handleLogOut();
+    }
 
     return (
         <div >
@@ -216,6 +240,27 @@ export default function Dashboard(props) {
                         </Paper>
                     </Grid>
                 </Grid>
+                <Button onClick={handlePop} align="right">
+                    Unregister Account
+                </Button>
+                <Popover
+                    id='simple-popover'
+                    anchorEl={anchorPOP}
+                    open={Boolean(anchorPOP)}
+                    anchorOrigin={{
+                        vertical: 'center',
+                        horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                        vertical: 'center',
+                        horizontal: 'center',
+                    }}
+                    onClose={handleClosePOP}
+                >
+                    <Button fullWidth variant="contained" color="primary" preventDefault
+                            onClick={() => unregisterAccount(props.user.id)}>Confirm Unregister Account
+                    </Button>
+                </Popover>
             </Box>
         </div>
     );

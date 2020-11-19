@@ -13,9 +13,18 @@ export default function Inbox(props) {
         let body = await response.json();
         let filtered = [];
         for (let i = 0; i < body.length; i++) {
-            if (body[i].message == "rejected" || body[i].message == "Rejected" || body[i].message == "accepted" || body[i].message == "Accepted" ) {
+            if (body[i].message == "rejected" || body[i].message == "Rejected" ||
+                body[i].message == "accepted" || body[i].message == "Accepted" ||
+                body[i].message == "A user that you had an active match with has unregistered their account." ) {
                 filtered.push(body[i]);
             }
+        }
+
+        for(const element of filtered){
+            let nameResponse = await fetch('/api/getUsername/' + element.receiverID);
+            let nameBody = await nameResponse.json();
+            let username = nameBody.username;
+            element.username = username;
         }
         upDatePending(filtered);
     };
@@ -28,6 +37,23 @@ export default function Inbox(props) {
        getPendingList(props.user.id);
        setLoad(false);
      };
+
+     function notification(invite){
+         if (invite.receiverID != 1){
+             return (
+                 <p key={invite.id}>
+                    Invite to user {invite.username} status: {invite.message}
+                 </p>
+             );
+         }
+         else{
+             return (
+                 <p key={invite.id}>
+                     System message: {invite.message}
+                 </p>
+             );
+         }
+     }
 
     return (
         
@@ -54,9 +80,7 @@ export default function Inbox(props) {
                             </Typography>
                             <Divider/>
                             {pendingList.map(invite => (
-                                <p key={invite.id}>
-                                     Invite to user ID {invite.receiver} status: {invite.message}
-                                </p>
+                                notification(invite)
                             ))}
                         </Paper>
                     </Grid>

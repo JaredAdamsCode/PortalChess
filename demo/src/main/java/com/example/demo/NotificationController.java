@@ -36,4 +36,13 @@ public class NotificationController {
     public int setNotificationMessage(@PathVariable int notificationID, @PathVariable String newMessage) {
         return notificationService.setNotificationMessage(notificationID, newMessage);
     }
+
+    @PostMapping(path = "/unregisterNotification/{userID}")
+    public void createUnregisterNotification(@PathVariable int userID) {
+        Notification notification = new Notification();
+        notification.setSender(userID);
+        notification.setReceiver(1);
+        notification.setMessage("A user that you had an active match with has unregistered their account.");
+        notificationService.createUnregisterNotification(notification);
+    }
 }

@@ -16,4 +16,6 @@ public interface NotificationDAO {
     int createNotification(Notification notification);
 
     int setNotificationMessage(int notificationID, String message);
+
+    void createUnregisterNotification(Notification notification);
 }

@@ -37,4 +37,9 @@ public class NotificationServiceImplementation implements  NotificationService{
     public int setNotificationMessage(int notificationID, String message) {
         return notificationDAO.setNotificationMessage(notificationID, message);
     }
+
+    @Override
+    public void createUnregisterNotification(Notification notification) {
+        notificationDAO.createUnregisterNotification(notification);
+    }
 }
