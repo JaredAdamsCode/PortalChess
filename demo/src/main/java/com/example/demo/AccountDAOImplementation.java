@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
+
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,10 +91,12 @@ public class AccountDAOImplementation implements AccountDAO {
 
 	}
 
+	@Transactional
 	@Override
 	public void unregister(int userID) {
 		Session currSession = entityManager.unwrap(Session.class);
-		currSession.createQuery("delete from Account a where a.id = :ID").setParameter("ID", userID);
+		Query<Account> query = currSession.createQuery("delete from Account a where a.id = :ID").setParameter("ID", userID);
+		query.executeUpdate();
 	}
 
 }

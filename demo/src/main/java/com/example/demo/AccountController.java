@@ -95,7 +95,6 @@ public class AccountController {
 
 	@DeleteMapping(path = "/unregister/{userID}")
 	public void unregisterAccount(@PathVariable int userID) {
-		System.out.println("unregistering account: " + userID);
 		accountService.unregister(userID);
 	}
 }

@@ -131,7 +131,6 @@ export default function Dashboard(props) {
 
 
     async function unregisterAccount(userID) {
-        console.log(matchesList);
         for(const element of matchesList){
             let opponentID = -1;
             if(element.senderID == userID) {
@@ -140,12 +139,9 @@ export default function Dashboard(props) {
                 opponentID = element.senderID;
             }
             await fetch('api/unregisterNotification/' + opponentID , {method: 'POST'});
-            console.log(opponentID);
         }
-        console.log("unregistering account: " + userID);
         await fetch('api/unregister/' + userID , {method: 'DELETE'});
-
-        //props.handleLogOut();
+        props.handleLogOut();
     }
 
     return (
