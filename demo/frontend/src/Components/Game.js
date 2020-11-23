@@ -1,7 +1,7 @@
 import React from "react";
 import {Redirect} from "react-router-dom";
 import Header from "./Header";
-import {Box, Divider, Grid, Paper, Typography} from "@material-ui/core";
+import {Box, Button, Divider, Grid, Paper, Popover, Typography} from "@material-ui/core";
 
 
 export default function Game(props) {
@@ -10,6 +10,7 @@ export default function Game(props) {
     const [firstLoad, setLoad] = React.useState(true);
     const [matchData, updateMatchData] = React.useState([]);
     const [chessboard, chessboardData] = React.useState([]);
+    const [anchorPOP, setAnchorPOP] = React.useState(null);
 
     if (!props.loggedInStatus){
         return (<Redirect to = "/"/>);
@@ -23,6 +24,14 @@ export default function Game(props) {
         console.log(chessboard);
     }
 
+    const handlePop = () => {
+        setAnchorPOP(!anchorPOP);
+    };
+
+    const handleClosePOP = () => {
+        setAnchorPOP(null);
+    };
+
     async function getMatchData(){
         let matchID = props.matchID;
         let response = await fetch('/api/getMatch/' + matchID);
@@ -32,7 +41,11 @@ export default function Game(props) {
     }
 
 
-return (
+    function abandonMatch(userId, matchID) {
+        console.log("abandon match: " +matchID+ ". user: "+userId);
+    }
+
+    return (
 
         <div >
             <Header {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut}/>
@@ -60,6 +73,27 @@ return (
                         </Paper>
                     </Grid>
                 </Grid>
+                <Button onClick={handlePop} align="right">
+                    Abandon Game
+                </Button>
+                <Popover
+                    id='simple-popover'
+                    anchorEl={anchorPOP}
+                    open={Boolean(anchorPOP)}
+                    anchorOrigin={{
+                        vertical: 'center',
+                        horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                        vertical: 'center',
+                        horizontal: 'center',
+                    }}
+                    onClose={handleClosePOP}
+                >
+                    <Button fullWidth variant="contained" color="primary" preventDefault
+                            onClick={() => abandonMatch(props.user.id, props.matchID)}>Confirm Abandon Game
+                    </Button>
+                </Popover>
             </Box>
         </div>
     );
