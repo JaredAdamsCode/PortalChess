@@ -12,6 +12,7 @@ export default class BoardSquare extends Component{
         this.state = {
             selected: false,
             squareStyle: null,
+            piece: this.props.piece
         }
 
         this.blackSquareStyle = {
@@ -39,6 +40,12 @@ export default class BoardSquare extends Component{
 
     }
 
+    /*componentWillReceiveProps(nextProps, nextContext) {
+        if(nextProps.piece != this.props.piece){
+            this.setState({piece: nextProps.piece});
+        }
+    }*/
+
     getDefaultSquareStyle(){
         if(this.props.isWhite){
             return this.whiteSquareStyle;
@@ -47,6 +54,8 @@ export default class BoardSquare extends Component{
             return this.blackSquareStyle;
         }
     }
+
+
 
     getSquareStyle(){
         if(this.props.isSelected(this.props.position)){
@@ -71,6 +80,7 @@ export default class BoardSquare extends Component{
         this.props.selectSquare(this.props.position);
     }
 
+
     render(){
         return (
             <Button onClick={this.handleClick} style={{
@@ -78,7 +88,7 @@ export default class BoardSquare extends Component{
                 minHeight: 0,
                 minWidth: 0,
             }}>
-                {this.renderSquare(this.props.piece)}
+                {this.renderSquare(this.state.piece)}
             </Button>
         );
     }

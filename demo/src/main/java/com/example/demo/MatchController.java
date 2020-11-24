@@ -24,30 +24,6 @@ public class MatchController {
         return ResponseEntity.accepted().body(matchID);
     }
 
-    @GetMapping("/getMatchesList/{accountID}")
-    public List<Match> get(@PathVariable int accountID) {
-        return matchService.getMatchesList(accountID);
-    }
-
-    @PatchMapping(path = "/updateMatchStatus/{matchID}/{newStatus}")
-    public int setMatchStatus(@PathVariable int matchID, @PathVariable String newStatus) {
-        return matchService.setStatus(matchID, newStatus);
-    }
-
-
-    @PatchMapping("/createBoard/{matchID}")
-    public String createBoard(@PathVariable int matchID) throws JsonProcessingException {
-        ChessBoard newBoard = new ChessBoard();
-        newBoard.initialize();
-        String storeBoard =  newBoard.getBoardString();
-        matchService.createBoard(matchID,storeBoard);
-        return storeBoard;
-    }
-
-    @GetMapping("/getMatch/{matchID}")
-    public Match getMatch(@PathVariable int matchID) {
-        return matchService.getMatch(matchID);
-    }
 
 
     /* Example for updating the board with a move
@@ -75,6 +51,56 @@ public class MatchController {
         return matchService.updateBoard(matchID,storeBoard); -updateBoard does not exist yet
 
      */
+
+    @PostMapping(path = "/attemptMove", consumes = "application/json", produces = "application/json")
+    public Match attemptMove(@RequestBody Move move) throws JsonProcessingException {
+        Match match = matchService.getMatch(move.getMatchId());
+        String boardStr = match.getBoard();
+
+        try{
+            ChessBoard board = stringToObject(boardStr);
+            board.move(move.getFromPosition(), move.getToPosition());
+            boardStr = board.getBoardString();
+            matchService.createBoard(move.getMatchId(), boardStr);
+            match = matchService.getMatch(move.getMatchId());
+        }
+        catch(IllegalMoveException e){
+            match.setStatus("Illegal Move");
+        }
+        catch(JSONException e){
+            match.setStatus("Board could not be instantiated");
+        }
+        catch(NullPointerException e){
+            match.setStatus("Illegal Move");;
+        }
+        return match;
+    }
+
+    @GetMapping("/getMatchesList/{accountID}")
+    public List<Match> get(@PathVariable int accountID) {
+        return matchService.getMatchesList(accountID);
+    }
+
+    @PatchMapping(path = "/updateMatchStatus/{matchID}/{newStatus}")
+    public int setMatchStatus(@PathVariable int matchID, @PathVariable String newStatus) {
+        return matchService.setStatus(matchID, newStatus);
+    }
+
+
+    @PatchMapping("/createBoard/{matchID}")
+    public String createBoard(@PathVariable int matchID) throws JsonProcessingException {
+        ChessBoard newBoard = new ChessBoard();
+        newBoard.initialize();
+        String storeBoard =  newBoard.getBoardString();
+        matchService.createBoard(matchID,storeBoard);
+        return storeBoard;
+    }
+
+    @GetMapping("/getMatch/{matchID}")
+    public Match getMatch(@PathVariable int matchID) {
+        return matchService.getMatch(matchID);
+    }
+
 
     public ChessBoard stringToObject(String boardString) throws JSONException {
 
