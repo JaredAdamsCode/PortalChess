@@ -48,10 +48,9 @@ public class MatchController {
         return matchService.getMatch(matchID);
     }
 
-    @PatchMapping("/abandonMatch/{matchID}/{playerID}")
-    public void abandonMatch(@PathVariable int matchID, @PathVariable int playerID) throws JsonProcessingException {
-        System.out.println("Abandoning match: " + matchID + " Setting winner to " + playerID);
-        matchService.abandonMatch(matchID,playerID);
+    @PatchMapping("/abandonMatch/{matchID}/{winnerID}/{loserID}")
+    public void abandonMatch(@PathVariable int matchID, @PathVariable int winnerID, @PathVariable int loserID) throws JsonProcessingException {
+        matchService.abandonMatch(matchID,winnerID,loserID);
     }
 
     /* Example for updating the board with a move

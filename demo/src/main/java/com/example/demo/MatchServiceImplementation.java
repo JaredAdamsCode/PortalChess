@@ -31,5 +31,5 @@ public class MatchServiceImplementation implements MatchService{
     public Match getMatch(int matchID) { return matchDAO.getMatch(matchID);}
 
     @Override
-    public void abandonMatch(int matchID, int playerID) { matchDAO.abandonMatch(matchID, playerID); }
+    public void abandonMatch(int matchID, int winnerID, int loserID) { matchDAO.abandonMatch(matchID, winnerID, loserID); }
 }

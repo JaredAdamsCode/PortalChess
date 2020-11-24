@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.chessboard.ChessBoard;
+import com.fasterxml.jackson.databind.ser.std.TimeZoneSerializer;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "matches")
@@ -31,8 +34,20 @@ public class Match {
     private String status;
 
     @Column
+    private Integer winner;
+
+    @Column
+    private Integer loser;
+
+    @Column
     @SerializedName("chessboard")
     private String board;
+
+    @Column
+    private Timestamp startTime;
+
+    @Column
+    private Timestamp endTime;
 
     @Override
      public String toString() {
@@ -55,7 +70,15 @@ public class Match {
         this.status = status;
     }
 
+    public void setWinner(Integer winnerID) { this.winner = winnerID; }
+
+    public void setLoser(Integer loserID) { this.loser = loserID; }
+
     public void setBoard(String board){this.board = board;}
+
+    public void setStartTime(Timestamp timestamp) {this.startTime = timestamp;}
+
+    public void setEndTime(Timestamp timestamp) {this.endTime = timestamp;}
 
     public Integer getId() {
         return id;
@@ -73,6 +96,14 @@ public class Match {
         return status;
     }
 
+    public Integer getWinner() {return winner; }
+
+    public Integer getLoser() {return loser; }
+
     public String getBoard(){return board;}
+
+    public Timestamp getStartTime() { return startTime; }
+
+    public Timestamp getEndTime() { return endTime; }
 
 }

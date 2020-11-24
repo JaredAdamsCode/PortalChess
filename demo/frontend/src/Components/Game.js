@@ -51,8 +51,8 @@ export default function Game(props) {
         }else {
             opponentID = body.senderID;
         }
-        await fetch('api/abandonMatch/' + matchID +"/"+ opponentID , {method: 'PATCH'});
-        console.log("abandon match: " +matchID+ " winner: "+ opponentID + " loser: " + userID);
+        await fetch('api/abandonMatch/' + matchID +"/"+ opponentID + "/" +userID , {method: 'PATCH'});
+        return (<Redirect to = "/"/>);
     }
 
     return (
