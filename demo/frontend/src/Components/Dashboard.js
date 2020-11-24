@@ -34,6 +34,11 @@ export default function Dashboard(props) {
         setAnchorPOP(!anchorPOP);
     };
 
+    const refreshLists = () =>{
+        getMatchesList(props.user.id);
+        getInviteList(props.user.id);
+    }
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -240,7 +245,12 @@ export default function Dashboard(props) {
                         </Paper>
                     </Grid>
                 </Grid>
-                <Button onClick={handlePop} align="right">
+                <Grid >
+                <Button onClick={refreshLists} variant="contained" align="right">
+                    Refresh Lists
+                </Button>
+                &nbsp;&nbsp;&nbsp;
+                <Button onClick={handlePop} variant="contained" align="right">
                     Unregister Account
                 </Button>
                 <Popover
@@ -248,11 +258,11 @@ export default function Dashboard(props) {
                     anchorEl={anchorPOP}
                     open={Boolean(anchorPOP)}
                     anchorOrigin={{
-                        vertical: 'center',
+                        vertical: 'bottom',
                         horizontal: 'center',
                     }}
                     transformOrigin={{
-                        vertical: 'center',
+                        vertical: 'bottom',
                         horizontal: 'center',
                     }}
                     onClose={handleClosePOP}
@@ -261,6 +271,7 @@ export default function Dashboard(props) {
                             onClick={() => unregisterAccount(props.user.id)}>Confirm Unregister Account
                     </Button>
                 </Popover>
+                </Grid>
             </Box>
         </div>
     );
