@@ -62,6 +62,12 @@ public class AccountServiceImplementation implements AccountService {
 	}
 
 	@Override
+	public void incrementGamesPlayed(int accountID) { accountDAO.incrementGamesPlayed(accountID); }
+
+	@Override
+	public void incrementGamesWon(int accountID) { accountDAO.incrementGamesWon(accountID); }
+
+	@Override
 	public Account getAccount(Account account) {return accountDAO.getAccount(account);}
 
 }

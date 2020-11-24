@@ -28,4 +28,8 @@ public interface AccountDAO {
     Account getAccount(Account account);
 
     void unregister(int userID);
+
+    void incrementGamesPlayed(int accountID);
+
+    void incrementGamesWon(int accountID);
 }

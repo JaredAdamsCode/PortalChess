@@ -92,6 +92,9 @@ export default function Game(props) {
             opponentID = body.senderID;
         }
         await fetch('api/abandonMatch/' + matchID +"/"+ opponentID + "/" +userID , {method: 'PATCH'});
+        await fetch('api/incrementGamesPlayed/' + opponentID, {method: 'PATCH'});
+        await fetch('api/incrementGamesPlayed/' + userID, {method: 'PATCH'});
+        await fetch('api/incrementGamesWon/' + opponentID, {method: 'PATCH'});
         props.history.push('/dashboard');
     }
 

@@ -31,4 +31,8 @@ public interface AccountService {
 	boolean checkUser(Account account);
 
     void unregister(int userID);
+
+    void incrementGamesPlayed(int accountID);
+
+	void incrementGamesWon(int accountID);
 }
