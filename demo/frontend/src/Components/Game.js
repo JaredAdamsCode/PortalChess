@@ -41,8 +41,18 @@ export default function Game(props) {
     }
 
 
-    function abandonMatch(userId, matchID) {
-        console.log("abandon match: " +matchID+ ". user: "+userId);
+    async function abandonMatch(userID) {
+        let matchID = props.matchID;
+        let response = await fetch('/api/getMatch/' + matchID);
+        let body = await response.json();
+        let opponentID = -1;
+        if(body.senderID == userID) {
+            opponentID = body.receiverID;
+        }else {
+            opponentID = body.senderID;
+        }
+        await fetch('api/abandonMatch/' + matchID +"/"+ opponentID , {method: 'PATCH'});
+        console.log("abandon match: " +matchID+ " winner: "+ opponentID + " loser: " + userID);
     }
 
     return (
@@ -91,7 +101,7 @@ export default function Game(props) {
                     onClose={handleClosePOP}
                 >
                     <Button fullWidth variant="contained" color="primary" preventDefault
-                            onClick={() => abandonMatch(props.user.id, props.matchID)}>Confirm Abandon Game
+                            onClick={() => abandonMatch(props.user.id)}>Confirm Abandon Game
                     </Button>
                 </Popover>
             </Box>

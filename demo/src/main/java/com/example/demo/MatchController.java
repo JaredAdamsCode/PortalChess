@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import com.example.demo.chessboard.ChessBoard;
-import com.example.demo.chessboard.IllegalMoveException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,6 +48,11 @@ public class MatchController {
         return matchService.getMatch(matchID);
     }
 
+    @PatchMapping("/abandonMatch/{matchID}/{playerID}")
+    public void abandonMatch(@PathVariable int matchID, @PathVariable int playerID) throws JsonProcessingException {
+        System.out.println("Abandoning match: " + matchID + " Setting winner to " + playerID);
+        matchService.abandonMatch(matchID,playerID);
+    }
 
     /* Example for updating the board with a move
     Client will send a request that contains at minimum the matchID and two moves

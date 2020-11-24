@@ -56,4 +56,20 @@ public class MatchDAOImplementation implements  MatchDAO{
                 .setParameter("mID", matchID);
         return query.getSingleResult();
     }
+
+    @Transactional
+    @Override
+    public void abandonMatch(int matchID, int playerID) {
+        /*
+        Session currSession = entityManager.unwrap(Session.class);
+        Query<Match> query = currSession.createQuery("update Match m set m.winner = :pID where m.id = :mID")
+                .setParameter("pID", playerID)
+                .setParameter("mID", matchID);
+        query.executeUpdate();
+        query = currSession.createQuery("update Match m set m.status = :status where m.id = :mID")
+                .setParameter("status", "abandoned")
+                .setParameter("mID", matchID);
+        query.executeUpdate();
+        */
+    }
 }
