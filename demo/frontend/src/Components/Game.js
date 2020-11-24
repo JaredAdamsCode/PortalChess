@@ -135,11 +135,11 @@ export default function Game(props) {
                     anchorEl={anchorPOP}
                     open={Boolean(anchorPOP)}
                     anchorOrigin={{
-                        vertical: 'center',
+                        vertical: 'bottom',
                         horizontal: 'center',
                     }}
                     transformOrigin={{
-                        vertical: 'center',
+                        vertical: 'bottom',
                         horizontal: 'center',
                     }}
                     onClose={handleClosePOP}
