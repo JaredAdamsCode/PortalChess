@@ -12,10 +12,8 @@ export default function Game(props) {
 
     const [pendingList, upDatePending] = React.useState([]);
     const [firstLoad, setLoad] = React.useState(true);
-    const [renderNum, setRenderNum] =React.useState(0);
     const [matchData, updateMatchData] = React.useState([]);
     const [chessboardData, setChessboardData] = React.useState([]);
-    const [boardUpdated, setBoardUpdated] = React.useState(true);
     const [status, setStatus] = React.useState("\n");
     const [chessboard, setChessboard] = React.useState(<Chessboard  sendMove={sendMove}
                                                                     boardLayout={
@@ -36,11 +34,6 @@ export default function Game(props) {
     if (firstLoad) {
         getMatchData();
         setLoad(false);
-    }
-    if(!boardUpdated){
-        getMatchData();
-        setBoardUpdated(true);
-
     }
 
     async function getMatchData(){
@@ -71,12 +64,6 @@ export default function Game(props) {
         if(body.status !== "Illegal Move" && body.status !== "Board could not be instantiated"){
             setLoad(true);
             setStatus("\n");
-            /*console.log(body);
-            console.log(body.board);
-            let chessData = JSON.parse(body.board);
-            setChessboardData([...chessData]);
-            setChessboard(null);
-            setChessboard(<Chessboard } sendMove={sendMove} boardLayout={chessData} matchID={props.matchID}/>);*/
 
         }
         else{
