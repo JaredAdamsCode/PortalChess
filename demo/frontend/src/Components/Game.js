@@ -1,7 +1,9 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
 import Header from "./Header";
-import {Box, Button, Divider, Grid, IconButton, Paper, Popover, Typography} from "@material-ui/core";
+import {Box, Divider, Grid, Paper, Typography, Button, IconButton, Popover} from "@material-ui/core";
+import Chessboard from "./Chessboard";
+import fillPieceArray from "./fillPieceArray";
 
 
 export default function Game(props) {
@@ -9,7 +11,20 @@ export default function Game(props) {
     const [pendingList, upDatePending] = React.useState([]);
     const [firstLoad, setLoad] = React.useState(true);
     const [matchData, updateMatchData] = React.useState([]);
-    const [chessboard, chessboardData] = React.useState([]);
+    const [chessboardData, setChessboardData] = React.useState([]);
+    const [status, setStatus] = React.useState("\n");
+    const [chessboard, setChessboard] = React.useState(<Chessboard  sendMove={sendMove}
+                                                                    boardLayout={
+                                                                        new Array(new Array(8).fill(null),
+                                                                        new Array(8).fill(null),
+                                                                        new Array(8).fill(null),
+                                                                        new Array(8).fill(null),
+                                                                        new Array(8).fill(null),
+                                                                        new Array(8).fill(null),
+                                                                        new Array(8).fill(null),
+                                                                        new Array(8).fill(null))}
+                                                                    matchID={props.matchID}
+                                                                    playerID={props.user.id}/>);
     const [anchorPOP, setAnchorPOP] = React.useState(null);
 
     if (!props.loggedInStatus){
@@ -19,9 +34,6 @@ export default function Game(props) {
     if (firstLoad) {
         getMatchData();
         setLoad(false);
-    }
-    if(!firstLoad){
-        console.log(chessboard);
     }
 
     const handlePop = () => {
@@ -36,8 +48,36 @@ export default function Game(props) {
         let matchID = props.matchID;
         let response = await fetch('/api/getMatch/' + matchID);
         let body = await response.json();
-        let chess = JSON.parse(body.board);
-        chessboardData(chess);
+        let chessData = JSON.parse(body.board);
+        setChessboardData([...chessData]);
+        setChessboard(null);
+        setChessboard(<Chessboard sendMove={sendMove} boardLayout={chessData} matchID={props.matchID} playerID={props.user.id}/>);
+    }
+
+    async function sendMove(toInput) {
+        const response = await fetch("/api/attemptMove", {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json"
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *client
+            body: JSON.stringify(toInput) // body data type must match "Content-Type" header
+        });
+        let body = await response.json();
+        if(body.status !== "Illegal Move" && body.status !== "Board could not be instantiated"){
+            setLoad(true);
+            setStatus("\n");
+
+        }
+        else{
+            setStatus(body.status);
+        }
+
     }
 
 
@@ -79,8 +119,12 @@ export default function Game(props) {
                                 Chessboard
                             </Typography>
                             <Divider/>
-
+                            <Typography variant='h6' align="center">
+                                {status}
+                            </Typography>
+                            {chessboard}
                         </Paper>
+
                     </Grid>
                 </Grid>
                 <Button onClick={handlePop} align="right">
