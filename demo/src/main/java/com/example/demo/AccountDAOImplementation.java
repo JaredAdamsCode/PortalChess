@@ -99,4 +99,20 @@ public class AccountDAOImplementation implements AccountDAO {
 		query.executeUpdate();
 	}
 
+	@Transactional
+	@Override
+	public void incrementGamesPlayed(int accountID) {
+		Session currSession = entityManager.unwrap(Session.class);
+		Query<Account> query = currSession.createQuery("UPDATE Account a SET games_played = games_played + 1 WHERE a.id = :ID").setParameter("ID", accountID);
+		query.executeUpdate();
+	}
+
+	@Transactional
+	@Override
+	public void incrementGamesWon(int accountID) {
+		Session currSession = entityManager.unwrap(Session.class);
+		Query<Account> query = currSession.createQuery("UPDATE Account a SET games_won = games_won + 1 WHERE a.id = :ID").setParameter("ID", accountID);
+		query.executeUpdate();
+	}
+
 }

@@ -73,6 +73,10 @@ public class MatchController {
         return matchService.getMatch(matchID);
     }
 
+    @PatchMapping("/abandonMatch/{matchID}/{winnerID}/{loserID}")
+    public void abandonMatch(@PathVariable int matchID, @PathVariable int winnerID, @PathVariable int loserID) throws JsonProcessingException {
+        matchService.abandonMatch(matchID,winnerID,loserID);
+    }
 
     public ChessBoard stringToObject(String boardString) throws JSONException {
 

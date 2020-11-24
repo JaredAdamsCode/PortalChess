@@ -1,11 +1,9 @@
 import React from "react";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import Header from "./Header";
-import {Box, Divider, Grid, Paper, Typography} from "@material-ui/core";
+import {Box, Divider, Grid, Paper, Typography, Button, IconButton, Popover} from "@material-ui/core";
 import Chessboard from "./Chessboard";
 import fillPieceArray from "./fillPieceArray";
-
-
 
 
 export default function Game(props) {
@@ -27,6 +25,8 @@ export default function Game(props) {
                                                                         new Array(8).fill(null))}
                                                                     matchID={props.matchID}
                                                                     playerID={props.user.id}/>);
+    const [anchorPOP, setAnchorPOP] = React.useState(null);
+
     if (!props.loggedInStatus){
         return (<Redirect to = "/"/>);
     }
@@ -35,6 +35,14 @@ export default function Game(props) {
         getMatchData();
         setLoad(false);
     }
+
+    const handlePop = () => {
+        setAnchorPOP(!anchorPOP);
+    };
+
+    const handleClosePOP = () => {
+        setAnchorPOP(null);
+    };
 
     async function getMatchData(){
         let matchID = props.matchID;
@@ -73,7 +81,24 @@ export default function Game(props) {
     }
 
 
-return (
+    async function abandonMatch(userID) {
+        let matchID = props.matchID;
+        let response = await fetch('/api/getMatch/' + matchID);
+        let body = await response.json();
+        let opponentID = -1;
+        if(body.senderID == userID) {
+            opponentID = body.receiverID;
+        }else {
+            opponentID = body.senderID;
+        }
+        await fetch('api/abandonMatch/' + matchID +"/"+ opponentID + "/" +userID , {method: 'PATCH'});
+        await fetch('api/incrementGamesPlayed/' + opponentID, {method: 'PATCH'});
+        await fetch('api/incrementGamesPlayed/' + userID, {method: 'PATCH'});
+        await fetch('api/incrementGamesWon/' + opponentID, {method: 'PATCH'});
+        props.history.push('/dashboard');
+    }
+
+    return (
 
         <div >
             <Header {...props} loggedInStatus={props.loggedInStatus} handleLogOut={props.handleLogOut}/>
@@ -105,6 +130,27 @@ return (
 
                     </Grid>
                 </Grid>
+                <Button onClick={handlePop} align="right">
+                    Abandon Game
+                </Button>
+                <Popover
+                    id='simple-popover'
+                    anchorEl={anchorPOP}
+                    open={Boolean(anchorPOP)}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    onClose={handleClosePOP}
+                >
+                    <Button fullWidth variant="contained" color="primary" preventDefault
+                            onClick={() => abandonMatch(props.user.id)}>Confirm Abandon Game
+                    </Button>
+                </Popover>
             </Box>
         </div>
     );

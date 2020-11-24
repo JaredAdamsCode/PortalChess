@@ -31,6 +31,12 @@ public class Match {
     private String status;
 
     @Column
+    private Integer winner;
+
+    @Column
+    private Integer loser;
+
+    @Column
     @SerializedName("chessboard")
     private String board;
 
@@ -55,6 +61,10 @@ public class Match {
         this.status = status;
     }
 
+    public void setWinner(Integer winnerID) { this.winner = winnerID; }
+
+    public void setLoser(Integer loserID) { this.loser = loserID; }
+
     public void setBoard(String board){this.board = board;}
 
     public Integer getId() {
@@ -72,6 +82,10 @@ public class Match {
     public String getStatus() {
         return status;
     }
+
+    public Integer getWinner() {return winner; }
+
+    public Integer getLoser() {return loser; }
 
     public String getBoard(){return board;}
 

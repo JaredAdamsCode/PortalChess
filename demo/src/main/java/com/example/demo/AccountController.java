@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -96,5 +97,15 @@ public class AccountController {
 	@DeleteMapping(path = "/unregister/{userID}")
 	public void unregisterAccount(@PathVariable int userID) {
 		accountService.unregister(userID);
+	}
+
+	@PatchMapping("/incrementGamesPlayed/{accountID}")
+	public void incrementGamesPlayed(@PathVariable int accountID) {
+		accountService.incrementGamesPlayed(accountID);
+	}
+
+	@PatchMapping("/incrementGamesWon/{accountID}")
+	public void incrementGamesWon(@PathVariable int accountID) {
+		accountService.incrementGamesWon(accountID);
 	}
 }

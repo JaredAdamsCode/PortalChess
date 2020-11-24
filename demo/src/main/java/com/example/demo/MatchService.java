@@ -16,4 +16,6 @@ public interface MatchService {
     void createBoard(int matchID, String storeBoard);
 
     Match getMatch(int matchID);
+
+    void abandonMatch(int matchID, int winnerID, int loserID);
 }

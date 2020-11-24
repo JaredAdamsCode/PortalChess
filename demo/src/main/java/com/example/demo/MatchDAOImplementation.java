@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -55,5 +57,23 @@ public class MatchDAOImplementation implements  MatchDAO{
         Query<Match> query = currSession.createQuery("from Match m where m.id = :mID")
                 .setParameter("mID", matchID);
         return query.getSingleResult();
+    }
+
+    @Transactional
+    @Override
+    public void abandonMatch(int matchID, int winnerID, int loserID) {
+        Session currSession = entityManager.unwrap(Session.class);
+        Query<Match> query = currSession.createQuery("update Match m set m.winner = :pID where m.id = :mID")
+                .setParameter("pID", winnerID)
+                .setParameter("mID", matchID);
+        query.executeUpdate();
+        query = currSession.createQuery("update Match m set m.loser = :pID where m.id = :mID")
+                .setParameter("pID", loserID)
+                .setParameter("mID", matchID);
+        query.executeUpdate();
+        query = currSession.createQuery("update Match m set m.status = :status where m.id = :mID")
+                .setParameter("status", "abandoned")
+                .setParameter("mID", matchID);
+        query.executeUpdate();
     }
 }
