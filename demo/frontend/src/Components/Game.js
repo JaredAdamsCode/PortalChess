@@ -27,7 +27,8 @@ export default function Game(props) {
                                                                         new Array(8).fill(null),
                                                                         new Array(8).fill(null),
                                                                         new Array(8).fill(null))}
-                                                                    matchID={props.matchID}/>);
+                                                                    matchID={props.matchID}
+                                                                    playerID={props.user.id}/>);
     if (!props.loggedInStatus){
         return (<Redirect to = "/"/>);
     }
@@ -49,7 +50,7 @@ export default function Game(props) {
         let chessData = JSON.parse(body.board);
         setChessboardData([...chessData]);
         setChessboard(null);
-        setChessboard(<Chessboard sendMove={sendMove} boardLayout={chessData} matchID={props.matchID}/>);
+        setChessboard(<Chessboard sendMove={sendMove} boardLayout={chessData} matchID={props.matchID} playerID={props.user.id}/>);
     }
 
     async function sendMove(toInput) {
@@ -68,7 +69,7 @@ export default function Game(props) {
         });
         let body = await response.json();
         if(body.status !== "Illegal Move" && body.status !== "Board could not be instantiated"){
-            setBoardUpdated(false);
+            setLoad(true);
             setStatus("\n");
             /*console.log(body);
             console.log(body.board);
