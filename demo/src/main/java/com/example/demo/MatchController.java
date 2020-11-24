@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.chessboard.ChessBoard;
+import com.example.demo.chessboard.IllegalMoveException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.JSONArray;
 import org.json.JSONException;
