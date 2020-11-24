@@ -26,7 +26,7 @@ Talked with PO about what to work on next <br/>
 Corey is working on getting Invitations Accepted/Rejected<br/>
 Rest of team needs to figure out the board object being passed from client/server/database will work<br/>
 
-## Scrum Session 4 Daily Scrum 11/15/2020
+## Scrum Session 4 Daily Scrum 11/12/2020
 
 Discussed possible solutions with creating and storing the ChessBoard object in the database<br/>
 - Potentially have it stored as a JSON string in database, then transferring it around will be easy
@@ -38,3 +38,17 @@ Discussed possible solutions with creating and storing the ChessBoard object in 
 - Working on unregistering an account, brought up issues with deleting an account with their ID cascading with other tables. Talked about solutions
 - Working on implementing Chesspieces that arent already finished, brought up issues of adding the Portal piece and how that affects other pieces
 - Working on getting the client to send a move to the server and having the server process that move
+
+## Scrum Session 6 Daily Scrum 11/19/2020
+- Finished having the server pull JSON board string and translate that into a ChessBoard object
+- Finished unregistering an account
+- Started working on adding the Portal chesspiece and the interactions with other chesspieces
+- Still working on client sending a move to the server and handling that
+
+## Scrum Session 7 Daily Scrum 11/24/2020
+- Created a refresh lists button on Dashboard that refreshes the Matches and Invitations List
+- Added a timestamp for both start and end times of a Match
+- Client can now send a move request to server and have it process that correctly
+- Portal piece has now been added as a possibility in the Chessboard
+- Working on implementing turns
+- Working on having the first turn be placing the Portal piece
