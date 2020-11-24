@@ -3,23 +3,42 @@ import {Redirect} from "react-router-dom";
 import Header from "./Header";
 import {Box, Divider, Grid, Paper, Typography} from "@material-ui/core";
 import Chessboard from "./Chessboard";
+import fillPieceArray from "./fillPieceArray";
+
+
 
 
 export default function Game(props) {
 
+
+
     const [pendingList, upDatePending] = React.useState([]);
     const [firstLoad, setLoad] = React.useState(true);
+    const [renderNum, setRenderNum] =React.useState(0);
     const [matchData, updateMatchData] = React.useState([]);
     const [chessboardData, setChessboardData] = React.useState([]);
+    const [boardUpdated, setBoardUpdated] = React.useState(true);
+    /*const [chessboardData, setChessboardData] = React.useState(new Array(new Array(8).fill(null),
+        new Array(8).fill(null),
+        new Array(8).fill(null),
+        new Array(8).fill(null),
+        new Array(8).fill(null),
+        new Array(8).fill(null),
+        new Array(8).fill(null),
+        new Array(8).fill(null)));*/
 
-    const [chessboard, setChessboard] = React.useState(<Chessboard boardLayout={new Array(new Array(8).fill(null),
+    //const [chessboard, setChessboard] = React.useState(<Chessboard sendMove={sendMove} boardLayout={chessboardData}
+                                                                   //matchID={props.matchID}/>);
+
+    const [chessboard, setChessboard] = React.useState(<Chessboard  sendMove={sendMove} boardLayout={new Array(new Array(8).fill(null),
                                                                                 new Array(8).fill(null),
                                                                                 new Array(8).fill(null),
                                                                                 new Array(8).fill(null),
                                                                                 new Array(8).fill(null),
                                                                                 new Array(8).fill(null),
                                                                                 new Array(8).fill(null),
-                                                                                new Array(8).fill(null))}/>);
+                                                                                new Array(8).fill(null))}
+                                                                                matchID={props.matchID}/>);
     if (!props.loggedInStatus){
         return (<Redirect to = "/"/>);
     }
@@ -28,10 +47,12 @@ export default function Game(props) {
         getMatchData();
         setLoad(false);
     }
-    if(!firstLoad){
-        console.log(chessboardData);
+    if(!boardUpdated){
+        getMatchData();
+        setBoardUpdated(true);
 
     }
+
 
 
 
@@ -42,7 +63,40 @@ export default function Game(props) {
         let chessData = JSON.parse(body.board);
         setChessboardData([...chessData]);
         setChessboard(null);
-        setChessboard(<Chessboard boardLayout={chessData}/>)
+        setChessboard(<Chessboard sendMove={sendMove} boardLayout={chessData} matchID={props.matchID}/>);
+    }
+
+    async function sendMove(toInput) {
+        const response = await fetch("/api/attemptMove", {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json"
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *client
+            body: JSON.stringify(toInput) // body data type must match "Content-Type" header
+        });
+        let body = await response.json();
+        if(body.status !== "Illegal Move" && body.status !== "Board could not be instantiated"){
+
+            console.log(body);
+            console.log(body.board);
+            let chessData = JSON.parse(body.board);
+            /*setChessboardData([...chessData]);
+            setChessboard(null);
+            setChessboard(<Chessboard } sendMove={sendMove} boardLayout={chessData} matchID={props.matchID}/>);*/
+            setBoardUpdated(false);
+        }
+        else{
+
+            console.log(body.status);
+
+        }
+
     }
 
 

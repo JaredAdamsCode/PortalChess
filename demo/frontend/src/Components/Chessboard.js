@@ -14,7 +14,6 @@ export default class Chessboard extends Component{
         this.selectSquare = this.selectSquare.bind(this);
         this.clearSelections = this.clearSelections.bind(this);
         this.isSelected = this.isSelected.bind(this);
-        this.sendMove = this.sendMove.bind(this);
         this.attemptMove = this.attemptMove.bind(this);
 
 
@@ -30,14 +29,18 @@ export default class Chessboard extends Component{
     }
 
     attemptMove(){
-        let fromPos = this.state.fromPosition;
-        let toPos = this.state.toPosition;
-        this.clearSelections()
-        const toInput = { fromPos, toPos };
-        this.sendMove(toInput);
+        let fromPosition = this.state.fromPosition;
+        let toPosition = this.state.toPosition;
+        let matchId = this.props.matchID;
+        let playerId = 5; //                                            !!!!!!!!!! fill with actual playerid
+        this.clearSelections();
+        const toInput = { fromPosition, toPosition, matchId, playerId };
+        this.props.sendMove(toInput);
+
+
 
     }
-
+    /*
     async sendMove(toInput) {
         const response = await fetch("/api/attemptMove", {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -53,55 +56,24 @@ export default class Chessboard extends Component{
             body: JSON.stringify(toInput) // body data type must match "Content-Type" header
         });
         let body = await response.json();
-        if(!body.message){
-            console.log("No message");
-            console.log(body[0]);
-            this.setState({pieceArr: fillPieceArray(body)});
+        if(body.status !== "Illegal Move" && body.status !== "Board not be instantiated"){
+
+            console.log(body);
+            console.log(body.board);
+            let boardData = JSON.parse(body.board);
+
+            this.setState({pieceArr: fillPieceArray(boardData)});
+            this.forceUpdate();
 
         }
         else{
-            console.log("message");
-            console.log(body);
+
+            console.log(body.status);
         }
 
-    }
+    }*/
 
-    attemptMove(){
-        let fromPos = this.state.fromPosition;
-        let toPos = this.state.toPosition;
-        this.clearSelections()
-        const toInput = { fromPos, toPos };
-        this.sendMove(toInput);
 
-    }
-
-    async sendMove(toInput) {
-        const response = await fetch("/api/attemptMove", {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
-            mode: "cors", // no-cors, *cors, same-origin
-            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: "same-origin", // include, *same-origin, omit
-            headers: {
-                "Content-Type": "application/json"
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: "follow", // manual, *follow, error
-            referrerPolicy: "no-referrer", // no-referrer, *client
-            body: JSON.stringify(toInput) // body data type must match "Content-Type" header
-        });
-        let body = await response.json();
-        if(!body.message){
-            console.log("No message");
-            console.log(body[0]);
-            this.setState({pieceArr: fillPieceArray(body)});
-
-        }
-        else{
-            console.log("message");
-            console.log(body);
-        }
-
-    }
 
     selectSquare(position){
         let arr = this.state.squaresStateArr;
@@ -141,6 +113,15 @@ export default class Chessboard extends Component{
     isSelected(position){
         return (this.state.squaresStateArr[position.index]);
     }
+
+    /*componentWillReceiveProps(nextProps, nextContext) {
+
+        if(nextProps.boardLayout != this.props.boardLayout){
+            console.log('in cwr chessboard');
+            this.setState({pieceArr: new Array(64).fill(null)});
+            this.setState({pieceArr: fillPieceArray(nextProps.boardLayout)});
+        }
+    }*/
 
     render(){
 
