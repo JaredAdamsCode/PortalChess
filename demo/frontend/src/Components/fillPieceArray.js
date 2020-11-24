@@ -15,42 +15,66 @@ import { ReactComponent as BlackBishop } from '../Icons/black_bishop.svg';
 
 export default function fillPieceArray(response){
 
-    function getPiece(str) {
-        if(str === "White King"){
-            return <WhiteKing/>
-        }
-        if(str === "White Queen"){
-            return <WhiteQueen/>
-        }
-        if(str === "White Pawn"){
-            return <WhitePawn/>
-        }
-        if(str === "White Rook"){
-            return <WhiteRook/>
-        }
-        if(str === "White Knight"){
-            return <WhiteKnight/>
-        }
-        if(str === "White Bishop"){
-            return <WhiteBishop/>
-        }
-        if(str === "Black King"){
-            return <BlackKing/>
-        }
-        if(str === "Black Queen"){
-            return <BlackQueen/>
-        }
-        if(str === "Black Pawn"){
-            return <BlackPawn/>
-        }
-        if(str === "Black Rook"){
-            return <BlackRook/>
-        }
-        if(str === "Black Knight"){
-            return <BlackKnight/>
-        }
-        if(str === "Black Bishop"){
-            return <BlackBishop/>
+    function getPiece(piece) {
+        if(piece){
+            if(piece.type === "King"){
+                if(piece.color === "WHITE"){
+                    return <WhiteKing/>
+                }
+                else{
+                    return <BlackKing/>
+                }
+
+            }
+            if(piece.type === "Queen"){
+                if(piece.color === "WHITE"){
+                    return <WhiteQueen/>
+                }
+                else{
+                    return <BlackQueen/>
+                }
+
+            }
+            if(piece.type === "Rook"){
+                if(piece.color === "WHITE"){
+                    return <WhiteRook/>
+                }
+                else{
+                    return <BlackRook/>
+                }
+            }
+            if(piece.type === "Bishop"){
+                if(piece.color === "WHITE"){
+                    return <WhiteBishop/>
+                }
+                else{
+                    return <BlackBishop/>
+                }
+            }
+            if(piece.type === "Knight"){
+                if(piece.color === "WHITE"){
+                    return <WhiteKnight/>
+                }
+                else{
+                    return <BlackKnight/>
+                }
+            }
+            if(piece.type === "Pawn"){
+                if(piece.color === "WHITE"){
+                    return <WhitePawn/>
+                }
+                else{
+                    return <BlackPawn/>
+                }
+            }
+            /*if(piece.type === "Portal"){
+                if(piece.color === "WHITE"){
+                    return <WhitePortal/>
+                }
+                else{
+                    return <BlackPortal/>
+                }
+            }*/
         }
         else{
             return null;
@@ -66,6 +90,7 @@ export default function fillPieceArray(response){
         }
     }
 
+    console.log(arr)
     return arr;
 
 }

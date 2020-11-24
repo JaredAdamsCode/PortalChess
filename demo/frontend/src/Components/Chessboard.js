@@ -24,7 +24,7 @@ export default class Chessboard extends Component{
             fromPositionIndex: null,
             toPosition: null,
             toPositionIndex: null,
-            pieceArr: DefaultBoardLayout()
+            pieceArr: fillPieceArray(this.props.boardLayout)
         }
 
     }
