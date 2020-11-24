@@ -11,6 +11,8 @@ import { ReactComponent as WhiteKnight } from '../Icons/white_knight.svg';
 import { ReactComponent as BlackKnight } from '../Icons/black_knight.svg';
 import { ReactComponent as WhiteBishop } from '../Icons/white_bishop.svg';
 import { ReactComponent as BlackBishop } from '../Icons/black_bishop.svg';
+import { ReactComponent as WhitePortal } from '../Icons/white_portal.svg';
+import { ReactComponent as BlackPortal } from '../Icons/black_portal.svg';
 
 
 export default function fillPieceArray(response){
@@ -67,14 +69,14 @@ export default function fillPieceArray(response){
                     return <BlackPawn/>
                 }
             }
-            /*if(piece.type === "Portal"){
+            if(piece.type === "Portal"){
                 if(piece.color === "WHITE"){
                     return <WhitePortal/>
                 }
                 else{
                     return <BlackPortal/>
                 }
-            }*/
+            }
         }
         else{
             return null;
