@@ -63,7 +63,6 @@ public class MatchDAOImplementation implements  MatchDAO{
     @Override
     public void abandonMatch(int matchID, int winnerID, int loserID) {
         Session currSession = entityManager.unwrap(Session.class);
-        Timestamp timestamp = new Timestamp(new Date().getTime());
         Query<Match> query = currSession.createQuery("update Match m set m.winner = :pID where m.id = :mID")
                 .setParameter("pID", winnerID)
                 .setParameter("mID", matchID);
@@ -74,10 +73,6 @@ public class MatchDAOImplementation implements  MatchDAO{
         query.executeUpdate();
         query = currSession.createQuery("update Match m set m.status = :status where m.id = :mID")
                 .setParameter("status", "abandoned")
-                .setParameter("mID", matchID);
-        query.executeUpdate();
-        query = currSession.createQuery("update Match m set m.endTime = :time where m.id = :mID")
-                .setParameter("time", timestamp)
                 .setParameter("mID", matchID);
         query.executeUpdate();
     }

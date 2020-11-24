@@ -1,7 +1,7 @@
 import React from "react";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import Header from "./Header";
-import {Box, Button, Divider, Grid, Paper, Popover, Typography} from "@material-ui/core";
+import {Box, Button, Divider, Grid, IconButton, Paper, Popover, Typography} from "@material-ui/core";
 
 
 export default function Game(props) {
@@ -52,7 +52,7 @@ export default function Game(props) {
             opponentID = body.senderID;
         }
         await fetch('api/abandonMatch/' + matchID +"/"+ opponentID + "/" +userID , {method: 'PATCH'});
-        return (<Redirect to = "/"/>);
+        props.history.push('/dashboard');
     }
 
     return (
