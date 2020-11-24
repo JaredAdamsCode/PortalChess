@@ -66,6 +66,43 @@ export default class Chessboard extends Component{
 
     }
 
+    attemptMove(){
+        let fromPos = this.state.fromPosition;
+        let toPos = this.state.toPosition;
+        this.clearSelections()
+        const toInput = { fromPos, toPos };
+        this.sendMove(toInput);
+
+    }
+
+    async sendMove(toInput) {
+        const response = await fetch("/api/attemptMove", {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json"
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *client
+            body: JSON.stringify(toInput) // body data type must match "Content-Type" header
+        });
+        let body = await response.json();
+        if(!body.message){
+            console.log("No message");
+            console.log(body[0]);
+            this.setState({pieceArr: fillPieceArray(body)});
+
+        }
+        else{
+            console.log("message");
+            console.log(body);
+        }
+
+    }
+
     selectSquare(position){
         let arr = this.state.squaresStateArr;
         if(!this.state.fromPosition){
