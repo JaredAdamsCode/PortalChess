@@ -90,7 +90,6 @@ export default function fillPieceArray(response){
         }
     }
 
-    console.log(arr)
     return arr;
 
 }

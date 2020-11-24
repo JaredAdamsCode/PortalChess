@@ -340,8 +340,8 @@ export default class Chessboard extends Component{
                     </Box>
                 </Grid>
                 <Grid container alignItems="center"  justify="center">
-                    <Grid item><Button onClick={this.clearSelections}>Clear</Button></Grid>
-                    <Grid item><Button onClick={this.attemptMove}>Move</Button></Grid>
+                    <Grid item><Button variant="contained" color="primary" onClick={this.clearSelections}>Clear</Button></Grid>
+                    <Grid item><Button variant="contained" color="primary" onClick={this.attemptMove}>Move</Button></Grid>
                 </Grid>
 
             </Grid>

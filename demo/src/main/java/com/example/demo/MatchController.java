@@ -70,6 +70,9 @@ public class MatchController {
         catch(JSONException e){
             match.setStatus("Board could not be instantiated");
         }
+        catch(NullPointerException e){
+            match.setStatus("Illegal Move");;
+        }
         return match;
     }
 
