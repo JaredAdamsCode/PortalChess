@@ -95,8 +95,9 @@ export default function SimpleTable(props) {
       for(let i = 0; i < selectedUsers.length; i++){
           let senderID = props.user.id;
           let receiverID = selectedUsers[i].id;
+          let turnID = props.user.id;
           userNames.push(selectedUsers[i].name);
-          const userIDs = {senderID, receiverID};
+          const userIDs = {senderID, receiverID, turnID};
 
           //Create the match before the invite is sent out
           const response = await fetch("/api/createMatch", {

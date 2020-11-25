@@ -1,15 +1,14 @@
 package com.example.demo;
 
-import com.example.demo.chessboard.ChessBoard;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.google.gson.annotations.SerializedName;
-
+import com.example.demo.chessboard.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.google.gson.annotations.SerializedName;
 
 @Entity
 @Table(name = "matches")
@@ -40,6 +39,9 @@ public class Match {
     @SerializedName("chessboard")
     private String board;
 
+    @Column
+    private Integer turnID;
+    
     @Override
      public String toString() {
         return "Match [id = " + id + ", senderId = " + senderID + ", receiverId = " + receiverID + ", status = " + status + "]";
@@ -88,5 +90,13 @@ public class Match {
     public Integer getLoser() {return loser; }
 
     public String getBoard(){return board;}
+    
+    public Integer getTurnID() {
+        return turnID;
+    }
+    
+    public void setTurnID(Integer turnID) {
+    	this.turnID = turnID;
+    }
 
 }
