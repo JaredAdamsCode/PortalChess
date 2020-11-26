@@ -35,6 +35,7 @@ export default class Chessboard extends Component{
         let playerId = this.props.playerID;
         this.clearSelections();
         const toInput = { fromPosition, toPosition, matchId, playerId };
+        console.log("toInput: ", toInput);
         this.props.sendMove(toInput);
 
 

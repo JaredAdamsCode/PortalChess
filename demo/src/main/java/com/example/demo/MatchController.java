@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.chessboard.ChessBoard;
+import com.example.demo.chessboard.ChessPiece;
 import com.example.demo.chessboard.IllegalMoveException;
+import com.example.demo.chessboard.IllegalPositionException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 @RestController
@@ -33,7 +35,7 @@ public class MatchController {
     }
 
     @PostMapping(path = "/attemptMove", consumes = "application/json", produces = "application/json")
-    public Match attemptMove(@RequestBody Move move) throws JsonProcessingException {
+    public Match attemptMove(@RequestBody Move move) throws JsonProcessingException, IllegalPositionException {
         Match match = matchService.getMatch(move.getMatchId());
         String boardStr = match.getBoard();
 
@@ -45,6 +47,9 @@ public class MatchController {
         	}
         	Integer newTurnID = getNewTurnID(match, currentPlayerID);
             ChessBoard board = stringToObject(boardStr);
+            if(!checkPieceColor(board.getPiece(move.getFromPosition()), match, currentPlayerID)) {
+            	throw new IllegalMoveException("Cannot move this piece because it does not belong to this player");
+            }
             board.move(move.getFromPosition(), move.getToPosition());
             boardStr = board.getBoardString();
             matchService.updateBoard(move.getMatchId(), boardStr, newTurnID);
@@ -65,6 +70,17 @@ public class MatchController {
     public Integer getNewTurnID(Match match, Integer currentPlayerID) {
     	if(currentPlayerID.equals(match.getSenderID()) ) return match.getReceiverID();
     	else return match.getSenderID();
+    }
+    
+    public boolean checkPieceColor(ChessPiece piece, Match match, Integer currentPlayerID) {
+
+    	if(currentPlayerID.equals(match.getSenderID()) && piece.getColor().equals(ChessPiece.Color.WHITE)) {
+    		return true;
+    	}
+    	if(currentPlayerID.equals(match.getReceiverID()) && piece.getColor().equals(ChessPiece.Color.BLACK)) {
+    		return true;
+    	}
+    	return false;
     }
 
     @GetMapping("/getMatchesList/{accountID}")
