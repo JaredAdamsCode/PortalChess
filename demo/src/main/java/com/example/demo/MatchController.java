@@ -43,7 +43,7 @@ public class MatchController {
         	Integer currentPlayerID = move.getPlayerId();
         	Integer turnID = match.getTurnID();
         	if(!currentPlayerID.equals(turnID)) {
-        		throw new IllegalMoveException("not this player's turn");
+        		throw new IllegalMoveException("Not this player's turn");
         	}
         	Integer newTurnID = getNewTurnID(match, currentPlayerID);
             ChessBoard board = stringToObject(boardStr);
@@ -54,15 +54,16 @@ public class MatchController {
             boardStr = board.getBoardString();
             matchService.updateBoard(move.getMatchId(), boardStr, newTurnID);
             match = matchService.getMatch(move.getMatchId());
+            match.setStatus("Legal");
         }
         catch(IllegalMoveException e){
-            match.setStatus("Illegal Move");
+            match.setStatus(e.getMessage());
         }
         catch(JSONException e){
             match.setStatus("Board could not be instantiated");
         }
         catch(NullPointerException e){
-            match.setStatus("Illegal Move");;
+            match.setStatus("Illegal Move");
         }
         return match;
     }

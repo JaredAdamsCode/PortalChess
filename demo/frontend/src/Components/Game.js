@@ -69,7 +69,7 @@ export default function Game(props) {
             body: JSON.stringify(toInput) // body data type must match "Content-Type" header
         });
         let body = await response.json();
-        if(body.status !== "Illegal Move" && body.status !== "Board could not be instantiated"){
+        if(body.status === "Legal"){
             setLoad(true);
             setStatus("\n");
 
