@@ -43,6 +43,17 @@ public class MatchDAOImplementation implements  MatchDAO{
 
     @Transactional
     @Override
+    public void updateBoard(int matchID, String storeBoard, int newTurnID) {
+        Session currSession = entityManager.unwrap(Session.class);
+        Query<Match> query = currSession.createQuery("update Match m set m.board = :board, m.turnID = :turnID where m.id = :mID")
+                .setParameter("board", storeBoard)
+                .setParameter("turnID", newTurnID)
+                .setParameter("mID", matchID);
+        query.executeUpdate();
+    }
+   
+    @Transactional
+    @Override
     public void createBoard(int matchID, String storeBoard) {
         Session currSession = entityManager.unwrap(Session.class);
         Query<Match> query = currSession.createQuery("update Match m set m.board = :board where m.id = :mID")

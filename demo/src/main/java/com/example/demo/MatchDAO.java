@@ -15,6 +15,8 @@ public interface MatchDAO {
 
     void createBoard(int matchID, String storeBoard);
 
+    void updateBoard(int matchID, String storeBoard, int newTurnID);
+
     Match getMatch(int matchID);
 
     void abandonMatch(int matchID, int winnerID, int loserID);

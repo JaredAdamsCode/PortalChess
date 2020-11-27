@@ -13,6 +13,8 @@ public interface MatchService {
 
     int setStatus(int matchID, String newStatus);
 
+    void updateBoard(int matchID, String storeBoard, int newTurnID);
+    
     void createBoard(int matchID, String storeBoard);
 
     Match getMatch(int matchID);
