@@ -2,6 +2,9 @@ package com.example.demo.chessboard;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -82,6 +85,9 @@ public class ChessBoard {
 			toPiece = getPiece(toPosition);
 			legalMoves = fromPiece.legalMoves();
 			if(legalMoves.contains(toPosition) && (toPiece == null || toPiece.color != fromPiece.color)) {
+				if(fromPiece instanceof Pawn) {
+					fromPiece = pawnPromotion(fromPiece, toRow);
+				}
 				placePiece(fromPiece, toPosition);
 				board[fromRow - 1][fromColumn - 1] = null;
 			}
@@ -92,6 +98,20 @@ public class ChessBoard {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
+	}
+	
+	public ChessPiece pawnPromotion(ChessPiece fromPiece, int toRow) {
+		if(fromPiece.color.equals(ChessPiece.Color.WHITE)) {
+			if(toRow == 8) {
+				return new Queen(this, ChessPiece.Color.WHITE, "Queen");
+			}
+		}
+		else {
+			if(toRow == 1) {
+				return new Queen(this, ChessPiece.Color.BLACK, "Queen");
+			}
+		}
+		return fromPiece;
 	}
 	
 	public String toString(){
@@ -303,5 +323,49 @@ public class ChessBoard {
 
 		placePiece(piece,position);
 
+	}
+	
+	public static void main(String[] args) throws IllegalMoveException {
+		ChessBoard board = new ChessBoard();
+		board.initialize();
+		System.out.println(board);
+		board.move("a2", "a4");
+		System.out.println(board);
+//		board.move("a7", "a5");
+//		System.out.println(board);
+//		board.move("b2", "b4");
+//		System.out.println(board);
+//		board.move("a5", "b4");
+//		System.out.println(board);
+//		board.move("a4", "a5");
+//		System.out.println(board);
+//		board.move("a8", "a6");
+//		System.out.println(board);
+//		board.move("a1", "a2");
+//		System.out.println(board);
+//		board.move("a6", "b6");
+//		System.out.println(board);
+//		board.move("a5", "a6");
+//		System.out.println(board);
+//		board.move("b6", "c6");
+//		System.out.println(board);
+//		board.move("a6", "a7");
+//		System.out.println(board);
+//		board.move("c6", "d6");
+//		System.out.println(board);
+//		board.move("a7", "a8");
+//		System.out.println(board);
+		board.move("b7", "b5");
+		System.out.println(board);
+		board.move("a4", "b5");
+		System.out.println(board);
+		board.move("a7", "a5");
+		System.out.println(board);
+		board.move("a1", "a5");
+		System.out.println(board);
+		board.move("c7", "c5");
+		System.out.println(board);
+		board.move("a5", "a8");
+		System.out.println(board);
 	}
 }
