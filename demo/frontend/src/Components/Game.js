@@ -49,9 +49,19 @@ export default function Game(props) {
         let response = await fetch('/api/getMatch/' + matchID);
         let body = await response.json();
         let chessData = JSON.parse(body.board);
+        console.log(body);
         setChessboardData([...chessData]);
         setChessboard(null);
         setChessboard(<Chessboard sendMove={sendMove} boardLayout={chessData} matchID={props.matchID} playerID={props.user.id}/>);
+        if(body.winner){
+            if(props.user.id == body.winner){
+                setStatus("You win!");
+
+            }
+            else{
+                setStatus("You lose");
+            }
+        }
     }
 
     async function sendMove(toInput) {
@@ -68,14 +78,18 @@ export default function Game(props) {
             referrerPolicy: "no-referrer", // no-referrer, *client
             body: JSON.stringify(toInput) // body data type must match "Content-Type" header
         });
+        console.log(response);
         let body = await response.json();
-        if(body.status !== "Illegal Move" && body.status !== "Board could not be instantiated"){
+        console.log(body);
+        if(body.moveWasMade === "true"){
             setLoad(true);
             setStatus("\n");
+            console.log(body);
 
         }
         else{
-            setStatus(body.status);
+            console.log(body);
+            setStatus(body.errorMsg);
         }
 
     }

@@ -20,4 +20,6 @@ public interface MatchService {
     Match getMatch(int matchID);
 
     void abandonMatch(int matchID, int winnerID, int loserID);
+
+    void updateMatchResults(int matchID, int winnerID, int loserID);
 }

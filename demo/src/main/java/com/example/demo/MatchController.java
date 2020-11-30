@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import java.util.List;
+import java.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,53 +35,65 @@ public class MatchController {
     }
 
     @PostMapping(path = "/attemptMove", consumes = "application/json", produces = "application/json")
-    public Match attemptMove(@RequestBody Move move) throws JsonProcessingException, IllegalPositionException {
+    public Hashtable<String, String> attemptMove(@RequestBody Move move) throws JsonProcessingException, IllegalPositionException {
         Match match = matchService.getMatch(move.getMatchId());
         String boardStr = match.getBoard();
+        //MoveResponse moveResponse = null;
+        Hashtable<String, String> moveResponse = new Hashtable<String, String>();
 
         try{
-        	Integer currentPlayerID = move.getPlayerId();
-        	Integer turnID = match.getTurnID();
-        	if(!currentPlayerID.equals(turnID)) {
-        		throw new IllegalMoveException("not this player's turn");
-        	}
-        	Integer newTurnID = getNewTurnID(match, currentPlayerID);
             ChessBoard board = stringToObject(boardStr);
-            if(!checkPieceColor(board.getPiece(move.getFromPosition()), match, currentPlayerID)) {
-            	throw new IllegalMoveException("Cannot move this piece because it does not belong to this player");
-            }
+            MoveAnalyzer moveAnalyzer = new MoveAnalyzer(match, board, move);
+
+            moveAnalyzer.checkPreconditions();
+            boolean endConditionMet = moveAnalyzer.willEndGame();
             board.move(move.getFromPosition(), move.getToPosition());
+
             boardStr = board.getBoardString();
+            Integer newTurnID = getNewTurnID(match, move.getPlayerId());
             matchService.updateBoard(move.getMatchId(), boardStr, newTurnID);
-            match = matchService.getMatch(move.getMatchId());
+
+        	if(endConditionMet){
+        	    if(move.getPlayerId() == match.getSenderID()){
+                    matchService.updateMatchResults(match.getId(), match.getSenderID(), match.getReceiverID());
+                }
+        	    else{
+                    matchService.updateMatchResults(match.getId(), match.getReceiverID(), match.getSenderID());
+                }
+
+            }
+            //moveResponse = matchService.getMatch(move.getMatchId());
+        	//moveResponse.setStatus("Legal");
+        	//moveResponse = new MoveResponse("true", "Legal");
+            moveResponse.put("moveWasMade", "true");
+            moveResponse.put("errorMsg", "legal");
         }
         catch(IllegalMoveException e){
-            match.setStatus("Illegal Move");
+            //moveResponse = new MoveResponse("false", e.getMessage());
+            //moveResponse.setStatus(e.getMessage());
+            moveResponse.put("moveWasMade", "false");
+            moveResponse.put("errorMsg", e.getMessage());
         }
         catch(JSONException e){
-            match.setStatus("Board could not be instantiated");
+            //moveResponse = new MoveResponse("false", "Board could not be instantiated");
+            //moveResponse.setStatus("Board could not be instantiated");
+            moveResponse.put("moveWasMade", "false");
+            moveResponse.put("errorMsg", "Board could not be instantiated");
         }
         catch(NullPointerException e){
-            match.setStatus("Illegal Move");;
+            //moveResponse = new MoveResponse("false", "Illegal Move");
+            //moveResponse.setStatus("Illegal Move");
+            moveResponse.put("moveWasMade", "false");
+            moveResponse.put("errorMsg", "Illegal Move");
         }
-        return match;
+        return moveResponse;
     }
     
     public Integer getNewTurnID(Match match, Integer currentPlayerID) {
     	if(currentPlayerID.equals(match.getSenderID()) ) return match.getReceiverID();
     	else return match.getSenderID();
     }
-    
-    public boolean checkPieceColor(ChessPiece piece, Match match, Integer currentPlayerID) {
 
-    	if(currentPlayerID.equals(match.getSenderID()) && piece.getColor().equals(ChessPiece.Color.WHITE)) {
-    		return true;
-    	}
-    	if(currentPlayerID.equals(match.getReceiverID()) && piece.getColor().equals(ChessPiece.Color.BLACK)) {
-    		return true;
-    	}
-    	return false;
-    }
 
     @GetMapping("/getMatchesList/{accountID}")
     public List<Match> get(@PathVariable int accountID) {
