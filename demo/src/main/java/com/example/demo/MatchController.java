@@ -51,8 +51,15 @@ public class MatchController {
                 throw new IllegalMoveException("Cannot move yourself into check");
             }
 
-            if(moveAnalyzer.opponentIsInCheck()){
-                System.out.println("Check");
+            if(moveAnalyzer.opponentIsInCheck(board)){
+                if(moveAnalyzer.opponentIsMated()){
+                   endConditionMet = true;
+                   System.out.println("Checkmate");
+                }
+                else{
+                    System.out.println("Check");
+                }
+
             }
 
             boardStr = board.getBoardString();
@@ -82,6 +89,9 @@ public class MatchController {
         }
         catch(IllegalPositionException e){
             match.setStatus(e.getMessage());
+        }
+        catch(JsonProcessingException e){
+            throw e;
         }
         return match;
     }

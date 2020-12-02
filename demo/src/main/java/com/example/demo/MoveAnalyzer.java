@@ -1,6 +1,10 @@
 package com.example.demo;
 import java.util.ArrayList;
 import com.example.demo.chessboard.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class MoveAnalyzer{
 
@@ -48,8 +52,8 @@ public class MoveAnalyzer{
     public boolean movedIntoCheck() throws IllegalPositionException{
         boolean inCheck = false;
         try{
-            String kingPosition = findKing(this.color);
-            inCheck = canBeCaptured(this.color, kingPosition);
+            String kingPosition = findKing(this.color, this.board);
+            inCheck = canBeCaptured(this.color, kingPosition, this.board);
 
         }
         catch(IllegalPositionException e){
@@ -104,7 +108,7 @@ public class MoveAnalyzer{
         }
     }
 
-    private String findKing(ChessPiece.Color color) throws IllegalPositionException{
+    private String findKing(ChessPiece.Color color, ChessBoard board) throws IllegalPositionException{
         boolean found = false;
         String kingLoc = "?";
         String pos;
@@ -114,7 +118,7 @@ public class MoveAnalyzer{
                 for(int col = 1; col < 9 && !found; col++){
                     pos = createPositionString(row, col);
 
-                    piece = this.board.getPiece(pos);
+                    piece = board.getPiece(pos);
                     if(piece != null){
                         if(piece instanceof King &&  piece.getColor().equals(color)){
                             kingLoc = pos;
@@ -131,7 +135,7 @@ public class MoveAnalyzer{
         return kingLoc;
     }
 
-    private boolean canBeCaptured(ChessPiece.Color color, String piecePos) throws IllegalPositionException{
+    private boolean canBeCaptured(ChessPiece.Color color, String piecePos, ChessBoard board) throws IllegalPositionException{
         boolean inDanger = false;
         ArrayList<String> dangerSpots;
         String pos;
@@ -140,7 +144,7 @@ public class MoveAnalyzer{
             for(int row = 1; row < 9 && !inDanger; row++){
                 for(int col = 1; col < 9 && !inDanger; col++){
                     pos = createPositionString(row, col);
-                    piece = this.board.getPiece(pos);
+                    piece = board.getPiece(pos);
                     if(piece != null && !piece.getColor().equals(color)){
                         dangerSpots = piece.legalMoves();
                         for(String s: dangerSpots){
@@ -160,12 +164,12 @@ public class MoveAnalyzer{
         return inDanger;
     }
 
-    public boolean opponentIsInCheck() throws IllegalPositionException{
+    public boolean opponentIsInCheck(ChessBoard board) throws IllegalPositionException{
         boolean inCheck = false;
         ChessPiece.Color color = getEnemyColor(this.currentPlayerID);
         try{
-            String kingPosition = findKing(color);
-            inCheck = canBeCaptured(color, kingPosition);
+            String kingPosition = findKing(color, board);
+            inCheck = canBeCaptured(color, kingPosition, board);
 
         }
         catch(IllegalPositionException e){
@@ -175,6 +179,51 @@ public class MoveAnalyzer{
     }
 
 
+    public boolean opponentIsMated() throws IllegalPositionException, IllegalMoveException, JSONException, JsonProcessingException{
+        boolean mated = true;
+
+        ChessPiece.Color color = getEnemyColor(this.currentPlayerID);
+        ArrayList<String> legalMoves;
+        String pos;
+        ChessPiece piece;
+        ChessBoard boardClone;
+
+        try{
+            String boardStr = this.board.getBoardString();
+            for(int row = 1; row < 9 && mated; row++){
+                for(int col = 1; col < 9 && mated; col++){
+                    pos = createPositionString(row, col);
+                    piece = this.board.getPiece(pos);
+                    if(piece != null && piece.getColor().equals(color)){
+                        legalMoves = piece.legalMoves();
+                        for(String s: legalMoves){
+                            boardClone = stringToObject(boardStr);
+                            boardClone.move(pos, s);
+                            if(opponentIsInCheck(boardClone) == false){
+                                mated = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch (IllegalPositionException e){
+            throw e;
+        }
+        catch (IllegalMoveException e){
+            throw e;
+        }
+        catch (JSONException e){
+            throw e;
+        }
+        catch(JsonProcessingException e){
+            throw e;
+        }
+
+
+        return mated;
+    }
+
 
     private String createPositionString(int row, int col) {
         char columnChar = (char) (col + 96);
@@ -182,5 +231,22 @@ public class MoveAnalyzer{
         position += columnChar;
         position += row;
         return position;
+    }
+
+    public ChessBoard stringToObject(String boardString) throws JSONException {
+
+        JSONArray outerArray = new JSONArray(boardString);
+        ChessBoard tempBoard = new ChessBoard();
+
+        for(int i = 0; i < outerArray.length(); i++){
+            JSONArray innerArray = outerArray.getJSONArray(i);
+            for (int j = 0; j < innerArray.length(); j++) {
+                if(!JSONObject.NULL.equals(innerArray.get(j))){
+                    JSONObject obj = innerArray.getJSONObject(j);
+                    tempBoard.createChessPieceObject(obj,tempBoard);
+                }
+            }
+        }
+        return tempBoard;
     }
 }
