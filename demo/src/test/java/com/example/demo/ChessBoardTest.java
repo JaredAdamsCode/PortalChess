@@ -102,20 +102,20 @@ class ChessBoardTest {
 	public void testMoveToCapture() throws IllegalMoveException, IllegalPositionException {
 		Rook whiteRook1 = new Rook(chessBoard, ChessPiece.Color.WHITE, "Rook");
 		Rook blackRook1 = new Rook(chessBoard, ChessPiece.Color.BLACK, "Rook");
-		chessBoard.placePiece(whiteRook1, "a1");
-		chessBoard.placePiece(blackRook1, "a8");
-		chessBoard.move("a1", "a8");
-		assertTrue(chessBoard.getPiece("a1") == null && chessBoard.getPiece("a8").equals(whiteRook1), "Test move to capture");	
+		chessBoard.placePiece(whiteRook1, "d3");
+		chessBoard.placePiece(blackRook1, "d6");
+		chessBoard.move("d3", "d6");
+		assertTrue(chessBoard.getPiece("d3") == null && chessBoard.getPiece("d6").equals(whiteRook1), "Test move to capture");
 	}
 	
 	@Test
 	public void testMoveToSameColor() {
 		Rook whiteRook1 = new Rook(chessBoard, ChessPiece.Color.WHITE, "Rook");
 		Rook whiteRook2 = new Rook(chessBoard, ChessPiece.Color.WHITE, "Rook");
-		chessBoard.placePiece(whiteRook1, "a1");
-		chessBoard.placePiece(whiteRook2, "a8");
+		chessBoard.placePiece(whiteRook1, "b1");
+		chessBoard.placePiece(whiteRook2, "b8");
 		try {
-			chessBoard.move("a1", "a8");
+			chessBoard.move("b1", "b8");
 		} catch (IllegalMoveException e) {
 			return;
 		}
