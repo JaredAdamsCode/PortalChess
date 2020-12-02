@@ -13,6 +13,8 @@ export default function Game(props) {
     const [status, setStatus] = React.useState("\n");
     const [turnStatus, setTurnStatus] = React.useState("White's turn");
     const [colorStatus, setColorStatus] = React.useState("\n");
+    const [whiteCheck, setWhiteCheckStatus] = React.useState("\n");
+    const [blackCheck, setBlackCheckStatus] = React.useState("\n");
     const [chessboard, setChessboard] = React.useState(<Chessboard  sendMove={sendMove}
                                                                     boardLayout={
                                                                         new Array(new Array(8).fill(null),
@@ -45,9 +47,7 @@ export default function Game(props) {
         setAnchorPOP(null);
     };
 
-    const handleRefresh = () => {
-        setLoad(true);
-    }
+
 
     async function getMatchData(){
         let matchID = props.matchID;
@@ -68,6 +68,8 @@ export default function Game(props) {
                 setStatus("You lose");
             }
         }
+
+
 
     }
 
@@ -95,7 +97,7 @@ export default function Game(props) {
 
         }
         else{
-            console.log(body);
+
             setStatus(body.status);
         }
 
@@ -137,6 +139,11 @@ export default function Game(props) {
         if(props.user.id !== body.turnID){
             setTimeout(() => setLoad(true), 3000);
         }
+
+        if(body.sender_check == true){ setWhiteCheckStatus("White is in check"); }
+        else{ setWhiteCheckStatus("\n");}
+        if(body.receiver_check == true){ setBlackCheckStatus("Black is in check"); }
+        else{ setBlackCheckStatus("\n");}
     }
 
     return (
@@ -166,14 +173,18 @@ export default function Game(props) {
                             <Typography variant='h6' align="center">
                                 {status}
                             </Typography>
+                            <Typography variant='h6' align="center">
+                                {whiteCheck}
+                            </Typography>
+                            <Typography variant='h6' align="center">
+                                {blackCheck}
+                            </Typography>
                             {chessboard}
                         </Paper>
 
                     </Grid>
                 </Grid>
-                <Button fullWidth variant="contained" color="primary" preventDefault
-                        onClick={handleRefresh}>Refresh
-                </Button>
+
                 <Button onClick={handlePop} align="right">
                     Abandon Game
                 </Button>
