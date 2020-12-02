@@ -43,6 +43,7 @@ public class MatchController {
 
 
         try{
+
             ChessBoard board = stringToObject(boardStr);
             MoveAnalyzer moveAnalyzer = new MoveAnalyzer(match, board, move);
 
@@ -83,7 +84,9 @@ public class MatchController {
 
             }
             match = matchService.getMatch(move.getMatchId());
-        	match.setStatus("Legal");
+
+            match.setStatus("Legal");
+
         }
         catch(IllegalMoveException e){
             match.setStatus(e.getMessage());
@@ -93,12 +96,14 @@ public class MatchController {
         }
         catch(NullPointerException e){
             match.setStatus("Illegal Move");
+
         }
         catch(IllegalPositionException e){
             match.setStatus(e.getMessage());
         }
         catch(JsonProcessingException e){
             throw e;
+
         }
         return match;
     }

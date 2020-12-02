@@ -1,18 +1,18 @@
 import React from "react";
-import {Link, Redirect} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import Header from "./Header";
-import {Box, Divider, Grid, Paper, Typography, Button, IconButton, Popover} from "@material-ui/core";
+import {Box, Divider, Grid, Paper, Typography, Button, Popover} from "@material-ui/core";
 import Chessboard from "./Chessboard";
-import fillPieceArray from "./fillPieceArray";
+
 
 
 export default function Game(props) {
 
-    const [pendingList, upDatePending] = React.useState([]);
     const [firstLoad, setLoad] = React.useState(true);
-    const [matchData, updateMatchData] = React.useState([]);
     const [chessboardData, setChessboardData] = React.useState([]);
     const [status, setStatus] = React.useState("\n");
+    const [turnStatus, setTurnStatus] = React.useState("White's turn");
+    const [colorStatus, setColorStatus] = React.useState("\n");
     const [chessboard, setChessboard] = React.useState(<Chessboard  sendMove={sendMove}
                                                                     boardLayout={
                                                                         new Array(new Array(8).fill(null),
@@ -33,6 +33,7 @@ export default function Game(props) {
 
     if (firstLoad) {
         getMatchData();
+        checkTurn();
         setLoad(false);
     }
 
@@ -57,6 +58,7 @@ export default function Game(props) {
         setChessboardData([...chessData]);
         setChessboard(null);
         setChessboard(<Chessboard sendMove={sendMove} boardLayout={chessData} matchID={props.matchID} playerID={props.user.id}/>);
+
         if(body.winner){
             if(props.user.id == body.winner){
                 setStatus("You win!");
@@ -66,6 +68,7 @@ export default function Game(props) {
                 setStatus("You lose");
             }
         }
+
     }
 
     async function sendMove(toInput) {
@@ -98,13 +101,12 @@ export default function Game(props) {
 
     }
 
-
     async function abandonMatch(userID) {
         let matchID = props.matchID;
         let response = await fetch('/api/getMatch/' + matchID);
         let body = await response.json();
         let opponentID = -1;
-        if(body.senderID == userID) {
+        if(body.senderID === userID) {
             opponentID = body.receiverID;
         }else {
             opponentID = body.senderID;
@@ -114,6 +116,27 @@ export default function Game(props) {
         await fetch('api/incrementGamesPlayed/' + userID, {method: 'PATCH'});
         await fetch('api/incrementGamesWon/' + opponentID, {method: 'PATCH'});
         props.history.push('/dashboard');
+    }
+
+
+    async function checkTurn() {
+        let matchID = props.matchID;
+        let response = await fetch('/api/getMatch/' + matchID);
+        let body = await response.json();
+
+        if(body.turnID === body.senderID){
+            setTurnStatus("White's turn");
+        }else{
+            setTurnStatus("Black's turn");
+        }
+        if(props.user.id === body.senderID){
+            setColorStatus("White");
+        }else{
+            setColorStatus("Black");
+        }
+        if(props.user.id !== body.turnID){
+            setTimeout(() => setLoad(true), 3000);
+        }
     }
 
     return (
@@ -136,8 +159,8 @@ export default function Game(props) {
                 <Grid  container spacing={40}>
                     <Grid item xs ={12} style={{paddingLeft: 0, paddingRight: 0}}>
                         <Paper>
-                            <Typography variant='h4' align="center">
-                                Chessboard
+                            <Typography variant='h6' align="center">
+                                You are playing as {colorStatus} - it is {turnStatus}
                             </Typography>
                             <Divider/>
                             <Typography variant='h6' align="center">
