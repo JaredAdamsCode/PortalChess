@@ -44,6 +44,10 @@ export default function Game(props) {
         setAnchorPOP(null);
     };
 
+    const handleRefresh = () => {
+        setLoad(true);
+    }
+
     async function getMatchData(){
         let matchID = props.matchID;
         let response = await fetch('/api/getMatch/' + matchID);
@@ -78,18 +82,18 @@ export default function Game(props) {
             referrerPolicy: "no-referrer", // no-referrer, *client
             body: JSON.stringify(toInput) // body data type must match "Content-Type" header
         });
-        console.log(response);
+
         let body = await response.json();
-        console.log(body);
-        if(body.moveWasMade === "true"){
+
+        if(body.status === "Legal"){
             setLoad(true);
             setStatus("\n");
-            console.log(body);
+
 
         }
         else{
             console.log(body);
-            setStatus(body.errorMsg);
+            setStatus(body.status);
         }
 
     }
@@ -144,6 +148,9 @@ export default function Game(props) {
 
                     </Grid>
                 </Grid>
+                <Button fullWidth variant="contained" color="primary" preventDefault
+                        onClick={handleRefresh}>Refresh
+                </Button>
                 <Button onClick={handlePop} align="right">
                     Abandon Game
                 </Button>
@@ -164,6 +171,7 @@ export default function Game(props) {
                     <Button fullWidth variant="contained" color="primary" preventDefault
                             onClick={() => abandonMatch(props.user.id)}>Confirm Abandon Game
                     </Button>
+
                 </Popover>
             </Box>
         </div>

@@ -35,11 +35,9 @@ public class MatchController {
     }
 
     @PostMapping(path = "/attemptMove", consumes = "application/json", produces = "application/json")
-    public Hashtable<String, String> attemptMove(@RequestBody Move move) throws JsonProcessingException, IllegalPositionException {
+    public Match attemptMove(@RequestBody Move move) throws JsonProcessingException, IllegalPositionException {
         Match match = matchService.getMatch(move.getMatchId());
         String boardStr = match.getBoard();
-        //MoveResponse moveResponse = null;
-        Hashtable<String, String> moveResponse = new Hashtable<String, String>();
 
         try{
             ChessBoard board = stringToObject(boardStr);
@@ -48,6 +46,10 @@ public class MatchController {
             moveAnalyzer.checkPreconditions();
             boolean endConditionMet = moveAnalyzer.willEndGame();
             board.move(move.getFromPosition(), move.getToPosition());
+
+            if(moveAnalyzer.movedIntoCheck()){
+                throw new IllegalMoveException("Cannot move yourself into check");
+            }
 
             boardStr = board.getBoardString();
             Integer newTurnID = getNewTurnID(match, move.getPlayerId());
@@ -62,31 +64,22 @@ public class MatchController {
                 }
 
             }
-            //moveResponse = matchService.getMatch(move.getMatchId());
-        	//moveResponse.setStatus("Legal");
-        	//moveResponse = new MoveResponse("true", "Legal");
-            moveResponse.put("moveWasMade", "true");
-            moveResponse.put("errorMsg", "legal");
+            match = matchService.getMatch(move.getMatchId());
+        	match.setStatus("Legal");
         }
         catch(IllegalMoveException e){
-            //moveResponse = new MoveResponse("false", e.getMessage());
-            //moveResponse.setStatus(e.getMessage());
-            moveResponse.put("moveWasMade", "false");
-            moveResponse.put("errorMsg", e.getMessage());
+            match.setStatus(e.getMessage());
         }
         catch(JSONException e){
-            //moveResponse = new MoveResponse("false", "Board could not be instantiated");
-            //moveResponse.setStatus("Board could not be instantiated");
-            moveResponse.put("moveWasMade", "false");
-            moveResponse.put("errorMsg", "Board could not be instantiated");
+            match.setStatus("Board could not be instantiated");
         }
         catch(NullPointerException e){
-            //moveResponse = new MoveResponse("false", "Illegal Move");
-            //moveResponse.setStatus("Illegal Move");
-            moveResponse.put("moveWasMade", "false");
-            moveResponse.put("errorMsg", "Illegal Move");
+            match.setStatus("Illegal Move");
         }
-        return moveResponse;
+        catch(IllegalPositionException e){
+            match.setStatus(e.getMessage());
+        }
+        return match;
     }
     
     public Integer getNewTurnID(Match match, Integer currentPlayerID) {
