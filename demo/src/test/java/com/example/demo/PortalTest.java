@@ -32,9 +32,29 @@ class PortalTest {
 	}
 
 	@Test
+	public void testToStringWhiteBH() {
+		Portal portal = new Portal(chessBoard, ChessPiece.Color.WHITE, "Portal", Portal.Status.BLACK_HOLE);
+		assertTrue(portal.toString().equals("\u25c9"));
+	}
+
+	@Test
 	public void testToStringBlack() {
 		Portal portal = new Portal(chessBoard, ChessPiece.Color.BLACK, "Portal", Portal.Status.PORTAL);
 		assertTrue(portal.toString().equals("\u25a2"));
+	}
+
+	@Test
+	public void testToStringBlackBH() {
+		Portal portal = new Portal(chessBoard, ChessPiece.Color.BLACK, "Portal", Portal.Status.BLACK_HOLE);
+		assertTrue(portal.toString().equals("\u25a3"));
+	}
+
+	@Test
+	public void testStatus() throws IllegalPositionException {
+		Portal portal = new Portal(chessBoard, ChessPiece.Color.BLACK, "Portal", Portal.Status.PORTAL);
+		assertTrue(portal.getStatus().equals(Portal.Status.PORTAL));
+		portal.setStatus(Portal.Status.BLACK_HOLE);
+		assertTrue(portal.getStatus().equals(Portal.Status.BLACK_HOLE));
 	}
 	
 	@Test
@@ -45,6 +65,14 @@ class PortalTest {
 		chessBoard.placePiece(rook, "c6");
 		moves = portal.legalMoves();
 		assertTrue(moves.size() == 8, "test 8 moves");
+	}
+
+	@Test
+	public void testBHMoves() {
+		Portal portal = new Portal(chessBoard, ChessPiece.Color.WHITE, "Portal", Portal.Status.BLACK_HOLE);
+		chessBoard.placePiece(portal, "d5");
+		moves = portal.legalMoves();
+		assertTrue(moves.size() == 0, "test 8 moves");
 	}
 	
 	@Test
