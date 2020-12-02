@@ -51,6 +51,10 @@ public class MatchController {
                 throw new IllegalMoveException("Cannot move yourself into check");
             }
 
+            if(moveAnalyzer.opponentIsInCheck()){
+                System.out.println("Check");
+            }
+
             boardStr = board.getBoardString();
             Integer newTurnID = getNewTurnID(match, move.getPlayerId());
             matchService.updateBoard(move.getMatchId(), boardStr, newTurnID);

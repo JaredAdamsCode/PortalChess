@@ -49,7 +49,7 @@ public class MoveAnalyzer{
         boolean inCheck = false;
         try{
             String kingPosition = findKing(this.color);
-            inCheck = isInCheck(this.color, kingPosition);
+            inCheck = canBeCaptured(this.color, kingPosition);
 
         }
         catch(IllegalPositionException e){
@@ -57,6 +57,8 @@ public class MoveAnalyzer{
         }
         return inCheck;
     }
+
+
 
     public boolean willEndGame() throws IllegalMoveException{
         try{
@@ -93,6 +95,15 @@ public class MoveAnalyzer{
         }
     }
 
+    private ChessPiece.Color getEnemyColor(Integer currentPlayerID){
+        if(this.match.getSenderID() != currentPlayerID){
+            return ChessPiece.Color.WHITE;
+        }
+        else{
+            return ChessPiece.Color.BLACK;
+        }
+    }
+
     private String findKing(ChessPiece.Color color) throws IllegalPositionException{
         boolean found = false;
         String kingLoc = "?";
@@ -120,22 +131,22 @@ public class MoveAnalyzer{
         return kingLoc;
     }
 
-    private boolean isInCheck(ChessPiece.Color color, String kingPos) throws IllegalPositionException{
-        boolean inCheck = false;
+    private boolean canBeCaptured(ChessPiece.Color color, String piecePos) throws IllegalPositionException{
+        boolean inDanger = false;
         ArrayList<String> dangerSpots;
         String pos;
         ChessPiece piece;
         try{
-            for(int row = 1; row < 9 && !inCheck; row++){
-                for(int col = 1; col < 9 && !inCheck; col++){
+            for(int row = 1; row < 9 && !inDanger; row++){
+                for(int col = 1; col < 9 && !inDanger; col++){
                     pos = createPositionString(row, col);
                     piece = this.board.getPiece(pos);
                     if(piece != null && !piece.getColor().equals(color)){
                         dangerSpots = piece.legalMoves();
                         for(String s: dangerSpots){
                             //System.out.println(kingPos + " vs. " + s);
-                            if(s.equals(kingPos)){
-                                inCheck = true;
+                            if(s.equals(piecePos)){
+                                inDanger = true;
                             }
                         }
                     }
@@ -146,8 +157,24 @@ public class MoveAnalyzer{
             throw e;
         }
 
+        return inDanger;
+    }
+
+    public boolean opponentIsInCheck() throws IllegalPositionException{
+        boolean inCheck = false;
+        ChessPiece.Color color = getEnemyColor(this.currentPlayerID);
+        try{
+            String kingPosition = findKing(color);
+            inCheck = canBeCaptured(color, kingPosition);
+
+        }
+        catch(IllegalPositionException e){
+            throw new IllegalPositionException("Enemy King could not be located");
+        }
         return inCheck;
     }
+
+
 
     private String createPositionString(int row, int col) {
         char columnChar = (char) (col + 96);
