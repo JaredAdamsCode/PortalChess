@@ -105,4 +105,18 @@ public class MatchDAOImplementation implements  MatchDAO{
                 .setParameter("mID", matchID);
         query.executeUpdate();
     }
+
+    @Transactional
+    @Override
+    public void updateCheckStatus(int matchID, boolean senderCheck, boolean receiverCheck){
+        Session currSession = entityManager.unwrap(Session.class);
+        Query<Match> query = currSession.createQuery("update Match m set m.sender_check = :sCheck where m.id = :mID")
+                .setParameter("sCheck", senderCheck)
+                .setParameter("mID", matchID);
+        query.executeUpdate();
+        query = currSession.createQuery("update Match m set m.receiver_check = :rCheck where m.id = :mID")
+                .setParameter("rCheck", receiverCheck)
+                .setParameter("mID", matchID);
+        query.executeUpdate();
+    }
 }

@@ -41,12 +41,12 @@ public class Match {
 
     @Column
     private Integer turnID;
-/*
-    @Column
-    private Boolean senderCheck;
 
     @Column
-    private Boolean receiverCheck;*/
+    private Boolean sender_check;
+
+    @Column
+    private Boolean receiver_check;
 
     @Override
      public String toString() {
@@ -105,20 +105,20 @@ public class Match {
     	this.turnID = turnID;
     }
 
-    /*public Boolean getSenderCheck() {
-        return senderCheck;
+    public Boolean getSender_check() {
+        return sender_check;
     }
 
-    public void setSenderCheck(Boolean senderCheck) {
-        this.senderCheck = senderCheck;
+    public void setSender_check(Boolean sender_check) {
+        this.sender_check = sender_check;
     }
 
-    public Boolean getReceiverCheck() {
-        return receiverCheck;
+    public Boolean getReceiver_check() {
+        return receiver_check;
     }
 
-    public void setReceiverCheckCheck(Boolean receiverCheck) {
-        this.receiverCheck = receiverCheck;
-    }*/
+    public void setReceiver_check(Boolean receiver_check) {
+        this.receiver_check = receiver_check;
+    }
 
 }

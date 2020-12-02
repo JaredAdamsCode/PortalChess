@@ -22,4 +22,6 @@ public interface MatchDAO {
     void abandonMatch(int matchID, int winnerID, int loserID);
 
     void updateMatchResults(int matchID, int winnerID, int loserID);
+
+    void updateCheckStatus(int matchID, boolean senderCheck, boolean receiverCheck);
 }

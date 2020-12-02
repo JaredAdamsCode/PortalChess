@@ -38,6 +38,9 @@ public class MatchController {
     public Match attemptMove(@RequestBody Move move) throws JsonProcessingException, IllegalPositionException {
         Match match = matchService.getMatch(move.getMatchId());
         String boardStr = match.getBoard();
+        boolean playerCheck = false;
+        boolean enemyCheck = false;
+
 
         try{
             ChessBoard board = stringToObject(boardStr);
@@ -50,16 +53,20 @@ public class MatchController {
             if(moveAnalyzer.movedIntoCheck()){
                 throw new IllegalMoveException("Cannot move yourself into check");
             }
+            playerCheck = false;
 
             if(moveAnalyzer.opponentIsInCheck(board)){
+                enemyCheck = true;
                 if(moveAnalyzer.opponentIsMated()){
                    endConditionMet = true;
-                   System.out.println("Checkmate");
                 }
-                else{
-                    System.out.println("Check");
-                }
+            }
 
+            if(move.getPlayerId() == match.getSenderID()){
+                matchService.updateCheckStatus(match.getId(), playerCheck, enemyCheck);
+            }
+            else{
+                matchService.updateCheckStatus(match.getId(), enemyCheck, playerCheck);
             }
 
             boardStr = board.getBoardString();
