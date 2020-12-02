@@ -30,6 +30,8 @@ public class MatchController {
 
     @PostMapping(path = "/createMatch", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> createMatch(@RequestBody Match match){
+        match.setReceiver_check(false);
+        match.setSender_check(false);
         int matchID = matchService.createMatch(match);
         return ResponseEntity.accepted().body(matchID);
     }
