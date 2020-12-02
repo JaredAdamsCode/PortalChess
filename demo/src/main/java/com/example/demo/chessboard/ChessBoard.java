@@ -25,6 +25,7 @@ public class ChessBoard {
 		createBishops();
 		createQueens();
 		createKings();
+		createPortals();
 	}
 	
 	public ChessPiece getPiece(String position) throws IllegalPositionException{
@@ -84,20 +85,84 @@ public class ChessBoard {
 			fromPiece = getPiece(fromPosition);
 			toPiece = getPiece(toPosition);
 			legalMoves = fromPiece.legalMoves();
-			if(legalMoves.contains(toPosition) && (toPiece == null || toPiece.color != fromPiece.color)) {
-				if(fromPiece instanceof Pawn) {
-					fromPiece = pawnPromotion(fromPiece, toRow);
+			if(legalMoves.contains(toPosition) &&
+					( toPiece == null || toPiece.color != fromPiece.color) ) {
+				if(toPiece instanceof Portal && fromPiece instanceof Portal) {
+					Portal black_hole = new Portal(this, ChessPiece.Color.BLACK,
+							"Portal", Portal.Status.BLACK_HOLE);
+					board[toRow - 1][toColumn - 1] = null;
+					placePiece(black_hole, toPosition);
+					blackHoleFunction(toPosition);
+				}else {
+					if (fromPiece instanceof Pawn) {
+						fromPiece = pawnPromotion(fromPiece, toRow);
+					}
+					if (!isNearBlackHole(toPosition)) {
+						placePiece(fromPiece, toPosition);
+					}else {
+
+					}
 				}
-				placePiece(fromPiece, toPosition);
 				board[fromRow - 1][fromColumn - 1] = null;
-			}
-			else {
+			}else {
 				throw new IllegalMoveException("Cannot make move from " + fromPosition + " to " + toPosition);
 			}
 		} catch (IllegalPositionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
+	}
+
+	public boolean isNearBlackHole(String toPosition) {
+		int toRow = Character.getNumericValue(toPosition.charAt(1));
+		int toColumn = toPosition.charAt(0) - 96;
+
+		String upperLeft = createPositionString(toRow + 1, toColumn - 1);
+		String up = createPositionString(toRow + 1, toColumn);
+		String upperRight = createPositionString(toRow + 1, toColumn + 1);
+
+		String left = createPositionString(toRow, toColumn - 1);
+		String right = createPositionString(toRow, toColumn + 1);
+
+		String lowerLeft = createPositionString(toRow - 1, toColumn - 1);
+		String down = createPositionString(toRow - 1, toColumn);
+		String lowerRight = createPositionString(toRow - 1, toColumn + 1);
+
+		String[] surroundingSquares = {upperLeft, up, upperRight, left, right, lowerLeft, down, lowerRight};
+
+		for(String pos : surroundingSquares) {
+			try {
+				boolean isPortal = getPiece(pos) instanceof Portal;
+				if (isPortal && ((Portal) getPiece(pos)).getStatus() == Portal.Status.BLACK_HOLE) {
+					return true;
+				}
+			} catch(IllegalPositionException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
+	private void blackHoleFunction(String position) {
+		int toRow = Character.getNumericValue(position.charAt(1)) - 1;
+		int toColumn = position.charAt(0) - 97;
+
+		nullifySquare(toRow + 1, toColumn - 1);
+		nullifySquare(toRow + 1, toColumn);
+		nullifySquare(toRow + 1, toColumn + 1);
+
+		nullifySquare(toRow, toColumn - 1);
+		nullifySquare(toRow, toColumn + 1);
+
+		nullifySquare(toRow - 1, toColumn - 1);
+		nullifySquare(toRow - 1, toColumn);
+		nullifySquare(toRow - 1, toColumn + 1);
+	}
+
+	private void nullifySquare(int row, int col) {
+		if(row <= 8 && row >= 1 && col <= 8 && col >= 1) {
+			board[row][col] = null;
+		}
 	}
 	
 	public ChessPiece pawnPromotion(ChessPiece fromPiece, int toRow) {
@@ -267,6 +332,19 @@ public class ChessBoard {
 		position = createPositionString(8, 5);
 		placePiece(blackKing, position);
 	}
+
+	private void createPortals() {
+		String position;
+		Portal whitePortal = new Portal(this, ChessPiece.Color.WHITE,
+				"Portal", Portal.Status.PORTAL);
+		position = createPositionString(4, 2);
+		placePiece(whitePortal, position);
+
+		Portal blackPortal = new Portal(this, ChessPiece.Color.BLACK,
+				"Portal", Portal.Status.PORTAL);
+		position = createPositionString(5, 7);
+		placePiece(blackPortal, position);
+	}
 	
 	public static ChessBoard initializeBoard(){
 		ChessBoard board = new ChessBoard();
@@ -299,6 +377,10 @@ public class ChessBoard {
 		}
 
 		switch (type) {
+			case "Portal":
+				Portal.Status status = Portal.Status.valueOf(obj.getString("status"));
+				piece = new Portal(tempBoard, pieceColor, "Portal", status);
+				break;
 			case "Rook":
 				piece = new Rook(tempBoard, pieceColor, "Rook");
 				break;
