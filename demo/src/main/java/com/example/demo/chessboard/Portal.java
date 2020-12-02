@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class Portal extends ChessPiece {
 
-    public enum Status {NOT_PLACED, PORTAL, BLACK_HOLE};
+    public enum Status {PORTAL, BLACK_HOLE};
 
     protected Status status;
 
@@ -19,18 +19,14 @@ public class Portal extends ChessPiece {
         if(this.getColor() == Color.WHITE) {
             if (this.getStatus() == Status.BLACK_HOLE) {
                 return "\u25c9";
-            } else if (this.getStatus() == Status.PORTAL) {
+            }else {
                 return "\u25ce";
-            } else {
-                return "W";
             }
         }else {
             if(this.getStatus() == Status.BLACK_HOLE) {
                 return "\u25a3";
-            }else if (this.getStatus() == Status.PORTAL) {
-                return "\u25a2";
             }else {
-                return "B";
+                return "\u25a2";
             }
         }
     }
@@ -71,13 +67,10 @@ public class Portal extends ChessPiece {
             String position = createPositionString(row, col);
             try {
                 ChessPiece checkPiece = board.getPiece(position);
-                if(checkPiece == null) {
+                if(checkPiece == null || checkPiece instanceof Portal ||
+                        (checkPiece != null && this instanceof Portal)) {
                     moves.add(position);
                 }
-                if(checkPiece != null && checkPiece.getColor() != this.getColor()) {
-                    moves.add(position);
-                }
-
             } catch (IllegalPositionException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -93,22 +86,22 @@ public class Portal extends ChessPiece {
         this.status = newStatus;
     }
 
-    public ArrayList<String> getValidInitPlacements() {
-        if(this.getColor() == Color.WHITE) {
-            return new ArrayList<String> (
-                    Arrays.asList("a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4")
-            );
-        }else {
-            return new ArrayList<String> (
-                    Arrays.asList("a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5")
-            );
-        }
-    }
-
-    public boolean isValidInitPlacement(String position) {
-        if(this.getValidInitPlacements().contains(position)) {
-            return true;
-        }
-        return false;
-    }
+//    public ArrayList<String> getValidInitPlacements() {
+//        if(this.getColor() == Color.WHITE) {
+//            return new ArrayList<String> (
+//                    Arrays.asList("a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4")
+//            );
+//        }else {
+//            return new ArrayList<String> (
+//                    Arrays.asList("a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5")
+//            );
+//        }
+//    }
+//
+//    public boolean isValidInitPlacement(String position) {
+//        if(this.getValidInitPlacements().contains(position)) {
+//            return true;
+//        }
+//        return false;
+//    }
 }
