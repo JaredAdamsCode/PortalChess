@@ -13,6 +13,8 @@ export default function Game(props) {
     const [status, setStatus] = React.useState("\n");
     const [turnStatus, setTurnStatus] = React.useState("White's turn");
     const [colorStatus, setColorStatus] = React.useState("\n");
+    const [whiteCheck, setWhiteCheckStatus] = React.useState("\n");
+    const [blackCheck, setBlackCheckStatus] = React.useState("\n");
     const [chessboard, setChessboard] = React.useState(<Chessboard  sendMove={sendMove}
                                                                     boardLayout={
                                                                         new Array(new Array(8).fill(null),
@@ -45,14 +47,29 @@ export default function Game(props) {
         setAnchorPOP(null);
     };
 
+
+
     async function getMatchData(){
         let matchID = props.matchID;
         let response = await fetch('/api/getMatch/' + matchID);
         let body = await response.json();
         let chessData = JSON.parse(body.board);
+        console.log(body);
         setChessboardData([...chessData]);
         setChessboard(null);
         setChessboard(<Chessboard sendMove={sendMove} boardLayout={chessData} matchID={props.matchID} playerID={props.user.id}/>);
+
+        if(body.winner){
+            if(props.user.id == body.winner){
+                setStatus("You win!");
+
+            }
+            else{
+                setStatus("You lose");
+            }
+        }
+
+
 
     }
 
@@ -70,13 +87,17 @@ export default function Game(props) {
             referrerPolicy: "no-referrer", // no-referrer, *client
             body: JSON.stringify(toInput) // body data type must match "Content-Type" header
         });
+
         let body = await response.json();
+
         if(body.status === "Legal"){
             setLoad(true);
             setStatus("\n");
 
+
         }
         else{
+
             setStatus(body.status);
         }
 
@@ -118,6 +139,11 @@ export default function Game(props) {
         if(props.user.id !== body.turnID){
             setTimeout(() => setLoad(true), 3000);
         }
+
+        if(body.sender_check == true){ setWhiteCheckStatus("White is in check"); }
+        else{ setWhiteCheckStatus("\n");}
+        if(body.receiver_check == true){ setBlackCheckStatus("Black is in check"); }
+        else{ setBlackCheckStatus("\n");}
     }
 
     return (
@@ -147,11 +173,18 @@ export default function Game(props) {
                             <Typography variant='h6' align="center">
                                 {status}
                             </Typography>
+                            <Typography variant='h6' align="center">
+                                {whiteCheck}
+                            </Typography>
+                            <Typography variant='h6' align="center">
+                                {blackCheck}
+                            </Typography>
                             {chessboard}
                         </Paper>
 
                     </Grid>
                 </Grid>
+
                 <Button onClick={handlePop} align="right">
                     Abandon Game
                 </Button>
@@ -172,6 +205,7 @@ export default function Game(props) {
                     <Button fullWidth variant="contained" color="primary" preventDefault
                             onClick={() => abandonMatch(props.user.id)}>Confirm Abandon Game
                     </Button>
+
                 </Popover>
             </Box>
         </div>

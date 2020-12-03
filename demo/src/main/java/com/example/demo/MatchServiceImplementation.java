@@ -35,4 +35,11 @@ public class MatchServiceImplementation implements MatchService{
 
     @Override
     public void abandonMatch(int matchID, int winnerID, int loserID) { matchDAO.abandonMatch(matchID, winnerID, loserID); }
+
+    @Override
+    public void updateMatchResults(int matchID, int winnerID, int loserID) { matchDAO.updateMatchResults(matchID, winnerID, loserID); }
+
+    @Override
+    public void updateCheckStatus(int matchID, boolean senderCheck, boolean receiverCheck){ matchDAO.updateCheckStatus(matchID, senderCheck, receiverCheck);}
+
 }
