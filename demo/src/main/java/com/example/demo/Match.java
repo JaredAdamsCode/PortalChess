@@ -41,7 +41,13 @@ public class Match {
 
     @Column
     private Integer turnID;
-    
+
+    @Column
+    private Boolean sender_check;
+
+    @Column
+    private Boolean receiver_check;
+
     @Override
      public String toString() {
         return "Match [id = " + id + ", senderId = " + senderID + ", receiverId = " + receiverID + ", status = " + status + "]";
@@ -97,6 +103,22 @@ public class Match {
     
     public void setTurnID(Integer turnID) {
     	this.turnID = turnID;
+    }
+
+    public Boolean getSender_check() {
+        return sender_check;
+    }
+
+    public void setSender_check(Boolean sender_check) {
+        this.sender_check = sender_check;
+    }
+
+    public Boolean getReceiver_check() {
+        return receiver_check;
+    }
+
+    public void setReceiver_check(Boolean receiver_check) {
+        this.receiver_check = receiver_check;
     }
 
 }

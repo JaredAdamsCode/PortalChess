@@ -87,4 +87,36 @@ public class MatchDAOImplementation implements  MatchDAO{
                 .setParameter("mID", matchID);
         query.executeUpdate();
     }
+
+    @Transactional
+    @Override
+    public void updateMatchResults(int matchID, int winnerID, int loserID) {
+        Session currSession = entityManager.unwrap(Session.class);
+        Query<Match> query = currSession.createQuery("update Match m set m.winner = :pID where m.id = :mID")
+                .setParameter("pID", winnerID)
+                .setParameter("mID", matchID);
+        query.executeUpdate();
+        query = currSession.createQuery("update Match m set m.loser = :pID where m.id = :mID")
+                .setParameter("pID", loserID)
+                .setParameter("mID", matchID);
+        query.executeUpdate();
+        query = currSession.createQuery("update Match m set m.status = :status where m.id = :mID")
+                .setParameter("status", "finished")
+                .setParameter("mID", matchID);
+        query.executeUpdate();
+    }
+
+    @Transactional
+    @Override
+    public void updateCheckStatus(int matchID, boolean senderCheck, boolean receiverCheck){
+        Session currSession = entityManager.unwrap(Session.class);
+        Query<Match> query = currSession.createQuery("update Match m set m.sender_check = :sCheck where m.id = :mID")
+                .setParameter("sCheck", senderCheck)
+                .setParameter("mID", matchID);
+        query.executeUpdate();
+        query = currSession.createQuery("update Match m set m.receiver_check = :rCheck where m.id = :mID")
+                .setParameter("rCheck", receiverCheck)
+                .setParameter("mID", matchID);
+        query.executeUpdate();
+    }
 }
