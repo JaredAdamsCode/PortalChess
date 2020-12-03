@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class ChessBoard {
 	
@@ -113,22 +114,11 @@ public class ChessBoard {
 		}	
 	}
 
-	public boolean isNearBlackHole(String toPosition) {
+	private boolean isNearBlackHole(String toPosition) {
 		int toRow = Character.getNumericValue(toPosition.charAt(1));
 		int toColumn = toPosition.charAt(0) - 96;
 
-		String upperLeft = createPositionString(toRow + 1, toColumn - 1);
-		String up = createPositionString(toRow + 1, toColumn);
-		String upperRight = createPositionString(toRow + 1, toColumn + 1);
-
-		String left = createPositionString(toRow, toColumn - 1);
-		String right = createPositionString(toRow, toColumn + 1);
-
-		String lowerLeft = createPositionString(toRow - 1, toColumn - 1);
-		String down = createPositionString(toRow - 1, toColumn);
-		String lowerRight = createPositionString(toRow - 1, toColumn + 1);
-
-		String[] surroundingSquares = {upperLeft, up, upperRight, left, right, lowerLeft, down, lowerRight};
+		Vector<String> surroundingSquares = getValidSurroundingSquares(toRow, toColumn);
 
 		for(String pos : surroundingSquares) {
 			try {
@@ -141,6 +131,33 @@ public class ChessBoard {
 			}
 		}
 		return false;
+	}
+
+	private String[] getSurroundingSquares(int row, int col) {
+		String upperLeft = createValidPositionString(row + 1, col - 1);
+		String up = createValidPositionString(row + 1, col);
+		String upperRight = createValidPositionString(row + 1, col + 1);
+
+		String left = createValidPositionString(row, col - 1);
+		String right = createValidPositionString(row, col + 1);
+
+		String lowerLeft = createValidPositionString(row - 1, col - 1);
+		String down = createValidPositionString(row - 1, col);
+		String lowerRight = createValidPositionString(row - 1, col + 1);
+
+		String[] squares = {upperLeft, up, upperRight, left, right, lowerLeft, down, lowerRight};
+		return squares;
+	}
+
+	private Vector<String> getValidSurroundingSquares(int row, int col) {
+		Vector<String> validSquares = new Vector<String>();
+		String[] potentialSquares = getSurroundingSquares(row, col);
+		for(String pos : potentialSquares) {
+			if(pos != "Invalid") {
+				validSquares.add(pos);
+			}
+		}
+		return validSquares;
 	}
 
 	private void blackHoleFunction(String position) {
@@ -235,6 +252,13 @@ public class ChessBoard {
 		position += columnChar;
 		position += row;
 		return position;
+	}
+
+	private String createValidPositionString(int row, int col) {
+		if(row <= 8 && row >= 1 && col <= 8 && col >= 1) {
+			return createPositionString(row, col);
+		}
+		return "Invalid";
 	}
 	
 	private void createPawns() {
