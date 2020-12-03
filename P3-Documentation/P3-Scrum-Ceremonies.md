@@ -52,3 +52,19 @@ Discussed possible solutions with creating and storing the ChessBoard object in 
 - Portal piece has now been added as a possibility in the Chessboard
 - Working on implementing turns
 - Working on having the first turn be placing the Portal piece
+
+## Scrum Session 8 Daily Scrum 12/01/2020
+- Added ablity to tell who's turn it is on the Game screen
+- Whoever is waiting for the other player to make a move, their client will ask if any changes have occurred every 3 seconds
+- Added Portal piece to board as well as black hole functionality 
+- Imeplemented turns
+- Added pawn promotion
+
+## Scrum Session 9 Daily Scrum 12/03/2020
+- Added end condition for a chess match
+- Fixed portals throwing invalidLocation  
+- Setup Sprint Review for Friday 12/03 at 5:30pm with PO
+- Discussed how pieces will interact with Portals
+- Discussed what will be shown during the sprint review
+- Working on adding more tests
+- Working on Match History page

@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import java.util.List;
+import java.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +30,8 @@ public class MatchController {
 
     @PostMapping(path = "/createMatch", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> createMatch(@RequestBody Match match){
+        match.setReceiver_check(false);
+        match.setSender_check(false);
         int matchID = matchService.createMatch(match);
         return ResponseEntity.accepted().body(matchID);
     }
@@ -38,23 +40,55 @@ public class MatchController {
     public Match attemptMove(@RequestBody Move move) throws JsonProcessingException, IllegalPositionException {
         Match match = matchService.getMatch(move.getMatchId());
         String boardStr = match.getBoard();
+        boolean playerCheck = false;
+        boolean enemyCheck = false;
+
 
         try{
-        	Integer currentPlayerID = move.getPlayerId();
-        	Integer turnID = match.getTurnID();
-        	if(!currentPlayerID.equals(turnID)) {
-        		throw new IllegalMoveException("Not this player's turn");
-        	}
-        	Integer newTurnID = getNewTurnID(match, currentPlayerID);
+
             ChessBoard board = stringToObject(boardStr);
-            if(!checkPieceColor(board.getPiece(move.getFromPosition()), match, currentPlayerID)) {
-            	throw new IllegalMoveException("Cannot move this piece because it does not belong to this player");
-            }
+            MoveAnalyzer moveAnalyzer = new MoveAnalyzer(match, board, move);
+
+            moveAnalyzer.checkPreconditions();
+            boolean endConditionMet = moveAnalyzer.willEndGame();
             board.move(move.getFromPosition(), move.getToPosition());
+
+            if(moveAnalyzer.movedIntoCheck()){
+                throw new IllegalMoveException("Cannot move yourself into check");
+            }
+            playerCheck = false;
+
+            if(moveAnalyzer.opponentIsInCheck(board)){
+                enemyCheck = true;
+                if(moveAnalyzer.opponentIsMated()){
+                   endConditionMet = true;
+                }
+            }
+
+            if(move.getPlayerId() == match.getSenderID()){
+                matchService.updateCheckStatus(match.getId(), playerCheck, enemyCheck);
+            }
+            else{
+                matchService.updateCheckStatus(match.getId(), enemyCheck, playerCheck);
+            }
+
             boardStr = board.getBoardString();
+            Integer newTurnID = getNewTurnID(match, move.getPlayerId());
             matchService.updateBoard(move.getMatchId(), boardStr, newTurnID);
+
+        	if(endConditionMet){
+        	    if(move.getPlayerId() == match.getSenderID()){
+                    matchService.updateMatchResults(match.getId(), match.getSenderID(), match.getReceiverID());
+                }
+        	    else{
+                    matchService.updateMatchResults(match.getId(), match.getReceiverID(), match.getSenderID());
+                }
+
+            }
             match = matchService.getMatch(move.getMatchId());
+
             match.setStatus("Legal");
+
         }
         catch(IllegalMoveException e){
             match.setStatus(e.getMessage());
@@ -64,6 +98,14 @@ public class MatchController {
         }
         catch(NullPointerException e){
             match.setStatus("Illegal Move");
+
+        }
+        catch(IllegalPositionException e){
+            match.setStatus(e.getMessage());
+        }
+        catch(JsonProcessingException e){
+            throw e;
+
         }
         return match;
     }
@@ -72,17 +114,7 @@ public class MatchController {
     	if(currentPlayerID.equals(match.getSenderID()) ) return match.getReceiverID();
     	else return match.getSenderID();
     }
-    
-    public boolean checkPieceColor(ChessPiece piece, Match match, Integer currentPlayerID) {
 
-    	if(currentPlayerID.equals(match.getSenderID()) && piece.getColor().equals(ChessPiece.Color.WHITE)) {
-    		return true;
-    	}
-    	if(currentPlayerID.equals(match.getReceiverID()) && piece.getColor().equals(ChessPiece.Color.BLACK)) {
-    		return true;
-    	}
-    	return false;
-    }
 
     @GetMapping("/getMatchesList/{accountID}")
     public List<Match> get(@PathVariable int accountID) {

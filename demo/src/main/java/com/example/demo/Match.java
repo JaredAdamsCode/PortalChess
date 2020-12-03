@@ -1,13 +1,16 @@
 package com.example.demo;
 
-import javax.persistence.*;
-
-import com.google.gson.annotations.SerializedName;
-import org.hibernate.annotations.DynamicInsert;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 
+import com.google.gson.annotations.SerializedName;
+
 @Entity
-@DynamicInsert
 @Table(name = "matches")
 
 public class Match {
@@ -40,11 +43,18 @@ public class Match {
     private Integer turnID;
 
     @Column
+    private Boolean sender_check;
+
+    @Column
+    private Boolean receiver_check;
+
+
+    @Column
     private Timestamp start_time;
 
     @Column
     private Timestamp end_time;
-    
+
     @Override
      public String toString() {
         return "Match [id = " + id + ", senderId = " + senderID + ", receiverId = " + receiverID + ", status = " + status + ", startTime = " + start_time + ", endTime = " + end_time + "]";
@@ -105,9 +115,25 @@ public class Match {
     public Timestamp getStartTime(){return start_time;}
 
     public Timestamp getEndTime(){return end_time;}
-    
+
     public void setTurnID(Integer turnID) {
     	this.turnID = turnID;
+    }
+
+    public Boolean getSender_check() {
+        return sender_check;
+    }
+
+    public void setSender_check(Boolean sender_check) {
+        this.sender_check = sender_check;
+    }
+
+    public Boolean getReceiver_check() {
+        return receiver_check;
+    }
+
+    public void setReceiver_check(Boolean receiver_check) {
+        this.receiver_check = receiver_check;
     }
 
 }

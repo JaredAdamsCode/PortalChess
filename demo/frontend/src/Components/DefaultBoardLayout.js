@@ -11,6 +11,8 @@ import { ReactComponent as WhiteKnight } from '../Icons/white_knight.svg';
 import { ReactComponent as BlackKnight } from '../Icons/black_knight.svg';
 import { ReactComponent as WhiteBishop } from '../Icons/white_bishop.svg';
 import { ReactComponent as BlackBishop } from '../Icons/black_bishop.svg';
+import { ReactComponent as WhitePortal } from '../Icons/white_portal.svg';
+import { ReactComponent as BlackPortal } from '../Icons/black_portal.svg';
 import * as constants from '../Constants/BoardConstants'
 
 export default function DefaultBoardLayout(){
@@ -25,6 +27,7 @@ export default function DefaultBoardLayout(){
     arr[constants.F1.index] = <WhiteBishop/>;
     arr[constants.G1.index] = <WhiteKnight/>;
     arr[constants.H1.index] = <WhiteRook/>;
+    arr[constants.B4.index] = <WhitePortal/>;
 
     for(let i = constants.A2.index; i < constants.A3.index; i++){
         arr[i] = <WhitePawn/>;
@@ -42,6 +45,7 @@ export default function DefaultBoardLayout(){
     arr[constants.F8.index] = <BlackBishop/>;
     arr[constants.G8.index] = <BlackKnight/>;
     arr[constants.H8.index] = <BlackRook/>;
+    arr[constants.G5.index] = <BlackPortal/>;
 
     return arr;
 

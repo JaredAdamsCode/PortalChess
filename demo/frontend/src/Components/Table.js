@@ -83,7 +83,7 @@ export default function SimpleTable(props) {
     let search = searchString.toLowerCase();
     data.map(row => {
       let uname = row.username.toLowerCase();
-      if (uname.includes(search)) {
+      if (uname.includes(search) && uname !== "system") {
         newUsers.push(row);
       }
     });
