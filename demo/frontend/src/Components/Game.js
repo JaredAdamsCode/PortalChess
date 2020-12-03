@@ -54,7 +54,7 @@ export default function Game(props) {
         let response = await fetch('/api/getMatch/' + matchID);
         let body = await response.json();
         let chessData = JSON.parse(body.board);
-        console.log(body);
+
         setChessboardData([...chessData]);
         setChessboard(null);
         setChessboard(<Chessboard sendMove={sendMove} boardLayout={chessData} matchID={props.matchID} playerID={props.user.id}/>);
