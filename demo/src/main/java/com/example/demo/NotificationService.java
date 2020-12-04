@@ -19,4 +19,6 @@ public interface NotificationService {
     int setNotificationMessage(int notificationID, String message);
 
     void createUnregisterNotification(Notification userID);
+
+    void sendGameOverNotifications(int matchID, int winnerID, int loserID);
 }
