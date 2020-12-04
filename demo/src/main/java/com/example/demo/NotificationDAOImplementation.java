@@ -58,4 +58,23 @@ public class NotificationDAOImplementation implements  NotificationDAO{
         currSession.save(notification);
     }
 
+    @Override
+    public void sendGameOverNotifications(int matchID, int winnerID, int loserID){
+        Session currSession = entityManager.unwrap(Session.class);
+
+        Account winnerAccount = currSession.get(Account.class, winnerID);
+        String winnerName = winnerAccount.getUsername();
+        Account loserAccount = currSession.get(Account.class, loserID);
+        String loserName = loserAccount.getUsername();
+        String winnerMsg = "You won your game against " + loserName;
+        String loserMsg = "You lost your game against " + winnerName;
+        Notification winnerNote = new Notification(matchID + 1000, winnerID, winnerID, winnerMsg, matchID);
+        Notification loserNote = new Notification(matchID + 1001, loserID, loserID, loserMsg, matchID);
+
+        currSession.save(winnerNote);
+        currSession.save(loserNote);
+
+
+    }
+
 }

@@ -18,4 +18,6 @@ public interface NotificationDAO {
     int setNotificationMessage(int notificationID, String message);
 
     void createUnregisterNotification(Notification notification);
+
+    void sendGameOverNotifications(int matchID, int winnerID, int loserID);
 }

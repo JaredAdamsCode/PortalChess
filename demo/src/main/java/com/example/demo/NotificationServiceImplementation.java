@@ -42,4 +42,9 @@ public class NotificationServiceImplementation implements  NotificationService{
     public void createUnregisterNotification(Notification notification) {
         notificationDAO.createUnregisterNotification(notification);
     }
+
+    @Override
+    public void sendGameOverNotifications(int matchID, int winnerID, int loserID){
+        notificationDAO.sendGameOverNotifications(matchID, winnerID, loserID);
+    }
 }

@@ -30,6 +30,18 @@ public class Notification {
                 + matchID + "]";
     }
 
+    public Notification(){
+
+    }
+
+    public Notification(Integer id, Integer senderID, Integer receiverID, String message, Integer matchID){
+        this.id = id;
+        this.senderID = senderID;
+        this.receiverID = receiverID;
+        this.message = message;
+        this.matchID = matchID;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }

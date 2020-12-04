@@ -11,11 +11,13 @@ export default function Inbox(props) {
     async function getPendingList(userID) {
         let response = await fetch('/api/getPendingList/' + userID);
         let body = await response.json();
+
         let filtered = [];
         for (let i = 0; i < body.length; i++) {
             if (body[i].message == "rejected" || body[i].message == "Rejected" ||
                 body[i].message == "accepted" || body[i].message == "Accepted" ||
-                body[i].message == "A user that you had an active match with has unregistered their account." ) {
+                body[i].message == "A user that you had an active match with has unregistered their account." ||
+                body[i].message.substring(0,3) == "You") {
                 filtered.push(body[i]);
             }
         }
@@ -39,7 +41,14 @@ export default function Inbox(props) {
      };
 
      function notification(invite){
-         if (invite.receiverID != 1){
+         if(invite.senderID == invite.receiverID){
+             return (
+                 <p key={invite.id}>
+                     Match ID# {invite.matchID} over: {invite.message}
+                 </p>
+             );
+         }
+         else if (invite.receiverID != 1){
              return (
                  <p key={invite.id}>
                     Invite to user {invite.username} status: {invite.message}
