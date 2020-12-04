@@ -44,8 +44,12 @@ public class Pawn extends ChessPiece{
 				potentialNewPosition = createValidPositionString(otherPortalRow - 1, otherPortalColumn);
 			}
 
-			if(potentialNewPosition != null) {
-				return potentialNewPosition;
+			try {
+				if (potentialNewPosition != null && board.getPiece(potentialNewPosition) == null) {
+					return potentialNewPosition;
+				}
+			} catch (IllegalPositionException e) {
+				e.printStackTrace();
 			}
 		}
 		return null;
