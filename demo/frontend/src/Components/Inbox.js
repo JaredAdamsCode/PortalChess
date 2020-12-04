@@ -1,7 +1,7 @@
 import React from "react";
 import {Box, Typography, Divider, Grid, Paper} from '@material-ui/core';
 import Header from './Header';
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 export default function Inbox(props) {
 
@@ -79,6 +79,12 @@ export default function Inbox(props) {
                             </Grid>
                         </Grid>
                     </Grid>
+                    <Link to="/dashboard">
+                        {" "}
+                        <Typography align="left">
+                            &#x2190; Back to Dashboard
+                        </Typography>{" "}
+                    </Link>
 
                 </Box>
                 <Grid  container spacing={40}>

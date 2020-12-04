@@ -1,5 +1,5 @@
 import React from "react";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import Header from "./Header";
 import {Box, Divider, Grid, Paper, Typography, Button, Popover} from "@material-ui/core";
 import Chessboard from "./Chessboard";
@@ -161,6 +161,12 @@ export default function Game(props) {
                             </Grid>
                         </Grid>
                     </Grid>
+                    <Link to="/dashboard">
+                        {" "}
+                        <Typography align="left">
+                            &#x2190; Back to Dashboard
+                        </Typography>{" "}
+                    </Link>
 
                 </Box>
                 <Grid  container spacing={40}>
