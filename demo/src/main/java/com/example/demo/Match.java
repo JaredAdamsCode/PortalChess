@@ -1,12 +1,12 @@
 package com.example.demo;
 
-import com.example.demo.chessboard.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -51,9 +51,16 @@ public class Match {
     @Column 
     private Integer castling_moves;
 
+
+    @Column
+    private Timestamp start_time;
+
+    @Column
+    private Timestamp end_time;
+
     @Override
      public String toString() {
-        return "Match [id = " + id + ", senderId = " + senderID + ", receiverId = " + receiverID + ", status = " + status + "]";
+        return "Match [id = " + id + ", senderId = " + senderID + ", receiverId = " + receiverID + ", status = " + status + ", startTime = " + start_time + ", endTime = " + end_time + "]";
     }
 
     public void setId(Integer id) {
@@ -77,6 +84,10 @@ public class Match {
     public void setLoser(Integer loserID) { this.loser = loserID; }
 
     public void setBoard(String board){this.board = board;}
+
+    public void setStartTime(Timestamp startTime){this.start_time = startTime;}
+
+    public void setEndTime(Timestamp endTime){this.end_time = endTime;}
 
     public Integer getId() {
         return id;
@@ -103,7 +114,11 @@ public class Match {
     public Integer getTurnID() {
         return turnID;
     }
-    
+
+    public Timestamp getStartTime(){return start_time;}
+
+    public Timestamp getEndTime(){return end_time;}
+
     public void setTurnID(Integer turnID) {
     	this.turnID = turnID;
     }
