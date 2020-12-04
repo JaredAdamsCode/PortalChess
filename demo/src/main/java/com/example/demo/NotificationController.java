@@ -45,4 +45,10 @@ public class NotificationController {
         notification.setMessage("A user that you had an active match with has unregistered their account.");
         notificationService.createUnregisterNotification(notification);
     }
+
+    @PostMapping(path = "/gameOver/matchID}/{winnerID}/{loserID}")
+    public void sendGameOverNotifications(@PathVariable int matchID, @PathVariable int winnerID, @PathVariable int loserID){
+        notificationService.sendGameOverNotifications(matchID,winnerID,loserID);
+    }
+
 }
