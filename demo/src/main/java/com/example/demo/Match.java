@@ -47,6 +47,9 @@ public class Match {
 
     @Column
     private Boolean receiver_check;
+    
+    @Column 
+    private Integer castling_moves;
 
 
     @Column
@@ -135,5 +138,15 @@ public class Match {
     public void setReceiver_check(Boolean receiver_check) {
         this.receiver_check = receiver_check;
     }
+
+	public Integer getCastlingMoves() {
+		return castling_moves;
+	}
+
+	public void setCastlingMoves(Integer castlingMoves) {
+		this.castling_moves = castlingMoves;
+	}
+    
+    
 
 }

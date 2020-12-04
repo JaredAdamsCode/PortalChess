@@ -25,7 +25,7 @@ public class MatchServiceImplementation implements MatchService{
     public int setStatus(int matchID, String newStatus) { return matchDAO.setStatus(matchID, newStatus); }
 
     @Override
-    public void updateBoard(int matchID, String storeBoard, int newTurnID) { matchDAO.updateBoard(matchID, storeBoard, newTurnID);}
+    public void updateBoard(int matchID, String storeBoard, int newTurnID, int castlingMoves) { matchDAO.updateBoard(matchID, storeBoard, newTurnID, castlingMoves);}
     
     @Override
     public void createBoard(int matchID, String storeBoard) { matchDAO.createBoard(matchID, storeBoard);}

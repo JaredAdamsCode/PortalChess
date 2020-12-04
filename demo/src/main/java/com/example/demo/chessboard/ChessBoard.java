@@ -1,9 +1,8 @@
 package com.example.demo.chessboard;
 
+import com.example.demo.MoveAnalyzer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,6 +13,8 @@ import java.util.Vector;
 public class ChessBoard {
 	
 	private ChessPiece[][] board;
+	
+	private int castlingMoves = 0;
 	
 	public ChessBoard() {
 		this.board = new ChessPiece[8][8];
@@ -83,8 +84,14 @@ public class ChessBoard {
 		ChessPiece fromPiece;
 		ChessPiece toPiece;
 		try {
+			
 			fromPiece = getPiece(fromPosition);
 			toPiece = getPiece(toPosition);
+			if(checkForCastling(fromPiece, toPiece, toPosition)) {
+				castle(fromPiece, toPiece, toPosition);
+				setCastlingMoves(updateCastlingMoves(fromPosition));
+				return;
+			}
 			legalMoves = fromPiece.legalMoves();
 			if(legalMoves.contains(toPosition) &&
 					( toPiece == null || toPiece.color != fromPiece.color) ) {
@@ -105,6 +112,10 @@ public class ChessBoard {
 					}
 				}
 				board[fromRow - 1][fromColumn - 1] = null;
+				
+				if(fromPiece instanceof King || fromPiece instanceof Rook) {
+					setCastlingMoves(updateCastlingMoves(fromPosition));
+				}
 			}else {
 				throw new IllegalMoveException("Cannot make move from " + fromPosition + " to " + toPosition);
 			}
@@ -431,12 +442,191 @@ public class ChessBoard {
 
 	}
 	
+	public void setCastlingMoves(int cMoves) {
+		this.castlingMoves = cMoves;
+	}
+	
+	public int getCastlingMoves() {
+		return this.castlingMoves;
+	}
+	
+	public int updateCastlingMoves(String fromPosition) {
+		if(fromPosition.equals("a1")) {
+			return this.castlingMoves | 4;
+		}
+		if(fromPosition.equals("h1")) {
+			return this.castlingMoves | 1;
+		}
+		if(fromPosition.equals("e1")) {
+			return this.castlingMoves | 2;
+		}
+		if(fromPosition.equals("a8")) {
+			return this.castlingMoves | 32;
+		}
+		if(fromPosition.equals("h8")) {
+			return this.castlingMoves | 8;
+		}
+		if(fromPosition.equals("e8")) {
+			return this.castlingMoves | 16;
+		}
+		return this.castlingMoves;
+	}
+	
+	private boolean checkForCastling(ChessPiece fromPiece, ChessPiece toPiece, String toPosition) {
+		
+		if(!(fromPiece instanceof King)) return false;
+		if(fromPiece.color.equals(ChessPiece.Color.WHITE)) {
+			if(toPosition.equals("c1") || toPosition.equals("g1")) {
+				return true;
+			}
+		}
+		else {
+			if(toPosition.equals("c8") || toPosition.equals("g8")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private void castle(ChessPiece fromPiece, ChessPiece toPiece, String toPosition) throws IllegalMoveException, IllegalPositionException {
+		// check that space King moves to is open
+		if(toPiece != null) {
+			throw new IllegalMoveException("Cannot castle - space is occupied");
+		}
+		// check if King is in check
+		if(inCheck(fromPiece)) {
+			throw new IllegalMoveException("Cannot castle - King is in check");
+		}
+		// validate castling requirements and castle if legal
+		if(fromPiece.getColor().equals(ChessPiece.Color.WHITE)) {
+			if(validateWhiteCastle(fromPiece, toPiece, toPosition)) {
+				whiteCastle(fromPiece, toPiece, toPosition);
+			}
+		}
+		else {
+			if(validateBlackCastle(fromPiece, toPiece, toPosition)) {
+				blackCastle(fromPiece, toPiece, toPosition);
+			}
+		}
+		
+		
+	}
+	
+	private boolean validateWhiteCastle(ChessPiece fromPiece, ChessPiece toPiece, String toPosition) throws IllegalMoveException, IllegalPositionException {
+		// check spaces are unoccupied
+		if(toPosition.equals("c1") && this.board[0][3] != null && this.board[0][1] != null) {
+			throw new IllegalMoveException("Cannot castle - space is occupied");
+		}
+		if(toPosition.equals("g1") && this.board[0][5] != null) {
+			throw new IllegalMoveException("Cannot castle - space is occupied");
+		}
+		// check if King and chosen rook have moved
+		if((toPosition.equals("c1") && (this.castlingMoves & 6) != 0)) {
+			throw new IllegalMoveException("Cannot castle - King and/or rook has moved before");
+		}
+		if((toPosition.equals("g1") && (this.castlingMoves & 3) != 0)) {
+			throw new IllegalMoveException("Cannot castle - King and/or rook has moved before");
+		}
+		// check that king does not move through check
+		ArrayList<String> attacked = attackedSpaces(fromPiece.getColor());
+		if(toPosition.equals("c1") && (attacked.contains("d1"))) {
+			throw new IllegalMoveException("Cannot castle - king cannot move through check");
+		}
+		if(toPosition.equals("g1") && (attacked.contains("f1"))) {
+			throw new IllegalMoveException("Cannot castle - king cannot move through check");
+		}
+		
+		return true;
+	}
+	
+	private boolean validateBlackCastle(ChessPiece fromPiece, ChessPiece toPiece, String toPosition) throws IllegalMoveException {
+		// check spaces are unoccupied
+		if(toPosition.equals("c8") && this.board[7][3] != null && this.board[7][1] != null) {
+			throw new IllegalMoveException("Cannot castle - space is occupied");
+		}
+		if(toPosition.equals("g8") && this.board[7][5] != null) {
+			throw new IllegalMoveException("Cannot castle - space is occupied");
+		}
+		// check if King and chosen rook have moved
+		if((toPosition.equals("c8") && (this.castlingMoves & 48) != 0)) {
+			throw new IllegalMoveException("Cannot castle - King and/or rook has moved before");
+		}
+		if((toPosition.equals("g1") && (this.castlingMoves & 24) != 0)) {
+			throw new IllegalMoveException("Cannot castle - King and/or rook has moved before");
+		}
+		// check that king does not move through check
+		ArrayList<String> attacked = attackedSpaces(fromPiece.getColor());
+		if(toPosition.equals("c8") && (attacked.contains("d8"))) {
+			throw new IllegalMoveException("Cannot castle - king cannot move through check");
+		}
+		if(toPosition.equals("g8") && (attacked.contains("f8"))) {
+			throw new IllegalMoveException("Cannot castle - king cannot move through check");
+		}
+		return true;
+	}
+	
+	private void whiteCastle(ChessPiece fromPiece, ChessPiece toPiece, String toPosition) {
+		if(toPosition.equals("c1")) {
+			ChessPiece rook = board[0][0];
+			board[0][3] = rook;
+			board[0][0] = null;
+			board[0][2] = fromPiece;
+			board[0][4] = null; 
+		}
+		else {
+			ChessPiece rook = board[0][7];
+			board[0][5] = rook;
+			board[0][7] = null;
+			board[0][6] = fromPiece;
+			board[0][4] = null; 
+		}
+	}
+	
+	private void blackCastle(ChessPiece fromPiece, ChessPiece toPiece, String toPosition) {
+		if(toPosition.equals("c8")) {
+			ChessPiece rook = board[7][0];
+			board[7][3] = rook;
+			board[7][0] = null;
+			board[7][2] = fromPiece;
+			board[7][4] = null; 
+		}
+		else {
+			ChessPiece rook = board[7][7];
+			board[7][5] = rook;
+			board[7][7] = null;
+			board[7][6] = fromPiece;
+			board[7][4] = null; 
+		}
+	}
+	
+	private ArrayList<String> attackedSpaces(ChessPiece.Color color){
+		ArrayList attacked = new ArrayList<String>();
+		
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 8; j++) {
+				ChessPiece piece = board[i][j];
+				if(piece != null && !piece.getColor().equals(color)) {
+					attacked.addAll(piece.legalMoves());
+				}
+			}
+		}
+		return attacked;
+	}
+	
+	private boolean inCheck(ChessPiece fromPiece) {
+		ArrayList<String> attacked = attackedSpaces(fromPiece.getColor());
+		if(attacked.contains(fromPiece.getPosition())) {
+			return true;
+		}
+		return false;
+	}
+	
 	public static void main(String[] args) throws IllegalMoveException {
 		ChessBoard board = new ChessBoard();
 		board.initialize();
 		System.out.println(board);
-		board.move("a2", "a4");
-		System.out.println(board);
+//		board.move("a2", "a4");
+//		System.out.println(board);
 //		board.move("a7", "a5");
 //		System.out.println(board);
 //		board.move("b2", "b4");
@@ -461,17 +651,120 @@ public class ChessBoard {
 //		System.out.println(board);
 //		board.move("a7", "a8");
 //		System.out.println(board);
-		board.move("b7", "b5");
-		System.out.println(board);
-		board.move("a4", "b5");
-		System.out.println(board);
-		board.move("a7", "a5");
-		System.out.println(board);
-		board.move("a1", "a5");
-		System.out.println(board);
-		board.move("c7", "c5");
-		System.out.println(board);
-		board.move("a5", "a8");
-		System.out.println(board);
+//		board.move("b7", "b5");
+//		System.out.println(board);
+//		board.move("a4", "b5");
+//		System.out.println(board);
+//		board.move("a7", "a5");
+//		System.out.println(board);
+//		board.move("a1", "a5");
+//		System.out.println(board);
+//		board.move("c7", "c5");
+//		System.out.println(board);
+//		board.move("a5", "a8");
+//		System.out.println(board);
+		
+		// basic valid white and black castling king side
+//		board.move("e2", "e4");
+//		System.out.println(board);
+//		
+//		board.move("e7", "e5");
+//		System.out.println(board);
+//		
+//		board.move("f1", "e2");
+//		System.out.println(board);
+//		
+//		board.move("f8", "e7");
+//		System.out.println(board);
+//		
+//		board.move("g1", "h3");
+//		System.out.println(board);
+//		
+//		board.move("g8", "h6");
+//		System.out.println(board);
+//		
+//		board.move("e1", "g1");
+//		System.out.println(board);
+//
+//		board.move("e8", "g8");
+//		System.out.println(board);
+//		
+//		board.move("b2", "b3");
+//		System.out.println(board);
+		
+		// basic valid white and black castling queen side
+//		board.move("d2", "d4");
+//		System.out.println(board);
+//		
+//		board.move("d7", "d5");
+//		System.out.println(board);
+//		
+//		board.move("c1", "e3");
+//		System.out.println(board);
+//		
+//		board.move("c8", "e6");
+//		System.out.println(board);
+//		
+//		board.move("b1", "a3");
+//		System.out.println(board);
+//		
+//		board.move("b8", "a6");
+//		System.out.println(board);
+//		
+//		board.move("d1", "d2");
+//		System.out.println(board);
+//
+//		board.move("d8", "d7");
+//		System.out.println(board);
+//		
+//		board.move("e1", "c1");
+//		System.out.println(board);
+//
+//		board.move("e8", "c8");
+//		System.out.println(board);
+		
+		// invalid castling with queen side rook moved
+//		board.move("d2", "d4");
+//		System.out.println(board);
+//		
+//		board.move("d7", "d5");
+//		System.out.println(board);
+//		
+//		board.move("c1", "e3");
+//		System.out.println(board);
+//		
+//		board.move("c8", "e6");
+//		System.out.println(board);
+//		
+//		board.move("b1", "a3");
+//		System.out.println(board);
+//		
+//		board.move("b8", "a6");
+//		System.out.println(board);
+//		
+//		board.move("d1", "d2");
+//		System.out.println(board);
+//
+//		board.move("d8", "d7");
+//		System.out.println(board);
+//		
+//		
+//		board.move("a1", "b1");
+//		System.out.println(board);
+//
+//		board.move("a8", "b8");
+//		System.out.println(board);
+//		
+//		
+//		
+//		
+//		
+//		board.move("e1", "c1");
+//		System.out.println(board);
+//
+//		board.move("e8", "c8");
+//		System.out.println(board);
+		
+		
 	}
 }

@@ -32,6 +32,7 @@ public class MatchController {
     public ResponseEntity<?> createMatch(@RequestBody Match match){
         match.setReceiver_check(false);
         match.setSender_check(false);
+        match.setCastlingMoves(0);
         int matchID = matchService.createMatch(match);
         return ResponseEntity.accepted().body(matchID);
     }
@@ -48,6 +49,7 @@ public class MatchController {
 
             ChessBoard board = stringToObject(boardStr);
             MoveAnalyzer moveAnalyzer = new MoveAnalyzer(match, board, move);
+            board.setCastlingMoves(match.getCastlingMoves());
 
             moveAnalyzer.checkPreconditions();
             boolean endConditionMet = moveAnalyzer.willEndGame();
@@ -74,7 +76,7 @@ public class MatchController {
 
             boardStr = board.getBoardString();
             Integer newTurnID = getNewTurnID(match, move.getPlayerId());
-            matchService.updateBoard(move.getMatchId(), boardStr, newTurnID);
+            matchService.updateBoard(move.getMatchId(), boardStr, newTurnID, match.getCastlingMoves());
 
         	if(endConditionMet){
         	    if(move.getPlayerId() == match.getSenderID()){
