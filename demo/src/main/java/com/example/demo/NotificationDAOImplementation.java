@@ -74,7 +74,7 @@ public class NotificationDAOImplementation implements  NotificationDAO{
         currSession.save(winnerNote);
         currSession.save(loserNote);
 
-        //System.out.println("hello from sendGameOverNotifications");
+
     }
 
 }
