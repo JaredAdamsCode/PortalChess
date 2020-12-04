@@ -28,6 +28,9 @@ public class MatchController {
     @Autowired
     private MatchService matchService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @PostMapping(path = "/createMatch", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> createMatch(@RequestBody Match match){
         match.setReceiver_check(false);
@@ -43,7 +46,7 @@ public class MatchController {
         String boardStr = match.getBoard();
         boolean playerCheck = false;
         boolean enemyCheck = false;
-
+        System.out.println("from " + move.getFromPosition() + " to " + move.getToPosition());
 
         try{
 
@@ -81,9 +84,11 @@ public class MatchController {
         	if(endConditionMet){
         	    if(move.getPlayerId() == match.getSenderID()){
                     matchService.updateMatchResults(match.getId(), match.getSenderID(), match.getReceiverID());
+                    notificationService.sendGameOverNotifications(match.getId(),  match.getSenderID(), match.getReceiverID());
                 }
         	    else{
                     matchService.updateMatchResults(match.getId(), match.getReceiverID(), match.getSenderID());
+                    notificationService.sendGameOverNotifications(match.getId(),  match.getReceiverID(), match.getSenderID());
                 }
 
             }
@@ -146,6 +151,7 @@ public class MatchController {
     @PatchMapping("/abandonMatch/{matchID}/{winnerID}/{loserID}")
     public void abandonMatch(@PathVariable int matchID, @PathVariable int winnerID, @PathVariable int loserID) throws JsonProcessingException {
         matchService.abandonMatch(matchID,winnerID,loserID);
+        notificationService.sendGameOverNotifications(matchID,  winnerID, loserID);
     }
 
     public ChessBoard stringToObject(String boardString) throws JSONException {

@@ -60,14 +60,21 @@ public class NotificationDAOImplementation implements  NotificationDAO{
 
     @Override
     public void sendGameOverNotifications(int matchID, int winnerID, int loserID){
-        Account winnerAccount = AccountService.get(winnerID);
-        String winnerName = winnerAccount.getUserName();
-        Account loserAccount = AccountService.get(loserID);
-        String loserName = loserAccount.getUserName();
+        Session currSession = entityManager.unwrap(Session.class);
+
+        Account winnerAccount = currSession.get(Account.class, winnerID);
+        String winnerName = winnerAccount.getUsername();
+        Account loserAccount = currSession.get(Account.class, loserID);
+        String loserName = loserAccount.getUsername();
         String winnerMsg = "You won your game against " + loserName;
         String loserMsg = "You lost your game against " + winnerName;
-        Notification winnerNote = new Notification(matchID + 500, loserID, winnerID, winnerMsg, matchID);
-        Notification loserNote = new Notification(matchID + 501, winnerID, loserId, loserMsg, matchID)
+        Notification winnerNote = new Notification(matchID + 1000, winnerID, winnerID, winnerMsg, matchID);
+        Notification loserNote = new Notification(matchID + 1001, loserID, loserID, loserMsg, matchID);
+
+        currSession.save(winnerNote);
+        currSession.save(loserNote);
+
+        System.out.println("hello from sendGameOverNotifications");
     }
 
 }
