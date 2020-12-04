@@ -48,6 +48,7 @@ public class MatchController {
 
             ChessBoard board = stringToObject(boardStr);
             MoveAnalyzer moveAnalyzer = new MoveAnalyzer(match, board, move);
+            board.setCastlingMoves(match.getCastlingMoves());
 
             moveAnalyzer.checkPreconditions();
             boolean endConditionMet = moveAnalyzer.willEndGame();
@@ -74,7 +75,7 @@ public class MatchController {
 
             boardStr = board.getBoardString();
             Integer newTurnID = getNewTurnID(match, move.getPlayerId());
-            matchService.updateBoard(move.getMatchId(), boardStr, newTurnID);
+            matchService.updateBoard(move.getMatchId(), boardStr, newTurnID, match.getCastlingMoves());
 
         	if(endConditionMet){
         	    if(move.getPlayerId() == match.getSenderID()){

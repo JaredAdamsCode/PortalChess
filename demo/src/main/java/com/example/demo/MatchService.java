@@ -13,7 +13,7 @@ public interface MatchService {
 
     int setStatus(int matchID, String newStatus);
 
-    void updateBoard(int matchID, String storeBoard, int newTurnID);
+    void updateBoard(int matchID, String storeBoard, int newTurnID, int castlingMoves);
     
     void createBoard(int matchID, String storeBoard);
 
