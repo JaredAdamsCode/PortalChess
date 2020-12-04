@@ -57,7 +57,7 @@ public class ChessBoard {
 		return null;
 	}
 
-	private String getOppositePortalPosition(ChessPiece.Color color) {
+	protected String getOppositePortalPosition(ChessPiece.Color color) {
 		if (color == ChessPiece.Color.WHITE) {
 			return getPiecePosition("Portal", ChessPiece.Color.BLACK);
 		}else {

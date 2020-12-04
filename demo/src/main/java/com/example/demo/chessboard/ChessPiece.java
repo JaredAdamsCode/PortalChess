@@ -64,7 +64,12 @@ public abstract class ChessPiece {
 		position += row;
 		return position;
 	}
-	
-	
+
+	protected String createValidPositionString(int row, int col) {
+		if(row <= 8 && row >= 1 && col <= 8 && col >= 1) {
+			return createPositionString(row, col);
+		}
+		return null;
+	}
 	
 }
