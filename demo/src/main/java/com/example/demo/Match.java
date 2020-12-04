@@ -49,7 +49,7 @@ public class Match {
     private Boolean receiver_check;
     
     @Column 
-    private Integer castlingMoves;
+    private Integer castling_moves;
 
     @Override
      public String toString() {
@@ -125,11 +125,11 @@ public class Match {
     }
 
 	public Integer getCastlingMoves() {
-		return castlingMoves;
+		return castling_moves;
 	}
 
 	public void setCastlingMoves(Integer castlingMoves) {
-		this.castlingMoves = castlingMoves;
+		this.castling_moves = castlingMoves;
 	}
     
     

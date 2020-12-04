@@ -45,7 +45,7 @@ public class MatchDAOImplementation implements  MatchDAO{
     @Override
     public void updateBoard(int matchID, String storeBoard, int newTurnID, int cMoves) {
         Session currSession = entityManager.unwrap(Session.class);
-        Query<Match> query = currSession.createQuery("update Match m set m.board = :board, m.turnID = :turnID, m.castlingMoves = :castlingMoves where m.id = :mID")
+        Query<Match> query = currSession.createQuery("update Match m set m.board = :board, m.turnID = :turnID, m.castling_moves = :castlingMoves where m.id = :mID")
                 .setParameter("board", storeBoard)
                 .setParameter("turnID", newTurnID)
                 .setParameter("castlingMoves", cMoves)
