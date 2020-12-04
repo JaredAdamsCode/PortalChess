@@ -665,32 +665,32 @@ public class ChessBoard {
 //		System.out.println(board);
 		
 		// basic valid white and black castling king side
-		board.move("e2", "e4");
-		System.out.println(board);
-		
-		board.move("e7", "e5");
-		System.out.println(board);
-		
-		board.move("f1", "e2");
-		System.out.println(board);
-		
-		board.move("f8", "e7");
-		System.out.println(board);
-		
-		board.move("g1", "h3");
-		System.out.println(board);
-		
-		board.move("g8", "h6");
-		System.out.println(board);
-		
-		board.move("e1", "g1");
-		System.out.println(board);
-
-		board.move("e8", "g8");
-		System.out.println(board);
-		
-		board.move("b2", "b3");
-		System.out.println(board);
+//		board.move("e2", "e4");
+//		System.out.println(board);
+//		
+//		board.move("e7", "e5");
+//		System.out.println(board);
+//		
+//		board.move("f1", "e2");
+//		System.out.println(board);
+//		
+//		board.move("f8", "e7");
+//		System.out.println(board);
+//		
+//		board.move("g1", "h3");
+//		System.out.println(board);
+//		
+//		board.move("g8", "h6");
+//		System.out.println(board);
+//		
+//		board.move("e1", "g1");
+//		System.out.println(board);
+//
+//		board.move("e8", "g8");
+//		System.out.println(board);
+//		
+//		board.move("b2", "b3");
+//		System.out.println(board);
 		
 		// basic valid white and black castling queen side
 //		board.move("d2", "d4");

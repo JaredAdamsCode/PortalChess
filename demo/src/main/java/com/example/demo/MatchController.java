@@ -32,6 +32,7 @@ public class MatchController {
     public ResponseEntity<?> createMatch(@RequestBody Match match){
         match.setReceiver_check(false);
         match.setSender_check(false);
+        match.setCastlingMoves(0);
         int matchID = matchService.createMatch(match);
         return ResponseEntity.accepted().body(matchID);
     }
