@@ -65,16 +65,7 @@ public class Portal extends ChessPiece {
     private void checkPortalMove(int row, int col, ArrayList<String> moves) {
         if(row <= 8 && row >= 1 && col <= 8 && col >= 1) {
             String position = createPositionString(row, col);
-            try {
-                ChessPiece checkPiece = board.getPiece(position);
-                if(checkPiece == null || checkPiece instanceof Portal ||
-                        (checkPiece != null && this instanceof Portal)) {
-                    moves.add(position);
-                }
-            } catch (IllegalPositionException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            moves.add(position);
         }
     }
 
@@ -85,23 +76,4 @@ public class Portal extends ChessPiece {
     public void setStatus(Status newStatus) {
         this.status = newStatus;
     }
-
-//    public ArrayList<String> getValidInitPlacements() {
-//        if(this.getColor() == Color.WHITE) {
-//            return new ArrayList<String> (
-//                    Arrays.asList("a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4")
-//            );
-//        }else {
-//            return new ArrayList<String> (
-//                    Arrays.asList("a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5")
-//            );
-//        }
-//    }
-//
-//    public boolean isValidInitPlacement(String position) {
-//        if(this.getValidInitPlacements().contains(position)) {
-//            return true;
-//        }
-//        return false;
-//    }
 }
