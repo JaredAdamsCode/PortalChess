@@ -94,7 +94,7 @@ public class ChessBoard {
 			}
 			legalMoves = fromPiece.legalMoves();
 			if(legalMoves.contains(toPosition) &&
-					( toPiece == null || toPiece.color != fromPiece.color) ) {
+					( toPiece == null || toPiece.color != fromPiece.color) || fromPiece instanceof Portal ) {
 				if(toPiece instanceof Portal && fromPiece instanceof Portal) {
 					Portal black_hole = new Portal(this, ChessPiece.Color.BLACK,
 							"Portal", Portal.Status.BLACK_HOLE);

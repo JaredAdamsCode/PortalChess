@@ -46,7 +46,7 @@ public class MatchController {
         String boardStr = match.getBoard();
         boolean playerCheck = false;
         boolean enemyCheck = false;
-        System.out.println("from " + move.getFromPosition() + " to " + move.getToPosition());
+        //System.out.println("from " + move.getFromPosition() + " to " + move.getToPosition());
 
         try{
 

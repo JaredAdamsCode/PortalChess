@@ -11,7 +11,7 @@ export default function Inbox(props) {
     async function getPendingList(userID) {
         let response = await fetch('/api/getPendingList/' + userID);
         let body = await response.json();
-        console.log(body);
+
         let filtered = [];
         for (let i = 0; i < body.length; i++) {
             if (body[i].message == "rejected" || body[i].message == "Rejected" ||
