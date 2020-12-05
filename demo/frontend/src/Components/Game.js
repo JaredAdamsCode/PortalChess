@@ -15,6 +15,7 @@ export default function Game(props) {
     const [colorStatus, setColorStatus] = React.useState("\n");
     const [whiteCheck, setWhiteCheckStatus] = React.useState("\n");
     const [blackCheck, setBlackCheckStatus] = React.useState("\n");
+    const [victorSet , setVictorSet] = React.useState(false);
     const [chessboard, setChessboard] = React.useState(<Chessboard  sendMove={sendMove}
                                                                     boardLayout={
                                                                         new Array(new Array(8).fill(null),
@@ -61,8 +62,13 @@ export default function Game(props) {
 
         if(body.winner){
             if(props.user.id == body.winner){
+                if(!victorSet) {
+                    await fetch('api/incrementGamesPlayed/' + body.winner, {method: 'PATCH'});
+                    await fetch('api/incrementGamesPlayed/' + body.loser, {method: 'PATCH'});
+                    await fetch('api/incrementGamesWon/' + body.winner, {method: 'PATCH'});
+                    setVictorSet(true);
+                }
                 setStatus("You win!");
-
             }
             else{
                 setStatus("You lose");
