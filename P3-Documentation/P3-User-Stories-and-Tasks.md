@@ -38,7 +38,7 @@ As a user, I would like to...
   * #25 Decide who goes first in the game {Completed}
   * #31 Send desired move to server {Completed}
   * #32 Recieve updated board {Completed}
-  * #55, #57, #58, #59 update Rook, Bishop, King, Queen to interact with Portals
+  * #54, #55, #56, #57, #58, #59 update ChessPieces to interact with Portals
 
 ### Should have
 
