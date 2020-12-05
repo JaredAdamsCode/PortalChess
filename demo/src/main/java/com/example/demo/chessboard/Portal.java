@@ -35,7 +35,7 @@ public class Portal extends ChessPiece {
     public ArrayList<String> legalMoves() {
         ArrayList<String> moves = new ArrayList<String>();
 
-        if(this.getStatus() != Status.BLACK_HOLE) {
+        if(getStatus() == Status.PORTAL) {
             checkMoves(moves);
         }
 

@@ -151,11 +151,13 @@ public class ChessBoard {
 					}
 					if (!isNearBlackHole(toPosition)) {
 						placePiece(fromPiece, toPosition);
-					}else {
-
 					}
 				}
-				board[fromRow - 1][fromColumn - 1] = null;
+				if(!(fromPiece instanceof Portal && ((Portal) fromPiece).getStatus() == Portal.Status.BLACK_HOLE)) {
+					board[fromRow - 1][fromColumn - 1] = null;
+				}else {
+					throw new IllegalMoveException("Cannot move black hole");
+				}
 				
 				if(fromPiece instanceof King || fromPiece instanceof Rook) {
 					setCastlingMoves(updateCastlingMoves(fromPosition));
@@ -228,7 +230,6 @@ public class ChessBoard {
 		}
 		return null;
 	}
-
 
 	private void blackHoleFunction(String position) {
 		int toRow = Character.getNumericValue(position.charAt(1)) - 1;
