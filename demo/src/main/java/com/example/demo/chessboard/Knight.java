@@ -59,6 +59,7 @@ public class Knight extends ChessPiece {
 					int portalCol = portalLoc.charAt(0) - 96;
 
 					String otherPortalLocation = board.getOppositePortalPosition(portal.getColor());
+					System.out.println(otherPortalLocation);
 					int otherPortalRow = Character.getNumericValue(otherPortalLocation.charAt(1));
 					int otherPortalColumn = otherPortalLocation.charAt(0) - 96;
 
@@ -69,7 +70,9 @@ public class Knight extends ChessPiece {
 					int finalCol = otherPortalColumn + colDifference;
 					if(finalRow <= 8 && finalRow >= 1 && finalCol <= 8 && finalCol >= 1) {
 						String finalPosition = createPositionString(finalRow, finalCol);
-						if(board.getPiece(finalPosition) != null) {
+						ChessPiece finalPiece = board.getPiece(finalPosition);
+						if(finalPiece == null ||
+								( finalPiece.getColor() != this.getColor() && !(finalPiece instanceof Portal) )) {
 							moves.add(finalPosition);
 						}
 					}
@@ -88,19 +91,22 @@ public class Knight extends ChessPiece {
 			// Moving up
 			if (this.row < row) {
 				while (temp <= row) {
+					//System.out.println(createValidPositionString(temp, this.column));
 					ChessPiece test = board.getPiece(createValidPositionString(temp, this.column));
 					if(test instanceof Portal) { return test.getPosition(); }
 					temp++;
 				}
 				temp = this.column;
 				if(this.column < col) {
-					while(temp < col) {
+					while(temp < col + 1) {
+						//System.out.println(createValidPositionString(row, temp));
 						ChessPiece test = board.getPiece(createValidPositionString(row, temp));
 						if(test instanceof Portal) { return test.getPosition(); }
 						temp++;
 					}
 				}else {
-					while(temp > col) {
+					while(temp > col - 1) {
+						//System.out.println(createValidPositionString(row, temp));
 						ChessPiece test = board.getPiece(createValidPositionString(row, temp));
 						if(test instanceof Portal) { return test.getPosition(); }
 						temp--;
@@ -111,19 +117,22 @@ public class Knight extends ChessPiece {
 			// Moving down
 			else {
 				while (temp >= row) {
+					//System.out.println(createValidPositionString(temp, this.column));
 					ChessPiece test = board.getPiece(createValidPositionString(temp, this.column));
 					if(test instanceof Portal) { return test.getPosition(); }
 					temp--;
 				}
 				temp = this.column;
 				if(this.column < col) {
-					while(temp < col) {
+					while(temp < col + 1) {
+						//System.out.println(createValidPositionString(row, temp));
 						ChessPiece test = board.getPiece(createValidPositionString(row, temp));
 						if(test instanceof Portal) { return test.getPosition(); }
 						temp++;
 					}
 				}else {
-					while(temp > col) {
+					while(temp > col - 1) {
+						//System.out.println(createValidPositionString(row, temp));
 						ChessPiece test = board.getPiece(createValidPositionString(row, temp));
 						if(test instanceof Portal) { return test.getPosition(); }
 						temp--;
