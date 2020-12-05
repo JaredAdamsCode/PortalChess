@@ -91,7 +91,7 @@ public class MatchController {
 
             }
             Integer newTurnID = getNewTurnID(match, move.getPlayerId());
-            matchService.updateBoard(move.getMatchId(), boardStr, newTurnID, match.getCastlingMoves());
+            matchService.updateBoard(move.getMatchId(), boardStr, newTurnID, board.getCastlingMoves());
             match = matchService.getMatch(move.getMatchId());
 
             match.setStatus("Legal");
