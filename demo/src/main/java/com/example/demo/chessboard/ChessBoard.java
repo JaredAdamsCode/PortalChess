@@ -44,7 +44,27 @@ public class ChessBoard {
 			return piece;	
 		}
 	}
-	
+
+	public String getPiecePosition(String type, ChessPiece.Color color) {
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 8; j++) {
+				ChessPiece piece = board[i][j];
+				if(piece != null && piece.getType().equals(type) && piece.getColor().equals(color)) {
+					return piece.getPosition();
+				}
+			}
+		}
+		return null;
+	}
+
+	protected String getOppositePortalPosition(ChessPiece.Color color) {
+		if (color == ChessPiece.Color.WHITE) {
+			return getPiecePosition("Portal", ChessPiece.Color.BLACK);
+		}else {
+			return getPiecePosition("Portal", ChessPiece.Color.WHITE);
+		}
+	}
+
 	public boolean placePiece(ChessPiece piece, String position) {
 		// check illegal characters in position
 		if(position.length() != 2) {
@@ -84,24 +104,48 @@ public class ChessBoard {
 		ChessPiece fromPiece;
 		ChessPiece toPiece;
 		try {
-			
 			fromPiece = getPiece(fromPosition);
 			toPiece = getPiece(toPosition);
+
+			// Castling
 			if(checkForCastling(fromPiece, toPiece, toPosition)) {
 				castle(fromPiece, toPiece, toPosition);
 				setCastlingMoves(updateCastlingMoves(fromPosition));
 				return;
 			}
+
 			legalMoves = fromPiece.legalMoves();
+
+			// Teleport pieces by moving portals onto them
+			if (legalMoves.contains(toPosition) && toPiece != null && !(toPiece instanceof Portal)
+					&& fromPiece instanceof Portal) {
+				String otherPortalLocation = getOppositePortalPosition(fromPiece.getColor());
+				int otherPortalRow = Character.getNumericValue(otherPortalLocation.charAt(1));
+				int otherPortalColumn = otherPortalLocation.charAt(0) - 96;
+
+				String newPosition = findFreeSpace(otherPortalRow, otherPortalColumn);
+
+				placePiece(toPiece, newPosition); // Teleport piece
+				board[toRow - 1][toColumn - 1] = null;
+
+				placePiece(fromPiece, toPosition); // Move portal
+				board[fromRow - 1][fromColumn - 1] = null;
+				return;
+			}
+
 			if(legalMoves.contains(toPosition) &&
 					( toPiece == null || toPiece.color != fromPiece.color) || fromPiece instanceof Portal ) {
+				// Create black hole by moving one portal onto another
 				if(toPiece instanceof Portal && fromPiece instanceof Portal) {
 					Portal black_hole = new Portal(this, ChessPiece.Color.BLACK,
 							"Portal", Portal.Status.BLACK_HOLE);
 					board[toRow - 1][toColumn - 1] = null;
 					placePiece(black_hole, toPosition);
 					blackHoleFunction(toPosition);
-				}else {
+				}
+
+				// Regular Move
+				else {
 					if (fromPiece instanceof Pawn) {
 						fromPiece = pawnPromotion(fromPiece, toRow);
 					}
@@ -170,6 +214,21 @@ public class ChessBoard {
 		}
 		return validSquares;
 	}
+
+	private String findFreeSpace(int row, int col) {
+		Vector<String> squares = getValidSurroundingSquares(row, col);
+		for(String position : squares) {
+			try {
+				if (getPiece(position) == null) {
+					return position;
+				}
+			} catch (IllegalPositionException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
 
 	private void blackHoleFunction(String position) {
 		int toRow = Character.getNumericValue(position.charAt(1)) - 1;

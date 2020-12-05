@@ -30,6 +30,30 @@ public class Pawn extends ChessPiece{
 		}
 		return moves;
 	}
+
+	private String potentialTeleportLocation(Integer index, ChessPiece checkPiece, boolean moveUp) {
+		if(index == 1 && checkPiece instanceof Portal) {
+			String otherPortalLocation = board.getOppositePortalPosition(checkPiece.getColor());
+			int otherPortalRow = Character.getNumericValue(otherPortalLocation.charAt(1));
+			int otherPortalColumn = otherPortalLocation.charAt(0) - 96;
+
+			String potentialNewPosition;
+			if(moveUp) {
+				potentialNewPosition = createValidPositionString(otherPortalRow + 1, otherPortalColumn);
+			}else {
+				potentialNewPosition = createValidPositionString(otherPortalRow - 1, otherPortalColumn);
+			}
+
+			try {
+				if (potentialNewPosition != null && board.getPiece(potentialNewPosition) == null) {
+					return potentialNewPosition;
+				}
+			} catch (IllegalPositionException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 	
 	private void checkWhitePawnMoves(ArrayList<String> moves) {
 			// if in initial position
@@ -38,6 +62,10 @@ public class Pawn extends ChessPiece{
 					String position = createPositionString(this.row + i, this.column);
 					try {
 						ChessPiece checkPiece = board.getPiece(position);
+						String teleport = potentialTeleportLocation(i, checkPiece, true);
+						if(teleport != null) {
+							moves.add(teleport);
+						}
 						if(checkPiece == null) {
 							moves.add(position);
 						}
@@ -100,11 +128,16 @@ public class Pawn extends ChessPiece{
 	}
 	
 	private void checkBlackPawnMoves(ArrayList<String> moves) {
+		// if in initial position
 		if(this.row == 7) {
 			for(int i = 1; i < 3; i++) {
 				String position = createPositionString(this.row - i, this.column);
 				try {
 					ChessPiece checkPiece = board.getPiece(position);
+					String teleport = potentialTeleportLocation(i, checkPiece, false);
+					if(teleport != null) {
+						moves.add(teleport);
+					}
 					if(checkPiece == null) {
 						moves.add(position);
 					}
