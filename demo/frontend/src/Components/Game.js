@@ -62,13 +62,13 @@ export default function Game(props) {
 
         if(body.winner){
             if(props.user.id == body.winner){
-                setStatus("You win!");
                 if(!victorSet) {
                     await fetch('api/incrementGamesPlayed/' + body.winner, {method: 'PATCH'});
                     await fetch('api/incrementGamesPlayed/' + body.loser, {method: 'PATCH'});
                     await fetch('api/incrementGamesWon/' + body.winner, {method: 'PATCH'});
                     setVictorSet(true);
                 }
+                setStatus("You win!");
             }
             else{
                 setStatus("You lose");
