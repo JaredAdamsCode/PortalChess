@@ -69,7 +69,9 @@ public class Knight extends ChessPiece {
 					int finalCol = otherPortalColumn + colDifference;
 					if(finalRow <= 8 && finalRow >= 1 && finalCol <= 8 && finalCol >= 1) {
 						String finalPosition = createPositionString(finalRow, finalCol);
-						if(board.getPiece(finalPosition) != null) {
+						ChessPiece finalPiece = board.getPiece(finalPosition);
+						if(finalPiece == null ||
+								( finalPiece.getColor() != this.getColor() && !(finalPiece instanceof Portal) )) {
 							moves.add(finalPosition);
 						}
 					}
@@ -94,13 +96,13 @@ public class Knight extends ChessPiece {
 				}
 				temp = this.column;
 				if(this.column < col) {
-					while(temp < col) {
+					while(temp < col + 1) {
 						ChessPiece test = board.getPiece(createValidPositionString(row, temp));
 						if(test instanceof Portal) { return test.getPosition(); }
 						temp++;
 					}
 				}else {
-					while(temp > col) {
+					while(temp > col - 1) {
 						ChessPiece test = board.getPiece(createValidPositionString(row, temp));
 						if(test instanceof Portal) { return test.getPosition(); }
 						temp--;
@@ -117,13 +119,13 @@ public class Knight extends ChessPiece {
 				}
 				temp = this.column;
 				if(this.column < col) {
-					while(temp < col) {
+					while(temp < col + 1) {
 						ChessPiece test = board.getPiece(createValidPositionString(row, temp));
 						if(test instanceof Portal) { return test.getPosition(); }
 						temp++;
 					}
 				}else {
-					while(temp > col) {
+					while(temp > col - 1) {
 						ChessPiece test = board.getPiece(createValidPositionString(row, temp));
 						if(test instanceof Portal) { return test.getPosition(); }
 						temp--;
