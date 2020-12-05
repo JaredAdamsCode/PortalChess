@@ -78,8 +78,6 @@ public class MatchController {
             }
 
             boardStr = board.getBoardString();
-            Integer newTurnID = getNewTurnID(match, move.getPlayerId());
-            matchService.updateBoard(move.getMatchId(), boardStr, newTurnID, match.getCastlingMoves());
 
         	if(endConditionMet){
         	    if(move.getPlayerId() == match.getSenderID()){
@@ -92,6 +90,8 @@ public class MatchController {
                 }
 
             }
+            Integer newTurnID = getNewTurnID(match, move.getPlayerId());
+            matchService.updateBoard(move.getMatchId(), boardStr, newTurnID, match.getCastlingMoves());
             match = matchService.getMatch(move.getMatchId());
 
             match.setStatus("Legal");

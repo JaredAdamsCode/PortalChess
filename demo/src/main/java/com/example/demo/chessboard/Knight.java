@@ -36,7 +36,7 @@ public class Knight extends ChessPiece {
 		checkKnightMove(this.row + 1, this.column - 2, moves);
 		// check up 2 left 1
 		checkKnightMove(this.row + 2, this.column - 1, moves);
-		// reutrn arraylist
+		// return arraylist
 		return moves;
 	}
 			
@@ -48,8 +48,31 @@ public class Knight extends ChessPiece {
 				if(checkPiece == null) {
 					moves.add(position);
 				}
-				if(checkPiece != null && checkPiece.getColor() != this.getColor()) {
+				if(checkPiece != null && checkPiece.getColor() != this.getColor() && !(checkPiece instanceof Portal)) {
 					moves.add(position);
+				}
+
+				String portalLoc = portalInPath(row, col);
+				if(portalLoc != null) {
+					ChessPiece portal = board.getPiece(portalLoc);
+					int portalRow = Character.getNumericValue(portalLoc.charAt(1));
+					int portalCol = portalLoc.charAt(0) - 96;
+
+					String otherPortalLocation = board.getOppositePortalPosition(portal.getColor());
+					int otherPortalRow = Character.getNumericValue(otherPortalLocation.charAt(1));
+					int otherPortalColumn = otherPortalLocation.charAt(0) - 96;
+
+					int rowDifference = row - portalRow;
+					int colDifference = col - portalCol;
+
+					int finalRow = otherPortalRow + rowDifference;
+					int finalCol = otherPortalColumn + colDifference;
+					if(finalRow <= 8 && finalRow >= 1 && finalCol <= 8 && finalCol >= 1) {
+						String finalPosition = createPositionString(finalRow, finalCol);
+						if(board.getPiece(finalPosition) != null) {
+							moves.add(finalPosition);
+						}
+					}
 				}
 
 			} catch (IllegalPositionException e) {
@@ -59,4 +82,57 @@ public class Knight extends ChessPiece {
 		}
 	}
 
+	private String portalInPath(int row, int col) {
+		try {
+			int temp = this.row;
+			// Moving up
+			if (this.row < row) {
+				while (temp <= row) {
+					ChessPiece test = board.getPiece(createValidPositionString(temp, this.column));
+					if(test instanceof Portal) { return test.getPosition(); }
+					temp++;
+				}
+				temp = this.column;
+				if(this.column < col) {
+					while(temp < col) {
+						ChessPiece test = board.getPiece(createValidPositionString(row, temp));
+						if(test instanceof Portal) { return test.getPosition(); }
+						temp++;
+					}
+				}else {
+					while(temp > col) {
+						ChessPiece test = board.getPiece(createValidPositionString(row, temp));
+						if(test instanceof Portal) { return test.getPosition(); }
+						temp--;
+					}
+				}
+			}
+
+			// Moving down
+			else {
+				while (temp >= row) {
+					ChessPiece test = board.getPiece(createValidPositionString(temp, this.column));
+					if(test instanceof Portal) { return test.getPosition(); }
+					temp--;
+				}
+				temp = this.column;
+				if(this.column < col) {
+					while(temp < col) {
+						ChessPiece test = board.getPiece(createValidPositionString(row, temp));
+						if(test instanceof Portal) { return test.getPosition(); }
+						temp++;
+					}
+				}else {
+					while(temp > col) {
+						ChessPiece test = board.getPiece(createValidPositionString(row, temp));
+						if(test instanceof Portal) { return test.getPosition(); }
+						temp--;
+					}
+				}
+			}
+		} catch (IllegalPositionException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
