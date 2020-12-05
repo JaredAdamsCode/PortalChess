@@ -231,7 +231,6 @@ public class ChessBoard {
 		return null;
 	}
 
-
 	private void blackHoleFunction(String position) {
 		int toRow = Character.getNumericValue(position.charAt(1)) - 1;
 		int toColumn = position.charAt(0) - 97;
