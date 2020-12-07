@@ -69,9 +69,18 @@ Discussed possible solutions with creating and storing the ChessBoard object in 
 - Working on adding more tests
 - Working on Match History page
 
-## Scrum Session 10 Sprint Review 12/05/2020
+## Scrum Session 10 Sprint Review 12/04/2020
 - A bunch of tests are now added in
 - Finished match history page
 - Pawn and Knight can now use portals, portals can be moved onto other pieces to teleport them
-- Showed Demo to Product Owner
-- Setup time for 12/06 at 9:00am to create Presentation
+- Showed Demo to Product Owner - Got feedback planned adjustments with feedback in mind
+- Setup time for 12/05 at 9:00am to create Presentation
+
+## Scrum Session 11 Presentation Creation and Sprint Retrospective 12/05/2020
+- Finalized all documentation for P3
+- Created Presentation for P3 with slides, demo, and recording a video
+## Sprint Retrospective<br/>
+- Overall we almost got everything done that was assigned in the original documentation
+- Everyone contributed a lot this final Sprint
+- Good communication, everyone helped eachother out if their were issues
+- Should have started implementing Portal stuff sooner, this ended up being much more work than we anticipated
